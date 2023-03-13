@@ -7,7 +7,6 @@ package com.mycompany.memeparadisback.Model;
 import com.mycompany.memeparadisback.Configuration.Database;
 import com.mycompany.memeparadisback.Exception.PasswordException;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -19,7 +18,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.ParameterMode;
 import javax.persistence.Persistence;
 import javax.persistence.StoredProcedureQuery;
@@ -44,8 +42,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "User.findByRegistrationDate", query = "SELECT u FROM User u WHERE u.registrationDate = :registrationDate"),
     @NamedQuery(name = "User.findByBirthDate", query = "SELECT u FROM User u WHERE u.birthDate = :birthDate"),
     @NamedQuery(name = "User.findByAccessType", query = "SELECT u FROM User u WHERE u.accessType = :accessType"),
-    @NamedQuery(name = "User.findByIsDeleted", query = "SELECT u FROM User u WHERE u.isDeleted = :isDeleted"),
-    @NamedQuery(name = "User.findByRegToken", query = "SELECT u FROM User u WHERE u.regToken = :regToken")})
+    @NamedQuery(name = "User.findByIsDeleted", query = "SELECT u FROM User u WHERE u.isDeleted = :isDeleted")})
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -88,17 +85,6 @@ public class User implements Serializable {
     @NotNull
     @Column(name = "is_deleted")
     private boolean isDeleted;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "regToken")
-    private String regToken;
-    @OneToMany(mappedBy = "userId")
-    private Collection<PasswordReset> passwordResetCollection;
-    @OneToMany(mappedBy = "userId")
-    private Collection<Comment> commentCollection;
-    @OneToMany(mappedBy = "uploaderName")
-    private Collection<Content> contentCollection;
 
     public User() {
     }
@@ -107,7 +93,7 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public User(Integer id, String name, String email, String password, Date registrationDate, Date birthDate, boolean accessType, boolean isDeleted, String regToken) {
+    public User(Integer id, String name, String email, String password, Date registrationDate, Date birthDate, boolean accessType, boolean isDeleted) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -116,7 +102,6 @@ public class User implements Serializable {
         this.birthDate = birthDate;
         this.accessType = accessType;
         this.isDeleted = isDeleted;
-        this.regToken = regToken;
     }
 
     public Integer getId() {
@@ -183,38 +168,6 @@ public class User implements Serializable {
         this.isDeleted = isDeleted;
     }
 
-    public String getRegToken() {
-        return regToken;
-    }
-
-    public void setRegToken(String regToken) {
-        this.regToken = regToken;
-    }
-
-    public Collection<PasswordReset> getPasswordResetCollection() {
-        return passwordResetCollection;
-    }
-
-    public void setPasswordResetCollection(Collection<PasswordReset> passwordResetCollection) {
-        this.passwordResetCollection = passwordResetCollection;
-    }
-
-    public Collection<Comment> getCommentCollection() {
-        return commentCollection;
-    }
-
-    public void setCommentCollection(Collection<Comment> commentCollection) {
-        this.commentCollection = commentCollection;
-    }
-
-    public Collection<Content> getContentCollection() {
-        return contentCollection;
-    }
-
-    public void setContentCollection(Collection<Content> contentCollection) {
-        this.contentCollection = contentCollection;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -237,16 +190,12 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.Model.User[ id=" + id + " ]";
+        return "com.mycompany.memeparadisback.Model.User[ id=" + id + " ]";
     }
     public String addnewUser(User u){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
         EntityManager em = emf.createEntityManager();
         
-        int length = 40;
-        boolean useLetters = true;
-        boolean useNumbers = true;
-//        String token = RandomStringUtils.random(length, useLetters, useNumbers);
 
  try{
             //Create SPQ and run it
@@ -264,7 +213,6 @@ public class User implements Serializable {
             spq.setParameter("emailIN", u.getEmail());
             spq.setParameter("passwordIN", u.getPassword());
             spq.setParameter("birth_dateIN", u.getBirthDate());
-            spq.setParameter("tokenIN", regToken);
             
             spq.execute();
             return "Succesfully registerd!";
@@ -310,5 +258,66 @@ public class User implements Serializable {
             return true;
         }
     }
-     
+     public static User login(String email, String pw){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
+            EntityManager em = emf.createEntityManager();
+
+            try{
+                StoredProcedureQuery spq = em.createStoredProcedureQuery("login");
+                
+
+                spq.registerStoredProcedureParameter("emailIN", String.class, ParameterMode.IN);
+                spq.registerStoredProcedureParameter("pwIN", String.class, ParameterMode.IN);
+                spq.registerStoredProcedureParameter("idOUT", Integer.class, ParameterMode.OUT);
+
+                spq.setParameter("emailIN", email);
+                spq.setParameter("pwIN", pw);
+                spq.execute();
+
+                Integer id = Integer.parseInt(spq.getOutputParameterValue("idOUT").toString());
+                User u = em.find(User.class, id);
+                return u;
+            }
+            catch(Exception ex){
+                System.out.println(ex.getMessage());
+                //Custom exception here, because if we throw an exepcion we dont need to return an empty object, and we can handle the unsucessfull login in the upper layers
+                return new User();
+            }
+            finally{
+                //clean up metods, and close connections
+                em.clear();
+                em.close();
+                emf.close();
+            }
     }
+     public boolean checkEmailUnique(String email){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
+        EntityManager em = emf.createEntityManager();
+        
+        try{
+            //Create SPQ and run it
+            StoredProcedureQuery spq = em.createStoredProcedureQuery("checkEmailUnique");
+            
+            spq.registerStoredProcedureParameter("result", Integer.class, ParameterMode.OUT);
+            spq.registerStoredProcedureParameter("emailIN", String.class, ParameterMode.IN);
+            
+            spq.setParameter("emailIN", email);
+            spq.execute();
+            Integer result = Integer.parseInt(spq.getOutputParameterValue("result").toString());
+            
+            return result==0 ? true : false;
+            
+            
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+            return false;
+        }
+        finally{
+            //clean up metods, and close connections
+            em.clear();
+            em.close();
+            emf.close();
+        }
+    }
+}
