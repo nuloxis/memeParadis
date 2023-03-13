@@ -2,20 +2,26 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.Model;
+package com.mycompany.memeparadisback.Model;
 
+import com.mycompany.memeparadisback.Configuration.Database;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.ParameterMode;
+import javax.persistence.Persistence;
+import javax.persistence.StoredProcedureQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -37,7 +43,8 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "User.findByRegistrationDate", query = "SELECT u FROM User u WHERE u.registrationDate = :registrationDate"),
     @NamedQuery(name = "User.findByBirthDate", query = "SELECT u FROM User u WHERE u.birthDate = :birthDate"),
     @NamedQuery(name = "User.findByAccessType", query = "SELECT u FROM User u WHERE u.accessType = :accessType"),
-    @NamedQuery(name = "User.findByIsDeleted", query = "SELECT u FROM User u WHERE u.isDeleted = :isDeleted")})
+    @NamedQuery(name = "User.findByIsDeleted", query = "SELECT u FROM User u WHERE u.isDeleted = :isDeleted"),
+    @NamedQuery(name = "User.findByRegToken", query = "SELECT u FROM User u WHERE u.regToken = :regToken")})
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -80,6 +87,11 @@ public class User implements Serializable {
     @NotNull
     @Column(name = "is_deleted")
     private boolean isDeleted;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "regToken")
+    private String regToken;
     @OneToMany(mappedBy = "userId")
     private Collection<PasswordReset> passwordResetCollection;
     @OneToMany(mappedBy = "userId")
@@ -94,7 +106,7 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public User(Integer id, String name, String email, String password, Date registrationDate, Date birthDate, boolean accessType, boolean isDeleted) {
+    public User(Integer id, String name, String email, String password, Date registrationDate, Date birthDate, boolean accessType, boolean isDeleted, String regToken) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -103,6 +115,7 @@ public class User implements Serializable {
         this.birthDate = birthDate;
         this.accessType = accessType;
         this.isDeleted = isDeleted;
+        this.regToken = regToken;
     }
 
     public Integer getId() {
@@ -169,6 +182,14 @@ public class User implements Serializable {
         this.isDeleted = isDeleted;
     }
 
+    public String getRegToken() {
+        return regToken;
+    }
+
+    public void setRegToken(String regToken) {
+        this.regToken = regToken;
+    }
+
     public Collection<PasswordReset> getPasswordResetCollection() {
         return passwordResetCollection;
     }
@@ -217,5 +238,48 @@ public class User implements Serializable {
     public String toString() {
         return "com.mycompany.Model.User[ id=" + id + " ]";
     }
-    
-}
+    public String addnewUser(User u){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
+        EntityManager em = emf.createEntityManager();
+        
+        int length = 40;
+        boolean useLetters = true;
+        boolean useNumbers = true;
+//        String token = RandomStringUtils.random(length, useLetters, useNumbers);
+
+ try{
+            //Create SPQ and run it
+            StoredProcedureQuery spq = em.createStoredProcedureQuery("addNewUser");
+            
+            spq.registerStoredProcedureParameter("nameIN", String.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("emailIN", String.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("passwordIN", String.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("birth_dateIN", String.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("tokenIN", String.class, ParameterMode.IN);
+            
+            
+            
+            spq.setParameter("nameIN", u.getName());
+            spq.setParameter("emailIN", u.getEmail());
+            spq.setParameter("passwordIN", u.getPassword());
+            spq.setParameter("birth_dateIN", u.getBirthDate());
+            spq.setParameter("tokenIN", regToken);
+            
+            spq.execute();
+            return "Succesfully registerd!";
+        }
+        catch(Exception ex){
+            //Handle database exceptions
+            if(ex.getMessage().equals("org.hibernate.exception.ConstraintViolationException: Error calling CallableStatement.getMoreResults")){
+                return "Some unique value is duplicate!";
+            }
+            return ex.getMessage();
+        }
+        finally{
+            //clean up metods, and close connections
+            em.clear();
+            em.close();
+            emf.close();
+        }
+    }
+    }

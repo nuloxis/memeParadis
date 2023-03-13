@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.Model;
+package com.mycompany.memeparadisback.Model;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -24,12 +26,12 @@ import javax.validation.constraints.Size;
  * @author krist
  */
 @Entity
-@Table(name = "tags")
+@Table(name = "comment")
 @NamedQueries({
-    @NamedQuery(name = "Tags.findAll", query = "SELECT t FROM Tags t"),
-    @NamedQuery(name = "Tags.findById", query = "SELECT t FROM Tags t WHERE t.id = :id"),
-    @NamedQuery(name = "Tags.findByTag", query = "SELECT t FROM Tags t WHERE t.tag = :tag")})
-public class Tags implements Serializable {
+    @NamedQuery(name = "Comment.findAll", query = "SELECT c FROM Comment c"),
+    @NamedQuery(name = "Comment.findById", query = "SELECT c FROM Comment c WHERE c.id = :id"),
+    @NamedQuery(name = "Comment.findByContent", query = "SELECT c FROM Comment c WHERE c.content = :content")})
+public class Comment implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -40,21 +42,24 @@ public class Tags implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
-    @Column(name = "tag")
-    private String tag;
-    @OneToMany(mappedBy = "tagsId")
-    private Collection<ContentTag> contentTagCollection;
+    @Column(name = "content")
+    private String content;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ManyToOne
+    private User userId;
+    @OneToMany(mappedBy = "commentId")
+    private Collection<Content> contentCollection;
 
-    public Tags() {
+    public Comment() {
     }
 
-    public Tags(Integer id) {
+    public Comment(Integer id) {
         this.id = id;
     }
 
-    public Tags(Integer id, String tag) {
+    public Comment(Integer id, String content) {
         this.id = id;
-        this.tag = tag;
+        this.content = content;
     }
 
     public Integer getId() {
@@ -65,20 +70,28 @@ public class Tags implements Serializable {
         this.id = id;
     }
 
-    public String getTag() {
-        return tag;
+    public String getContent() {
+        return content;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public Collection<ContentTag> getContentTagCollection() {
-        return contentTagCollection;
+    public User getUserId() {
+        return userId;
     }
 
-    public void setContentTagCollection(Collection<ContentTag> contentTagCollection) {
-        this.contentTagCollection = contentTagCollection;
+    public void setUserId(User userId) {
+        this.userId = userId;
+    }
+
+    public Collection<Content> getContentCollection() {
+        return contentCollection;
+    }
+
+    public void setContentCollection(Collection<Content> contentCollection) {
+        this.contentCollection = contentCollection;
     }
 
     @Override
@@ -91,10 +104,10 @@ public class Tags implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Tags)) {
+        if (!(object instanceof Comment)) {
             return false;
         }
-        Tags other = (Tags) object;
+        Comment other = (Comment) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -103,7 +116,7 @@ public class Tags implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.Model.Tags[ id=" + id + " ]";
+        return "com.mycompany.Model.Comment[ id=" + id + " ]";
     }
     
 }
