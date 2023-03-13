@@ -310,5 +310,66 @@ public class User implements Serializable {
             return true;
         }
     }
-     
+     public static User login(String email, String pw){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
+            EntityManager em = emf.createEntityManager();
+
+            try{
+                StoredProcedureQuery spq = em.createStoredProcedureQuery("login");
+                
+
+                spq.registerStoredProcedureParameter("emailIN", String.class, ParameterMode.IN);
+                spq.registerStoredProcedureParameter("pwIN", String.class, ParameterMode.IN);
+                spq.registerStoredProcedureParameter("idOUT", Integer.class, ParameterMode.OUT);
+
+                spq.setParameter("emailIN", email);
+                spq.setParameter("pwIN", pw);
+                spq.execute();
+
+                Integer id = Integer.parseInt(spq.getOutputParameterValue("idOUT").toString());
+                User u = em.find(User.class, id);
+                return u;
+            }
+            catch(Exception ex){
+                System.out.println(ex.getMessage());
+                //Custom exception here, because if we throw an exepcion we dont need to return an empty object, and we can handle the unsucessfull login in the upper layers
+                return new User();
+            }
+            finally{
+                //clean up metods, and close connections
+                em.clear();
+                em.close();
+                emf.close();
+            }
+    }
+     public boolean checkEmailUnique(String email){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
+        EntityManager em = emf.createEntityManager();
+        
+        try{
+            //Create SPQ and run it
+            StoredProcedureQuery spq = em.createStoredProcedureQuery("checkEmailUnique");
+            
+            spq.registerStoredProcedureParameter("result", Integer.class, ParameterMode.OUT);
+            spq.registerStoredProcedureParameter("emailIN", String.class, ParameterMode.IN);
+            
+            spq.setParameter("emailIN", email);
+            spq.execute();
+            Integer result = Integer.parseInt(spq.getOutputParameterValue("result").toString());
+            
+            return result==0 ? true : false;
+            
+            
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+            return false;
+        }
+        finally{
+            //clean up metods, and close connections
+            em.clear();
+            em.close();
+            emf.close();
+        }
+    }
     }
