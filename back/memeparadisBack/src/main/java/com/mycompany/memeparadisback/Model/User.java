@@ -5,6 +5,7 @@
 package com.mycompany.memeparadisback.Model;
 
 import com.mycompany.memeparadisback.Configuration.Database;
+import com.mycompany.memeparadisback.Exception.PasswordException;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -282,4 +283,32 @@ public class User implements Serializable {
             emf.close();
         }
     }
+     public static boolean validatePassword(String pw) throws PasswordException {
+        // 8 character
+        
+        if(pw.length() < 8){
+            throw new PasswordException("The password is not long enough");
+            // return false;
+        }
+        // lowercase letter
+        else if(!pw.matches(".*[a-z].*")){
+            throw new PasswordException("It must be a lowercase character");
+        }
+        // uppercase letter
+        else if(!pw.matches(".*[A-Z].*")){
+            throw new PasswordException("It must be a uppercase character");
+        }
+        // number
+        else if(!pw.matches(".*[0-9].*")){
+            throw new PasswordException("It must be a numeric character");
+        }
+        // Special character
+        else if(!pw.matches(".*[!@#$%&*()_+=|<>?{}\\\\[\\\\]~-].*")){
+            throw new PasswordException("It must be a special character");
+        }
+        else{
+            return true;
+        }
+    }
+     
     }
