@@ -1,0 +1,13 @@
+com\mycompany\memeparadisback\Model\PasswordReset.class
+com\mycompany\memeparadisback\Configuration\Database.class
+com\mycompany\memeparadisback\JAXRSConfiguration.class
+com\mycompany\memeparadisback\Exception\PasswordException.class
+com\mycompany\memeparadisback\Service\userService.class
+com\mycompany\memeparadisback\Model\Comment.class
+com\mycompany\memeparadisback\Model\Content.class
+com\mycompany\memeparadisback\Model\ContentTag.class
+com\mycompany\memeparadisback\resources\JavaEE8Resource.class
+com\mycompany\memeparadisback\Controller\UserController.class
+com\mycompany\memeparadisback\Exception\InvalidCredentialsException.class
+com\mycompany\memeparadisback\Model\Tags.class
+com\mycompany\memeparadisback\Model\User.class
