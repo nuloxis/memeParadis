@@ -15,9 +15,9 @@ export class RegistrationComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onProductCreate(uservalues: {name:string,email:string,passworld:string,birth:Date}){
-    console.log(uservalues);
-    this.http.post('',uservalues).subscribe((res)=>{
+  onProductCreate(addNewUser: {name:string,email:string,passworld:string,birth:Date}){
+    console.log(addNewUser);
+    this.http.post('http://127.0.0.1:8080/memeparadisBack/api/addnewUser',addNewUser).subscribe((res)=>{
       console.log(res);
     });
   }
