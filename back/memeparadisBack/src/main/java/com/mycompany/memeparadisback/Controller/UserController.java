@@ -42,6 +42,8 @@ public class UserController {
         String result = us.addNewUser(user);
         return Response.status(Response.Status.OK).entity(result).type(MediaType.APPLICATION_JSON).build();
     }
+    @POST
+    @Path("login")
     public Response login(String username,String password){
         User result = us.login(username,password);
         return Response.status(Response.Status.OK).entity(result).type(MediaType.APPLICATION_JSON).build();
