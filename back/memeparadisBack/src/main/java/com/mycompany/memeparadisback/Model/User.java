@@ -177,7 +177,6 @@ public class User implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof User)) {
             return false;
         }
@@ -198,7 +197,7 @@ public class User implements Serializable {
         
 
  try{
-            //Create SPQ and run it
+            
             StoredProcedureQuery spq = em.createStoredProcedureQuery("addNewUser");
             
             spq.registerStoredProcedureParameter("nameIN", String.class, ParameterMode.IN);
@@ -218,39 +217,39 @@ public class User implements Serializable {
             return "Succesfully registerd!";
         }
         catch(Exception ex){
-            //Handle database exceptions
+          
             if(ex.getMessage().equals("org.hibernate.exception.ConstraintViolationException: Error calling CallableStatement.getMoreResults")){
                 return "Some unique value is duplicate!";
             }
             return ex.getMessage();
         }
         finally{
-            //clean up metods, and close connections
+         
             em.clear();
             em.close();
             emf.close();
         }
     }
      public static boolean validatePassword(String pw) throws PasswordException {
-        // 8 character
-        
+    
+         
         if(pw.length() < 8){
             throw new PasswordException("The password is not long enough");
-            // return false;
+
         }
-        // lowercase letter
+
         else if(!pw.matches(".*[a-z].*")){
             throw new PasswordException("It must be a lowercase character");
         }
-        // uppercase letter
+
         else if(!pw.matches(".*[A-Z].*")){
             throw new PasswordException("It must be a uppercase character");
         }
-        // number
+
         else if(!pw.matches(".*[0-9].*")){
             throw new PasswordException("It must be a numeric character");
         }
-        // Special character
+
         else if(!pw.matches(".*[!@#$%&*()_+=|<>?{}\\\\[\\\\]~-].*")){
             throw new PasswordException("It must be a special character");
         }
@@ -280,11 +279,11 @@ public class User implements Serializable {
             }
             catch(Exception ex){
                 System.out.println(ex.getMessage());
-                //Custom exception here, because if we throw an exepcion we dont need to return an empty object, and we can handle the unsucessfull login in the upper layers
+
                 return new User();
             }
             finally{
-                //clean up metods, and close connections
+     
                 em.clear();
                 em.close();
                 emf.close();
@@ -295,7 +294,7 @@ public class User implements Serializable {
         EntityManager em = emf.createEntityManager();
         
         try{
-            //Create SPQ and run it
+    
             StoredProcedureQuery spq = em.createStoredProcedureQuery("checkEmailUnique");
             
             spq.registerStoredProcedureParameter("result", Integer.class, ParameterMode.OUT);
@@ -314,7 +313,7 @@ public class User implements Serializable {
             return false;
         }
         finally{
-            //clean up metods, and close connections
+
             em.clear();
             em.close();
             emf.close();
