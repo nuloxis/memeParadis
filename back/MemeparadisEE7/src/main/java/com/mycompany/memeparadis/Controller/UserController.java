@@ -34,7 +34,6 @@ public class UserController {
     public void putJson(String content) {
     }
     
-    //Unique endpoints
     @POST
     @Path("addNewUser")
     @Consumes(MediaType.APPLICATION_JSON)

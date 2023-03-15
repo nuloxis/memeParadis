@@ -24,8 +24,8 @@ public class JAXRSConfiguration extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(com.mycompany.memeparadis.Controller.UserController.class);
         resources.add(com.mycompany.memeparadis.Confjaxrs.cors.class);
+        resources.add(com.mycompany.memeparadis.Controller.UserController.class);
        
         
     }
