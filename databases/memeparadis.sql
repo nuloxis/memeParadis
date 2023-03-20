@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2023. Már 14. 00:04
+-- Létrehozás ideje: 2023. Már 20. 09:28
 -- Kiszolgáló verziója: 10.4.24-MariaDB
 -- PHP verzió: 7.4.29
 
@@ -72,12 +72,15 @@ DELIMITER ;
 --
 
 DROP TABLE IF EXISTS `comment`;
-CREATE TABLE `comment` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `comment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `comment` varchar(100) NOT NULL,
   `userId` int(11) NOT NULL,
-  `contentId` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `contentId` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `userId` (`userId`),
+  KEY `contentId` (`contentId`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -86,15 +89,17 @@ CREATE TABLE `comment` (
 --
 
 DROP TABLE IF EXISTS `content`;
-CREATE TABLE `content` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `content` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `adult_content` tinyint(1) NOT NULL,
   `uploader_name` int(11) DEFAULT NULL,
   `language` varchar(100) NOT NULL,
   `likes` int(11) NOT NULL DEFAULT 0,
   `content_type` tinyint(1) NOT NULL,
-  `content_src` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `content_src` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `uploader_name` (`uploader_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- A tábla adatainak kiíratása `content`
@@ -113,10 +118,13 @@ INSERT INTO `content` (`id`, `adult_content`, `uploader_name`, `language`, `like
 --
 
 DROP TABLE IF EXISTS `content_tag`;
-CREATE TABLE `content_tag` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `content_tag` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `content_id` int(11) DEFAULT NULL,
-  `tags_id` int(11) DEFAULT NULL
+  `tags_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `content_id` (`content_id`),
+  KEY `tags_id` (`tags_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -126,13 +134,15 @@ CREATE TABLE `content_tag` (
 --
 
 DROP TABLE IF EXISTS `password_reset`;
-CREATE TABLE `password_reset` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `password_reset` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
   `token` varchar(100) NOT NULL,
   `token_expire` date NOT NULL,
   `used` tinyint(1) NOT NULL,
-  `created_at` date NOT NULL
+  `created_at` date NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -142,9 +152,10 @@ CREATE TABLE `password_reset` (
 --
 
 DROP TABLE IF EXISTS `tags`;
-CREATE TABLE `tags` (
-  `id` int(11) NOT NULL,
-  `tag` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `tags` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tag` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -154,16 +165,17 @@ CREATE TABLE `tags` (
 --
 
 DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   `registration_date` datetime NOT NULL DEFAULT current_timestamp(),
   `birth_date` date DEFAULT NULL,
   `access_type` tinyint(1) NOT NULL DEFAULT 0,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- A tábla adatainak kiíratása `user`
@@ -174,92 +186,6 @@ INSERT INTO `user` (`id`, `name`, `email`, `password`, `registration_date`, `bir
 (2, 'mjhh', 'jjhh@gmail.com', '665485', '2023-02-20 15:57:59', '2023-02-15', 0, 0),
 (3, 'oulé', 'klélk@gmail.com', '5766', '2023-02-20 15:59:02', '2023-02-09', 1, 0),
 (4, 'teszt', 'tesz@gmail.com', '54687', '2023-02-21 09:48:59', '2023-12-11', 0, 0);
-
---
--- Indexek a kiírt táblákhoz
---
-
---
--- A tábla indexei `comment`
---
-ALTER TABLE `comment`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `userId` (`userId`),
-  ADD KEY `contentId` (`contentId`);
-
---
--- A tábla indexei `content`
---
-ALTER TABLE `content`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `uploader_name` (`uploader_name`);
-
---
--- A tábla indexei `content_tag`
---
-ALTER TABLE `content_tag`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `content_id` (`content_id`),
-  ADD KEY `tags_id` (`tags_id`);
-
---
--- A tábla indexei `password_reset`
---
-ALTER TABLE `password_reset`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- A tábla indexei `tags`
---
-ALTER TABLE `tags`
-  ADD PRIMARY KEY (`id`);
-
---
--- A tábla indexei `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`);
-
---
--- A kiírt táblák AUTO_INCREMENT értéke
---
-
---
--- AUTO_INCREMENT a táblához `comment`
---
-ALTER TABLE `comment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT a táblához `content`
---
-ALTER TABLE `content`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT a táblához `content_tag`
---
-ALTER TABLE `content_tag`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT a táblához `password_reset`
---
-ALTER TABLE `password_reset`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT a táblához `tags`
---
-ALTER TABLE `tags`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT a táblához `user`
---
-ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Megkötések a kiírt táblákhoz
