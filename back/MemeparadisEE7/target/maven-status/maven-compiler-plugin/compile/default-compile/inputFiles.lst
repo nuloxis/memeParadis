@@ -1,13 +1,13 @@
-C:\Kristof_fajljai\Ceges mogyó\Radnoti helix\netbeans\MemeparadisEE7\src\main\java\com\mycompany\memeparadis\Exception\InvalidCredentialsException.java
-C:\Kristof_fajljai\Ceges mogyó\Radnoti helix\netbeans\MemeparadisEE7\src\main\java\com\mycompany\memeparadis\Controller\UserController.java
-C:\Kristof_fajljai\Ceges mogyó\Radnoti helix\netbeans\MemeparadisEE7\src\main\java\com\mycompany\memeparadis\Confjaxrs\JAXRSConfiguration.java
-C:\Kristof_fajljai\Ceges mogyó\Radnoti helix\netbeans\MemeparadisEE7\src\main\java\com\mycompany\memeparadis\Configuration\Database.java
-C:\Kristof_fajljai\Ceges mogyó\Radnoti helix\netbeans\MemeparadisEE7\src\main\java\com\mycompany\memeparadis\Exception\PasswordException.java
-C:\Kristof_fajljai\Ceges mogyó\Radnoti helix\netbeans\MemeparadisEE7\src\main\java\com\mycompany\memeparadis\Model\Tags.java
-C:\Kristof_fajljai\Ceges mogyó\Radnoti helix\netbeans\MemeparadisEE7\src\main\java\com\mycompany\memeparadis\Confjaxrs\cors.java
-C:\Kristof_fajljai\Ceges mogyó\Radnoti helix\netbeans\MemeparadisEE7\src\main\java\com\mycompany\memeparadis\Model\User.java
-C:\Kristof_fajljai\Ceges mogyó\Radnoti helix\netbeans\MemeparadisEE7\src\main\java\com\mycompany\memeparadis\Model\PasswordReset.java
-C:\Kristof_fajljai\Ceges mogyó\Radnoti helix\netbeans\MemeparadisEE7\src\main\java\com\mycompany\memeparadis\Model\Content.java
-C:\Kristof_fajljai\Ceges mogyó\Radnoti helix\netbeans\MemeparadisEE7\src\main\java\com\mycompany\memeparadis\Model\Comment.java
-C:\Kristof_fajljai\Ceges mogyó\Radnoti helix\netbeans\MemeparadisEE7\src\main\java\com\mycompany\memeparadis\Service\userService.java
-C:\Kristof_fajljai\Ceges mogyó\Radnoti helix\netbeans\MemeparadisEE7\src\main\java\com\mycompany\memeparadis\Model\ContentTag.java
+C:\Users\nuloxis\Desktop\memeparadis\memeParadis\back\MemeparadisEE7\src\main\java\com\mycompany\memeparadis\Exception\PasswordException.java
+C:\Users\nuloxis\Desktop\memeparadis\memeParadis\back\MemeparadisEE7\src\main\java\com\mycompany\memeparadis\Service\userService.java
+C:\Users\nuloxis\Desktop\memeparadis\memeParadis\back\MemeparadisEE7\src\main\java\com\mycompany\memeparadis\Confjaxrs\cors.java
+C:\Users\nuloxis\Desktop\memeparadis\memeParadis\back\MemeparadisEE7\src\main\java\com\mycompany\memeparadis\Configuration\Database.java
+C:\Users\nuloxis\Desktop\memeparadis\memeParadis\back\MemeparadisEE7\src\main\java\com\mycompany\memeparadis\Model\Comment.java
+C:\Users\nuloxis\Desktop\memeparadis\memeParadis\back\MemeparadisEE7\src\main\java\com\mycompany\memeparadis\Controller\UserController.java
+C:\Users\nuloxis\Desktop\memeparadis\memeParadis\back\MemeparadisEE7\src\main\java\com\mycompany\memeparadis\Model\PasswordReset.java
+C:\Users\nuloxis\Desktop\memeparadis\memeParadis\back\MemeparadisEE7\src\main\java\com\mycompany\memeparadis\Model\User.java
+C:\Users\nuloxis\Desktop\memeparadis\memeParadis\back\MemeparadisEE7\src\main\java\com\mycompany\memeparadis\Confjaxrs\JAXRSConfiguration.java
+C:\Users\nuloxis\Desktop\memeparadis\memeParadis\back\MemeparadisEE7\src\main\java\com\mycompany\memeparadis\Model\Content.java
+C:\Users\nuloxis\Desktop\memeparadis\memeParadis\back\MemeparadisEE7\src\main\java\com\mycompany\memeparadis\Model\ContentTag.java
+C:\Users\nuloxis\Desktop\memeparadis\memeParadis\back\MemeparadisEE7\src\main\java\com\mycompany\memeparadis\Exception\InvalidCredentialsException.java
+C:\Users\nuloxis\Desktop\memeparadis\memeParadis\back\MemeparadisEE7\src\main\java\com\mycompany\memeparadis\Model\Tags.java
