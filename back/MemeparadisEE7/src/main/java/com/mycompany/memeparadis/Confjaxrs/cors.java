@@ -23,9 +23,9 @@ public class cors implements ContainerResponseFilter  {
     public void filter(ContainerRequestContext requestContext,
             ContainerResponseContext responseContext) throws IOException {
         ArrayList<String> urls = new ArrayList();
-        urls.add("*");
-        responseContext.getHeaders().add(
-         "Access-Control-Allow-Origin", "*");
+        
+        urls.add("http://localhost:4200");
+        
         String url = requestContext.getHeaderString("Origin");
         if (urls.contains(url)) {
             responseContext.getHeaders().add(

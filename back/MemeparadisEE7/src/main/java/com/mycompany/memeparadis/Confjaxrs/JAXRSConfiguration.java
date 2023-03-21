@@ -27,7 +27,6 @@ public class JAXRSConfiguration extends Application {
         resources.add(com.mycompany.memeparadis.Confjaxrs.cors.class);
         resources.add(com.mycompany.memeparadis.Controller.UserController.class);
        
-        
     }
 
 }

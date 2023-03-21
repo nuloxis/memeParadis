@@ -13,13 +13,15 @@ export class RegistrationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
   }
 
-  onProductCreate(addNewUser: {name:string,email:string,password:string,birthDate:Date}){
+  onProductCreate(addNewUser: any){
     console.log(addNewUser);
-    this.http.post('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/User/addNewUser',JSON.stringify(addNewUser)).subscribe((res)=>{
+    this.http.post('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/User/addNewUser',addNewUser).subscribe((res)=>{
       console.log(res);
     });
   }
+
 
 }

@@ -18,7 +18,7 @@ public class userService {
     
         String result = "";
         
-        if( ! (u.checkEmailUnique(user.getEmail()))){
+        if( !(u.checkEmailUnique(user.getEmail()))){
             result = "Email is already taken!";
         }
         
