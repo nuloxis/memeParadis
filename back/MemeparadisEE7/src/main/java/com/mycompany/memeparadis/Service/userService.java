@@ -38,7 +38,7 @@ public class userService {
 }
     public User login(String email,String password) throws InvalidCredentialsException{
        Integer id = User.login(email,password);
-        User user = u.getUserById(id);
+        User user = u.getUserByID(id);
         if(user == null){
             throw new InvalidCredentialsException("Invalid email or password");
         }

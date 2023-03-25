@@ -335,7 +335,7 @@ public class User implements Serializable {
     public void setContentCollection(Collection<Content> contentCollection) {
         this.contentCollection = contentCollection;
     }
-    public User getUserById(Integer id){
+    public User getUserByID(Integer id){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
         EntityManager em = emf.createEntityManager();
         User user = null;
