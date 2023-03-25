@@ -1,4 +1,11 @@
 <p>login works!</p>
-<input type="text">
-<input type="text">
+<form #productsFrom="ngForm" (ngSubmit)="loginProduct(productsFrom.value)">
+  <label>Name</label>
+  <input type="text" name="email" ngModel>
+  <label >Password</label>
+  <input type="text" name="password" ngModel>
+
+  <button type="submit">Login</button>
+</form>
+
 <button (click)="goToPage('registration')">Registration</button>

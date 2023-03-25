@@ -8,6 +8,7 @@ import { RegistrationComponent } from './_components/registration/registration.c
 import { LoginComponent } from './_components/login/login.component';
 import { FormsModule } from '@angular/forms';
 
+
 @NgModule({
   declarations: [
     AppComponent,
