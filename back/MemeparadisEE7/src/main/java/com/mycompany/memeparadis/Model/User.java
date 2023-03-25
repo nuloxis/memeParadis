@@ -331,28 +331,6 @@ public class User implements Serializable {
         }
     }
 
-    @XmlTransient
-    public Collection<PasswordReset> getPasswordResetCollection() {
-        return passwordResetCollection;
-    }
-
-    public void setPasswordResetCollection(Collection<PasswordReset> passwordResetCollection) {
-        this.passwordResetCollection = passwordResetCollection;
-    }
-
-    @XmlTransient
-    public Collection<Comment> getCommentCollection() {
-        return commentCollection;
-    }
-
-    public void setCommentCollection(Collection<Comment> commentCollection) {
-        this.commentCollection = commentCollection;
-    }
-
-    @XmlTransient
-    public Collection<Content> getContentCollection() {
-        return contentCollection;
-    }
 
     public void setContentCollection(Collection<Content> contentCollection) {
         this.contentCollection = contentCollection;
