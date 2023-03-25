@@ -43,8 +43,8 @@ public class UserController {
     }
     @POST
     @Path("login")
-    public Response login(String username,String password){
-        User result = us.login(username,password);
+    public Response login(String email,String password){
+        User result = us.login(email,password);
         return Response.status(Response.Status.OK).entity(result).type(MediaType.APPLICATION_JSON).build();
     }
 }

@@ -269,7 +269,7 @@ public class User implements Serializable {
             return true;
         }
     }
-     public static User login(String email, String pw){
+     public static Integer login(String email, String pw){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
             EntityManager em = emf.createEntityManager();
 
@@ -287,12 +287,10 @@ public class User implements Serializable {
 
                 Integer id = Integer.parseInt(spq.getOutputParameterValue("idOUT").toString());
                 User u = em.find(User.class, id);
-                return u;
+                return id;
             }
             catch(Exception ex){
                 System.out.println(ex.getMessage());
-
-                return new User();
             }
             finally{
      
@@ -300,6 +298,7 @@ public class User implements Serializable {
                 em.close();
                 emf.close();
             }
+            return 0;
     }
      public boolean checkEmailUnique(String email){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
@@ -358,4 +357,28 @@ public class User implements Serializable {
     public void setContentCollection(Collection<Content> contentCollection) {
         this.contentCollection = contentCollection;
     }
+    public User getUserById(Integer id){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
+        EntityManager em = emf.createEntityManager();
+        User user = null;
+        try{
+    
+            StoredProcedureQuery spq = em.createStoredProcedureQuery("getUserByID");
+            
+            spq.registerStoredProcedureParameter("idIN", Integer.class, ParameterMode.IN);
+            spq.setParameter("idIN", id);
+            user = (User) spq.getSingleResult();
+            spq.execute();
+           
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+        finally{
+            em.clear();
+            em.close();
+            emf.close();
+        }
+        return user;
+}
 }

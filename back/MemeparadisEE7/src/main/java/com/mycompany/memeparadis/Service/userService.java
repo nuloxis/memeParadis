@@ -36,11 +36,12 @@ public class userService {
         }
         return result;
 }
-    public User login(String username,String Password) throws InvalidCredentialsException{
-        User user = u;
-        if(user == null || !user.getPassword().equals(Password)){
-            throw new InvalidCredentialsException("Invalid username or password");
+    public User login(String email,String password) throws InvalidCredentialsException{
+       Integer id = User.login(email,password);
+        User user = u.getUserById(id);
+        if(user == null){
+            throw new InvalidCredentialsException("Invalid email or password");
         }
-        return user;
+       return user;
     }
 }
