@@ -8,9 +8,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mycompany.memeparadis.Configuration.Database;
 import com.mycompany.memeparadis.Exception.PasswordException;
 import java.io.Serializable;
-import java.util.Collection;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +25,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.ParameterMode;
 import javax.persistence.Persistence;
 import javax.persistence.StoredProcedureQuery;
@@ -30,7 +33,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -82,7 +84,8 @@ public class User implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "registration_date")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
     private Date registrationDate;
     @Basic(optional = false)
     @NotNull
@@ -288,7 +291,7 @@ public class User implements Serializable {
 
                 List<Object[]> result = spq.getResultList();
                 Object[] r = result.get(0);
-                Integer idd=(Integer) r[0];
+                Integer idd= Integer.parseInt(r[0].toString());
 //                throw new Exception(""+r[0].toString());
                 return idd;
             }
@@ -352,18 +355,21 @@ public class User implements Serializable {
             spq.execute();
             List<Object[]> result = spq.getResultList();
             Object[] r = result.get(0);
-            Integer idd = Integer.valueOf(r[0].toString());
-            String name = r[1].toString();
-            String email = r[2].toString();
-            String password = r[3].toString();
-            Date registrationDate =new Date(r[4].toString());
-            Date birthDate =new Date(r[5].toString());
-            Boolean accessType = Boolean.valueOf(r[6].toString());
+            Integer idd = Integer.parseInt(r[0].toString());
+            String namee = r[1].toString();
+            String emaile = r[2].toString();
+            String passworde = r[3].toString();
+            Date registrationDatee =Timestamp.valueOf(r[4].toString());
             
-            User user=new User(idd,name,email,password,registrationDate,birthDate,accessType,false);
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+            Date birthDatee = formatter.parse(r[5].toString());
             
-            throw new Exception(""+id);
-//            return user;
+            Boolean accessTypee = Boolean.valueOf(r[6].toString());
+            
+            User user=new User(idd,namee,emaile,passworde,registrationDatee,birthDatee,accessTypee,false);
+            
+//            throw new Exception(""+id);
+            return user;
         }
         catch(Exception ex){
             System.out.println(ex.getMessage());

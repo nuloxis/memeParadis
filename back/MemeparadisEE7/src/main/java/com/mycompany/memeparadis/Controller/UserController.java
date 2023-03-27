@@ -47,12 +47,12 @@ public class UserController {
     @Path("login")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response login(User user){
-        String result;
+        User result;
         try {
-            result = us.login(user.getEmail(),user.getPassword()).toString();
+            result = us.login(user.getEmail(),user.getPassword());
         } catch (Exception ex) {
-            result=ex.getMessage();
-            
+            System.err.println("");
+            result = new User();
         }
         return Response.status(Response.Status.OK).entity(result).type(MediaType.APPLICATION_JSON).build();
     }
