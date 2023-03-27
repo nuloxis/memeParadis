@@ -10,6 +10,7 @@ import com.mycompany.memeparadis.Exception.PasswordException;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -48,13 +49,13 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "User.findByAccessType", query = "SELECT u FROM User u WHERE u.accessType = :accessType"),
     @NamedQuery(name = "User.findByIsDeleted", query = "SELECT u FROM User u WHERE u.isDeleted = :isDeleted")})
 public class User implements Serializable {
-
-    @OneToMany(mappedBy = "userId")
-    private Collection<PasswordReset> passwordResetCollection;
-    @OneToMany(mappedBy = "userId")
-    private Collection<Comment> commentCollection;
-    @OneToMany(mappedBy = "uploaderName")
-    private Collection<Content> contentCollection;
+//
+//    @OneToMany(mappedBy = "userId")
+//    private Collection<PasswordReset> passwordResetCollection;
+//    @OneToMany(mappedBy = "userId")
+//    private Collection<Comment> commentCollection;
+//    @OneToMany(mappedBy = "uploaderName")
+//    private Collection<Content> contentCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -269,7 +270,7 @@ public class User implements Serializable {
             return true;
         }
     }
-     public static Integer login(String email, String pw){
+     public static Integer login(String email, String pw) throws Exception{
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
             EntityManager em = emf.createEntityManager();
 
@@ -279,18 +280,21 @@ public class User implements Serializable {
 
                 spq.registerStoredProcedureParameter("emailIN", String.class, ParameterMode.IN);
                 spq.registerStoredProcedureParameter("pwIN", String.class, ParameterMode.IN);
-                spq.registerStoredProcedureParameter("idOUT", Integer.class, ParameterMode.OUT);
+//                spq.registerStoredProcedureParameter("idOUT", Integer.class, ParameterMode.OUT);
 
                 spq.setParameter("emailIN", email);
                 spq.setParameter("pwIN", pw);
                 spq.execute();
 
-                Integer id = Integer.parseInt(spq.getOutputParameterValue("idOUT").toString());
-                User u = em.find(User.class, id);
-                return id;
+                List<Object[]> result = spq.getResultList();
+                Object[] r = result.get(0);
+                Integer idd=(Integer) r[0];
+//                throw new Exception(""+r[0].toString());
+                return idd;
             }
             catch(Exception ex){
                 System.out.println(ex.getMessage());
+                throw new Exception(ex.getMessage());
             }
             finally{
      
@@ -298,7 +302,7 @@ public class User implements Serializable {
                 em.close();
                 emf.close();
             }
-            return 0;
+            
     }
      public boolean checkEmailUnique(String email){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
@@ -331,32 +335,47 @@ public class User implements Serializable {
         }
     }
 
-
-    public void setContentCollection(Collection<Content> contentCollection) {
-        this.contentCollection = contentCollection;
-    }
-    public User getUserByID(Integer id){
+//
+//    public void setContentCollection(Collection<Content> contentCollection) {
+//        this.contentCollection = contentCollection;
+//    }
+    public User getUserByID(Integer id) throws Exception{
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
         EntityManager em = emf.createEntityManager();
-        User user = null;
+        
         try{
     
             StoredProcedureQuery spq = em.createStoredProcedureQuery("getUserByID");
             
             spq.registerStoredProcedureParameter("idIN", Integer.class, ParameterMode.IN);
             spq.setParameter("idIN", id);
-            user = (User) spq.getSingleResult();
             spq.execute();
-           
+            List<Object[]> result = spq.getResultList();
+            Object[] r = result.get(0);
+            Integer idd = Integer.valueOf(r[0].toString());
+            String name = r[1].toString();
+            String email = r[2].toString();
+            String password = r[3].toString();
+            Date registrationDate =new Date(r[4].toString());
+            Date birthDate =new Date(r[5].toString());
+            Boolean accessType = Boolean.valueOf(r[6].toString());
+            
+            User user=new User(idd,name,email,password,registrationDate,birthDate,accessType,false);
+            
+            throw new Exception(""+id);
+//            return user;
         }
         catch(Exception ex){
             System.out.println(ex.getMessage());
+            throw new Exception(""+ex.getMessage());
+//            return new User();
         }
         finally{
             em.clear();
             em.close();
             emf.close();
+            
         }
-        return user;
+        
 }
 }

@@ -17,12 +17,14 @@ export class LoginComponent implements OnInit {
   goToPage(pageName:string):void{
     this.router.navigate([`${pageName}`]);
   }
-  loginProduct(addUser: any){
 
+
+
+  loginProduct(addUser: any){
     console.log(addUser);
     this.http.post('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/User/login',addUser).subscribe((res)=>{
       console.log(res);
-      localStorage.setItem('name',JSON.stringify(addUser));
+      localStorage.setItem('name',JSON.stringify(res));
     },error=>{
       console.log("Hiba történt",error);
     });

@@ -6,6 +6,8 @@ package com.mycompany.memeparadis.Controller;
 
 import com.mycompany.memeparadis.Model.User;
 import com.mycompany.memeparadis.Service.userService;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -43,8 +45,15 @@ public class UserController {
     }
     @POST
     @Path("login")
-    public Response login(String email,String password){
-        User result = us.login(email,password);
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response login(User user){
+        String result;
+        try {
+            result = us.login(user.getEmail(),user.getPassword()).toString();
+        } catch (Exception ex) {
+            result=ex.getMessage();
+            
+        }
         return Response.status(Response.Status.OK).entity(result).type(MediaType.APPLICATION_JSON).build();
     }
 }
