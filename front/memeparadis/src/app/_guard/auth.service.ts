@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Route, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -6,4 +7,8 @@ import { Injectable } from '@angular/core';
 export class AuthService {
 
   constructor() { }
+
+  IsLoggedIn(){
+    return localStorage.getItem("name")
+  }
 }
