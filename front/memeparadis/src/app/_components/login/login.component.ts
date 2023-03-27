@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
+import { MyResponse } from 'src/app/my-response';
 
 
 @Component({
@@ -22,12 +24,19 @@ export class LoginComponent implements OnInit {
 
   loginProduct(addUser: any){
     console.log(addUser);
-    this.http.post('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/User/login',addUser).subscribe((res)=>{
+    this.http.post<MyResponse>('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/User/login',addUser).subscribe((res)=>{
       console.log(res);
-      localStorage.setItem('name',JSON.stringify(res));
-    },error=>{
-      console.log("Hiba történt",error);
+      const resId=res;
+
+      if(resId.name===null){
+        alert("HIBA");
+      }else{
+        localStorage.setItem('name',JSON.stringify(res));
+        this.router.navigate(["main"]);
+      }
+
     });
   }
+
 
 }
