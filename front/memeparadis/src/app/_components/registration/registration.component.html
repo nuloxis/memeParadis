@@ -1,20 +1,32 @@
-<p>registration works!</p>
+<html class="loginbody">
 
-<div>
-  <h3>Registration</h3>
-  <form #productsFrom="ngForm" (ngSubmit)="onProductCreate(productsFrom.value)">
-    <label>Name</label>
-    <input type="text" name="name" ngModel>
+<body class="loginbody">
+  <div class="navbar">
+    <h1>MEME<span>PARADISE</span></h1>
+  </div>
 
-    <label >Email</label>
-    <input type="text" name="email" ngModel>
+  <div class="main">
+    <div class="registration">
+      <form #productsFrom="ngForm" (ngSubmit)="onProductCreate(productsFrom.value)">
+        <label>Name</label>
+        <input type="text" name="name" ngModel>
 
-    <label >Password</label>
-    <input type="text" name="password" ngModel>
+        <label>Email</label>
+        <input type="text" name="email" ngModel>
 
-    <label >Birth Date</label>
-    <input type="date" name="birthDate" ngModel>
+        <label>Password</label>
+        <input type="text" name="password" ngModel>
 
-    <button type="submit">Registration</button>
-  </form>
-</div>
+        <label>Birth Date</label>
+        <input type="date" name="birthDate" ngModel>
+
+        <button type="submit">Registration</button>
+      </form>
+    </div>
+
+
+  </div>
+
+</body>
+
+</html>

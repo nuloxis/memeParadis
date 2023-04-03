@@ -1,11 +1,43 @@
-<p>login works!</p>
-<form #productsFrom="ngForm" (ngSubmit)="loginProduct(productsFrom.value)">
-  <label>Name</label>
-  <input type="text" name="email" ngModel>
-  <label >Password</label>
-  <input type="text" name="password" ngModel>
+<html class="loginbody">
 
-  <button type="submit">Login</button>
-</form>
+<body class="loginbody">
+  <div class="navbar">
+    <h1>MEME<span>PARADISE</span></h1>
+  </div>
 
-<button (click)="goToPage('registration')">Registration</button>
+
+  <div class="main">
+    <div class="thislogin">
+
+
+
+      <form #productsFrom="ngForm" (ngSubmit)="loginProduct(productsFrom.value)">
+        <label class="maintext">Welcome back!</label>
+        <div class="text_fieldd">
+          <label class="textr">Email</label>
+          <input type="text" name="email" ngModel>
+
+
+        </div>
+        <div class="text_fieldd">
+          <label class="textr">Password</label>
+          <input type="text" name="password" ngModel>
+
+
+        </div>
+        <div class="forgotpass textr">Forgot Password?</div>
+        <button type="submit">Login</button>
+        <div class="registration textr">
+          Not Registered? <a href="registration" class="hreftext" (click)="goToPage('registration')" >Register now</a>
+        </div>
+      </form>
+
+    </div>
+    <div class="loginmeme">
+        <img src="https://media.discordapp.net/attachments/642806502817660975/1091701744997773394/337709729_184165197724150_8034665451170138933_n.jpg?width=674&height=676" alt="">
+    </div>
+  </div>
+
+</body>
+
+</html>
