@@ -32,12 +32,62 @@ span{
   display: flex;
   place-items: center;
   justify-content: center;
-
-
 }
 form{
   width: 414px;
   height: 614px;
+
+}
+.text_fieldd{
   display: grid;
 }
-
+.textr{
+  color: #B5BAC1;
+  margin: 7px;
+  margin-bottom: 10px;
+}
+.hreftext{
+  color: #00a8fc;
+}
+input{
+  background-color: #1E1F22;
+  color: white;
+  width: 414px;
+  height: 40px;
+  border: 0;
+  border-radius: 5px;
+}
+button{
+  width: 414px;
+  height: 40px;
+  background-color: #39ca74;
+  color: white;
+  border: 0;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+.maintext{
+  color: white;
+  width: 93px;
+  height: 30px;
+  font-size: 30px;
+  margin-left: 115px;
+}
+button:hover{
+  background-color: #278d50;
+  color: rgb(195, 192, 192);
+  touch-action: 5s;
+  transition: 0.2s;
+}
+.registration{
+  background-color: #282828;
+  border-radius: 5px;
+  padding: 32px;
+}
+.login{
+  margin-left: 118px;
+  margin-top: 15px;
+}
+a{
+  text-decoration: none;
+}

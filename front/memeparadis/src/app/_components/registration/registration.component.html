@@ -8,17 +8,35 @@
   <div class="main">
     <div class="registration">
       <form #productsFrom="ngForm" (ngSubmit)="onProductCreate(productsFrom.value)">
-        <label>Name</label>
-        <input type="text" name="name" ngModel>
+        <label class="maintext">Create account</label>
 
-        <label>Email</label>
-        <input type="text" name="email" ngModel>
+        <div class="text_fieldd">
+          <label class="textr">Name</label>
+          <input type="text" name="name" ngModel>
+        </div>
 
-        <label>Password</label>
-        <input type="text" name="password" ngModel>
+        <div class="text_fieldd">
+          <label class="textr">Email</label>
+          <input type="text" name="email" ngModel>
+        </div>
 
-        <label>Birth Date</label>
-        <input type="date" name="birthDate" ngModel>
+        <div class="text_fieldd">
+          <label class="textr">Password</label>
+          <input type="text" name="password" ngModel>
+        </div>
+
+        <div class="text_fieldd">
+          <label class="textr">Birth Date</label>
+          <input type="date" name="birthDate" ngModel>
+        </div>
+
+        <div class="login textr">
+          <a href="login" class="hreftext" (click)="goToPage('login')" >Already have an account?</a>
+        </div>
+
+
+
+
 
         <button type="submit">Registration</button>
       </form>

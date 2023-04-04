@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration',
@@ -8,12 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegistrationComponent implements OnInit {
 
-  constructor(private http:HttpClient) {
+  constructor(private http:HttpClient,private router:Router) {
 
   }
 
   ngOnInit(): void {
-    
+
+  }
+  goToPage(pageName:string):void{
+    this.router.navigate([`${pageName}`]);
   }
 
   onProductCreate(addNewUser: any){

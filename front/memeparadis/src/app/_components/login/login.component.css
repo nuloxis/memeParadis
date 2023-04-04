@@ -58,7 +58,7 @@ span{
 }
 .textr{
   color: #B5BAC1;
-  margin: 5px;
+  margin: 7px;
 }
 .hreftext{
   color: #00a8fc;
@@ -98,6 +98,9 @@ button:hover{
 }
 img{
   border-radius: 5px;
+}
+a{
+  text-decoration: none;
 }
 
 
