@@ -4,11 +4,14 @@
  */
 package com.mycompany.memeparadis.Model;
 
+import com.mycompany.memeparadis.Configuration.Database;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,6 +19,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.ParameterMode;
+import javax.persistence.Persistence;
+import javax.persistence.StoredProcedureQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -180,5 +186,38 @@ public class Content implements Serializable {
     public String toString() {
         return "com.mycompany.memeparadis.Model.Content[ id=" + id + " ]";
     }
-    
+    public Content createContent(Content c,byte[] fileBytes, String fileName) throws Exception{
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
+        EntityManager em = emf.createEntityManager();
+        try{
+            StoredProcedureQuery spq = em.createStoredProcedureQuery("createContent");
+            spq.registerStoredProcedureParameter("uploader_id",String.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("adult_content", Integer.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("language",String.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("content_type",String.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("file_name", String.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("file_bytes", byte[].class, ParameterMode.IN);
+            
+            spq.setParameter("uploader_id",c.getUploaderName());
+            spq.setParameter("adult_content",c.getAdultContent());
+            spq.setParameter("language",c.getLanguage());
+            spq.setParameter("content_type",c.getContentType());
+            spq.setParameter("file_name", fileName);
+            spq.setParameter("file_bytes", fileBytes);
+            
+            spq.execute();
+            
+            return c;
+           
+        }catch(Exception ex){
+            System.out.println(ex.getMessage());
+            throw new Exception(""+ex.getMessage());
+        }
+        finally{
+            em.clear();
+            em.close();
+            emf.close();    
+        }
+    }
 }
+
