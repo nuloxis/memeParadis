@@ -12,6 +12,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -25,6 +26,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.ParameterMode;
 import javax.persistence.Persistence;
 import javax.persistence.StoredProcedureQuery;
@@ -33,6 +35,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -51,6 +54,11 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "User.findByAccessType", query = "SELECT u FROM User u WHERE u.accessType = :accessType"),
     @NamedQuery(name = "User.findByIsDeleted", query = "SELECT u FROM User u WHERE u.isDeleted = :isDeleted")})
 public class User implements Serializable {
+
+    @OneToMany(mappedBy = "userId")
+    private Collection<Comment> commentCollection;
+    @OneToMany(mappedBy = "uploaderName")
+    private Collection<Content> contentCollection;
 //
 //    @OneToMany(mappedBy = "userId")
 //    private Collection<PasswordReset> passwordResetCollection;
@@ -384,4 +392,22 @@ public class User implements Serializable {
         }
         
 }
+
+    @XmlTransient
+    public Collection<Comment> getCommentCollection() {
+        return commentCollection;
+    }
+
+    public void setCommentCollection(Collection<Comment> commentCollection) {
+        this.commentCollection = commentCollection;
+    }
+
+    @XmlTransient
+    public Collection<Content> getContentCollection() {
+        return contentCollection;
+    }
+
+    public void setContentCollection(Collection<Content> contentCollection) {
+        this.contentCollection = contentCollection;
+    }
 }

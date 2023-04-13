@@ -5,7 +5,7 @@
 package com.mycompany.memeparadis.Model;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,12 +16,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -36,7 +36,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Content.findByAdultContent", query = "SELECT c FROM Content c WHERE c.adultContent = :adultContent"),
     @NamedQuery(name = "Content.findByLanguage", query = "SELECT c FROM Content c WHERE c.language = :language"),
     @NamedQuery(name = "Content.findByLikes", query = "SELECT c FROM Content c WHERE c.likes = :likes"),
-    @NamedQuery(name = "Content.findByContentType", query = "SELECT c FROM Content c WHERE c.contentType = :contentType")})
+    @NamedQuery(name = "Content.findByContentType", query = "SELECT c FROM Content c WHERE c.contentType = :contentType"),
+    @NamedQuery(name = "Content.findByUploadedDate", query = "SELECT c FROM Content c WHERE c.uploadedDate = :uploadedDate")})
 public class Content implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -63,8 +64,11 @@ public class Content implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "content_type")
     private String contentType;
-    @OneToMany(mappedBy = "contentId")
-    private Collection<ContentTag> contentTagCollection;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "uploaded_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date uploadedDate;
     @JoinColumn(name = "comment_id", referencedColumnName = "id")
     @ManyToOne
     private Comment commentId;
@@ -79,12 +83,13 @@ public class Content implements Serializable {
         this.id = id;
     }
 
-    public Content(Integer id, boolean adultContent, String language, int likes, String contentType) {
+    public Content(Integer id, boolean adultContent, String language, int likes, String contentType, Date uploadedDate) {
         this.id = id;
         this.adultContent = adultContent;
         this.language = language;
         this.likes = likes;
         this.contentType = contentType;
+        this.uploadedDate = uploadedDate;
     }
 
     public Integer getId() {
@@ -127,13 +132,12 @@ public class Content implements Serializable {
         this.contentType = contentType;
     }
 
-    @XmlTransient
-    public Collection<ContentTag> getContentTagCollection() {
-        return contentTagCollection;
+    public Date getUploadedDate() {
+        return uploadedDate;
     }
 
-    public void setContentTagCollection(Collection<ContentTag> contentTagCollection) {
-        this.contentTagCollection = contentTagCollection;
+    public void setUploadedDate(Date uploadedDate) {
+        this.uploadedDate = uploadedDate;
     }
 
     public Comment getCommentId() {
@@ -174,7 +178,7 @@ public class Content implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.memeparadisee7.Model.Content[ id=" + id + " ]";
+        return "com.mycompany.memeparadis.Model.Content[ id=" + id + " ]";
     }
     
 }
