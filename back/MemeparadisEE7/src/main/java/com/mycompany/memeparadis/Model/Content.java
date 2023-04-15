@@ -4,6 +4,7 @@
  */
 package com.mycompany.memeparadis.Model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mycompany.memeparadis.Configuration.Database;
 import java.io.Serializable;
 import java.util.Date;
@@ -74,6 +75,7 @@ public class Content implements Serializable {
     @NotNull
     @Column(name = "uploaded_date")
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
     private Date uploadedDate;
     @JoinColumn(name = "comment_id", referencedColumnName = "id")
     @ManyToOne
@@ -186,7 +188,7 @@ public class Content implements Serializable {
     public String toString() {
         return "com.mycompany.memeparadis.Model.Content[ id=" + id + " ]";
     }
-    public Content createContent(Content c,byte[] fileBytes, String fileName) throws Exception{
+    public String createContent(Content c,byte[] fileBytes, String fileName) throws Exception{
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
         EntityManager em = emf.createEntityManager();
         try{
@@ -207,7 +209,7 @@ public class Content implements Serializable {
             
             spq.execute();
             
-            return c;
+            return fileName;
            
         }catch(Exception ex){
             System.out.println(ex.getMessage());
