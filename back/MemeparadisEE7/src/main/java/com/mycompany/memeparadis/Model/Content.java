@@ -7,7 +7,9 @@ package com.mycompany.memeparadis.Model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mycompany.memeparadis.Configuration.Database;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -221,5 +223,22 @@ public class Content implements Serializable {
             emf.close();    
         }
     }
+    public List<Content> getAllContent() throws Exception{
+         List<Content> resultList = new ArrayList<>();
+        try{
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
+        EntityManager em = emf.createEntityManager();
+        
+         resultList = em.createQuery("SELECT c FROM Content c", Content.class).getResultList();
+         
+          em.clear();
+          em.close();
+          emf.close();   
+        }catch(Exception ex){
+             System.out.println(ex.getMessage());
+            throw new Exception(""+ex.getMessage());
+        }
+        return resultList;
+}
 }
 

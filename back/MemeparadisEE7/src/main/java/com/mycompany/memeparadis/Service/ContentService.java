@@ -4,10 +4,13 @@
  */
 package com.mycompany.memeparadis.Service;
 
+import javax.ws.rs.Path;
+
 /**
  *
  * @author krist
  */
+@Path("content")
 public class ContentService {
     
 }
