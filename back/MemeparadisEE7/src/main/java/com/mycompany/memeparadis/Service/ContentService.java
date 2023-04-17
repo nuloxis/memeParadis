@@ -4,13 +4,20 @@
  */
 package com.mycompany.memeparadis.Service;
 
+import com.mycompany.memeparadis.Configuration.Database;
+import com.mycompany.memeparadis.Model.Content;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.ws.rs.Path;
+import javax.ws.rs.core.Response;
+
 
 /**
  *
  * @author krist
  */
-@Path("content")
 public class ContentService {
-    
+   
 }
