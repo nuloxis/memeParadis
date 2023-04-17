@@ -1,0 +1,8 @@
+com\mycompany\memeparadis\Exception\InvalidCredentialsException.class
+com\mycompany\memeparadis\Configuration\Database.class
+com\mycompany\memeparadis\Model\PasswordReset.class
+com\mycompany\memeparadis\Exception\PasswordException.class
+com\mycompany\memeparadis\Model\Tags.class
+com\mycompany\memeparadis\Controller\UserController.class
+com\mycompany\memeparadis\Service\userService.class
+com\mycompany\memeparadis\Confjaxrs\cors.class
