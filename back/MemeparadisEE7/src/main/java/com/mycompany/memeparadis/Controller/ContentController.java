@@ -42,9 +42,9 @@ public class ContentController {
     @POST
      @Path("createContent")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createContent(Content content){
-//        String result = conts.createContent(content);
-        return null;
+    public String createContent(Content content){
+        String result = conts.createContent(content);
+        return result;
     }
     
     @GET

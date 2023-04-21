@@ -4,10 +4,8 @@
  */
 package com.mycompany.memeparadis.Model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mycompany.memeparadis.Configuration.Database;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -30,6 +28,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.ws.rs.core.Response;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -43,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Content.findAll", query = "SELECT c FROM Content c"),
     @NamedQuery(name = "Content.findById", query = "SELECT c FROM Content c WHERE c.id = :id"),
     @NamedQuery(name = "Content.findByAdultContent", query = "SELECT c FROM Content c WHERE c.adultContent = :adultContent"),
+    @NamedQuery(name = "Content.findByUploaderName", query = "SELECT c FROM Content c WHERE c.uploaderName = :uploaderName"),
     @NamedQuery(name = "Content.findByLanguage", query = "SELECT c FROM Content c WHERE c.language = :language"),
     @NamedQuery(name = "Content.findByLikes", query = "SELECT c FROM Content c WHERE c.likes = :likes"),
     @NamedQuery(name = "Content.findByContentType", query = "SELECT c FROM Content c WHERE c.contentType = :contentType"),
@@ -59,6 +59,9 @@ public class Content implements Serializable {
     @NotNull
     @Column(name = "adult_content")
     private boolean adultContent;
+    @Size(max = 200)
+    @Column(name = "uploader_name")
+    private String uploaderName;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
@@ -77,14 +80,13 @@ public class Content implements Serializable {
     @NotNull
     @Column(name = "uploaded_date")
     @Temporal(TemporalType.TIMESTAMP)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
     private Date uploadedDate;
     @JoinColumn(name = "comment_id", referencedColumnName = "id")
     @ManyToOne
     private Comment commentId;
-    @JoinColumn(name = "uploader_name", referencedColumnName = "id")
-    @ManyToOne
-    private User uploaderName;
+    @JoinColumn(name = "uuploader_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private User uuploaderId;
 
     public Content() {
     }
@@ -116,6 +118,14 @@ public class Content implements Serializable {
 
     public void setAdultContent(boolean adultContent) {
         this.adultContent = adultContent;
+    }
+
+    public String getUploaderName() {
+        return uploaderName;
+    }
+
+    public void setUploaderName(String uploaderName) {
+        this.uploaderName = uploaderName;
     }
 
     public String getLanguage() {
@@ -158,12 +168,12 @@ public class Content implements Serializable {
         this.commentId = commentId;
     }
 
-    public User getUploaderName() {
-        return uploaderName;
+    public User getUuploaderId() {
+        return uuploaderId;
     }
 
-    public void setUploaderName(User uploaderName) {
-        this.uploaderName = uploaderName;
+    public void setUuploaderId(User uuploaderId) {
+        this.uuploaderId = uuploaderId;
     }
 
     @Override
@@ -190,7 +200,7 @@ public class Content implements Serializable {
     public String toString() {
         return "com.mycompany.memeparadis.Model.Content[ id=" + id + " ]";
     }
-    public String createContent(Content c,byte[] fileBytes, String fileName) throws Exception{
+    public Response createContent(Content c,byte[] fileBytes, String fileName) throws Exception{
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
         EntityManager em = emf.createEntityManager();
         try{
@@ -210,8 +220,12 @@ public class Content implements Serializable {
             spq.setParameter("file_bytes", fileBytes);
             
             spq.execute();
+            int randomNumber = (int)(Math.random() * 1000);
             
-            return fileName;
+             String fileAndRandomNumber = fileName + "_" + randomNumber;
+            String responseText = "File name: " + fileAndRandomNumber;
+
+            return Response.ok(responseText).build();
            
         }catch(Exception ex){
             System.out.println(ex.getMessage());
@@ -251,4 +265,3 @@ public class Content implements Serializable {
          }
     }
 }
-
