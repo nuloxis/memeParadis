@@ -205,14 +205,14 @@ public class Content implements Serializable {
         EntityManager em = emf.createEntityManager();
         try{
             StoredProcedureQuery spq = em.createStoredProcedureQuery("createContent");
-            spq.registerStoredProcedureParameter("uploader_id",String.class, ParameterMode.IN);
-            spq.registerStoredProcedureParameter("adult_content", Integer.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("uploader_name",String.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("adult_content", Boolean.class, ParameterMode.IN);
             spq.registerStoredProcedureParameter("language",String.class, ParameterMode.IN);
             spq.registerStoredProcedureParameter("content_type",String.class, ParameterMode.IN);
             spq.registerStoredProcedureParameter("file_name", String.class, ParameterMode.IN);
             spq.registerStoredProcedureParameter("file_bytes", byte[].class, ParameterMode.IN);
             
-            spq.setParameter("uploader_id",c.getUploaderName());
+            spq.setParameter("uploader_name",c.getUploaderName());
             spq.setParameter("adult_content",c.getAdultContent());
             spq.setParameter("language",c.getLanguage());
             spq.setParameter("content_type",c.getContentType());
