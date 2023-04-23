@@ -73,7 +73,7 @@ public class Content implements Serializable {
     @Column(name = "content_uplade_name")
     private String contentUpladeName;
     @JoinColumn(name = "uploader_name", referencedColumnName = "id")
-    @ManyToOne
+    
     private User uploaderName;
 
     public Content() {

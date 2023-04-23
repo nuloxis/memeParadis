@@ -50,7 +50,7 @@ public class Comment implements Serializable {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne
     private User userId;
-    @OneToMany(mappedBy = "commentId")
+    @OneToMany(mappedBy = "")
     private Collection<Content> contentCollection;
 
     public Comment() {
