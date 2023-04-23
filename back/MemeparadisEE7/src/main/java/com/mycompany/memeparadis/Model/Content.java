@@ -6,7 +6,6 @@ package com.mycompany.memeparadis.Model;
 
 import com.mycompany.memeparadis.Configuration.Database;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -24,11 +23,8 @@ import javax.persistence.ParameterMode;
 import javax.persistence.Persistence;
 import javax.persistence.StoredProcedureQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.ws.rs.core.Response;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -42,11 +38,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Content.findAll", query = "SELECT c FROM Content c"),
     @NamedQuery(name = "Content.findById", query = "SELECT c FROM Content c WHERE c.id = :id"),
     @NamedQuery(name = "Content.findByAdultContent", query = "SELECT c FROM Content c WHERE c.adultContent = :adultContent"),
-    @NamedQuery(name = "Content.findByUploaderName", query = "SELECT c FROM Content c WHERE c.uploaderName = :uploaderName"),
     @NamedQuery(name = "Content.findByLanguage", query = "SELECT c FROM Content c WHERE c.language = :language"),
     @NamedQuery(name = "Content.findByLikes", query = "SELECT c FROM Content c WHERE c.likes = :likes"),
     @NamedQuery(name = "Content.findByContentType", query = "SELECT c FROM Content c WHERE c.contentType = :contentType"),
-    @NamedQuery(name = "Content.findByUploadedDate", query = "SELECT c FROM Content c WHERE c.uploadedDate = :uploadedDate")})
+    @NamedQuery(name = "Content.findByContentUpladeName", query = "SELECT c FROM Content c WHERE c.contentUpladeName = :contentUpladeName")})
 public class Content implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -59,9 +54,6 @@ public class Content implements Serializable {
     @NotNull
     @Column(name = "adult_content")
     private boolean adultContent;
-    @Size(max = 200)
-    @Column(name = "uploader_name")
-    private String uploaderName;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
@@ -73,20 +65,16 @@ public class Content implements Serializable {
     private int likes;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
     @Column(name = "content_type")
-    private String contentType;
+    private boolean contentType;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "uploaded_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date uploadedDate;
-    @JoinColumn(name = "comment_id", referencedColumnName = "id")
+    @Size(min = 1, max = 100)
+    @Column(name = "content_uplade_name")
+    private String contentUpladeName;
+    @JoinColumn(name = "uploader_name", referencedColumnName = "id")
     @ManyToOne
-    private Comment commentId;
-    @JoinColumn(name = "uuploader_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private User uuploaderId;
+    private User uploaderName;
 
     public Content() {
     }
@@ -95,13 +83,13 @@ public class Content implements Serializable {
         this.id = id;
     }
 
-    public Content(Integer id, boolean adultContent, String language, int likes, String contentType, Date uploadedDate) {
+    public Content(Integer id, boolean adultContent, String language, int likes, boolean contentType, String contentUpladeName) {
         this.id = id;
         this.adultContent = adultContent;
         this.language = language;
         this.likes = likes;
         this.contentType = contentType;
-        this.uploadedDate = uploadedDate;
+        this.contentUpladeName = contentUpladeName;
     }
 
     public Integer getId() {
@@ -120,14 +108,6 @@ public class Content implements Serializable {
         this.adultContent = adultContent;
     }
 
-    public String getUploaderName() {
-        return uploaderName;
-    }
-
-    public void setUploaderName(String uploaderName) {
-        this.uploaderName = uploaderName;
-    }
-
     public String getLanguage() {
         return language;
     }
@@ -144,36 +124,28 @@ public class Content implements Serializable {
         this.likes = likes;
     }
 
-    public String getContentType() {
+    public boolean getContentType() {
         return contentType;
     }
 
-    public void setContentType(String contentType) {
+    public void setContentType(boolean contentType) {
         this.contentType = contentType;
     }
 
-    public Date getUploadedDate() {
-        return uploadedDate;
+    public String getContentUpladeName() {
+        return contentUpladeName;
     }
 
-    public void setUploadedDate(Date uploadedDate) {
-        this.uploadedDate = uploadedDate;
+    public void setContentUpladeName(String contentUpladeName) {
+        this.contentUpladeName = contentUpladeName;
     }
 
-    public Comment getCommentId() {
-        return commentId;
+    public User getUploaderName() {
+        return uploaderName;
     }
 
-    public void setCommentId(Comment commentId) {
-        this.commentId = commentId;
-    }
-
-    public User getUuploaderId() {
-        return uuploaderId;
-    }
-
-    public void setUuploaderId(User uuploaderId) {
-        this.uuploaderId = uuploaderId;
+    public void setUploaderName(User uploaderName) {
+        this.uploaderName = uploaderName;
     }
 
     @Override
@@ -200,37 +172,34 @@ public class Content implements Serializable {
     public String toString() {
         return "com.mycompany.memeparadis.Model.Content[ id=" + id + " ]";
     }
-    public Response createContent(Content c,byte[] fileBytes, String fileName) throws Exception{
+    public String createContent(Content c) throws Exception{
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
         EntityManager em = emf.createEntityManager();
         try{
             StoredProcedureQuery spq = em.createStoredProcedureQuery("createContent");
-            spq.registerStoredProcedureParameter("uploader_name",String.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("uploader_id",Integer.class, ParameterMode.IN);
             spq.registerStoredProcedureParameter("adult_content", Boolean.class, ParameterMode.IN);
             spq.registerStoredProcedureParameter("language",String.class, ParameterMode.IN);
             spq.registerStoredProcedureParameter("content_type",String.class, ParameterMode.IN);
-            spq.registerStoredProcedureParameter("file_name", String.class, ParameterMode.IN);
-            spq.registerStoredProcedureParameter("file_bytes", byte[].class, ParameterMode.IN);
-            
-            spq.setParameter("uploader_name",c.getUploaderName());
+            spq.registerStoredProcedureParameter("content_uplade_name",String.class, ParameterMode.IN);
+    
+            spq.setParameter("uploader_id",c.getUploaderName());
             spq.setParameter("adult_content",c.getAdultContent());
             spq.setParameter("language",c.getLanguage());
             spq.setParameter("content_type",c.getContentType());
-            spq.setParameter("file_name", fileName);
-            spq.setParameter("file_bytes", fileBytes);
+            spq.setParameter("content_uplade_name",c.getContentType());
             
             spq.execute();
             int randomNumber = (int)(Math.random() * 1000);
             
-             String fileAndRandomNumber = fileName + "_" + randomNumber;
-            String responseText = "File name: " + fileAndRandomNumber;
+          
 
-            return Response.ok(responseText).build();
+            return "Sikeres"+randomNumber;
            
         }catch(Exception ex){
             System.out.println(ex.getMessage());
             throw new Exception(""+ex.getMessage());
-        }
+}
         finally{
             em.clear();
             em.close();

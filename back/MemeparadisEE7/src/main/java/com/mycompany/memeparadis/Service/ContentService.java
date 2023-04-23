@@ -23,6 +23,12 @@ public class ContentService {
    
    public String createContent(Content content){
        String result = "";
-       return result;
+       try{
+           result = c.createContent(c);
+             
+       }catch(Exception ex){
+           result = ex.getMessage();
+       }
+    return result+"Sikeres átmenetel";
    }
 }
