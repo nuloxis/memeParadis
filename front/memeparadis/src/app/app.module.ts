@@ -8,6 +8,7 @@ import { RegistrationComponent } from './_components/registration/registration.c
 import { LoginComponent } from './_components/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { MainPageComponent } from './_components/main-page/main-page.component';
+import { ProfilPageComponent } from './_components/profil-page/profil-page.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { MainPageComponent } from './_components/main-page/main-page.component';
     AppComponent,
     RegistrationComponent,
     LoginComponent,
-    MainPageComponent
+    MainPageComponent,
+    ProfilPageComponent
   ],
   imports: [
     BrowserModule,

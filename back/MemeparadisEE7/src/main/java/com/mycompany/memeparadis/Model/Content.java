@@ -53,7 +53,7 @@ public class Content implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "adult_content")
-    private boolean adultContent;
+    private Boolean adultContent;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
@@ -66,7 +66,7 @@ public class Content implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "content_type")
-    private boolean contentType;
+    private Boolean contentType;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
@@ -74,7 +74,9 @@ public class Content implements Serializable {
     private String contentUpladeName;
     @JoinColumn(name = "uploader_name", referencedColumnName = "id")
     
-    private User uploaderName;
+    private Integer uploaderName;
+    @NotNull
+    @Size(min = 1, max = 100)
 
     public Content() {
     }
@@ -83,9 +85,10 @@ public class Content implements Serializable {
         this.id = id;
     }
 
-    public Content(Integer id, boolean adultContent, String language, int likes, boolean contentType, String contentUpladeName) {
+    public Content(Integer id, boolean adultContent,Integer uploaderId,String language, int likes, boolean contentType, String contentUpladeName) {
         this.id = id;
         this.adultContent = adultContent;
+        this.uploaderName = uploaderId;
         this.language = language;
         this.likes = likes;
         this.contentType = contentType;
@@ -140,11 +143,11 @@ public class Content implements Serializable {
         this.contentUpladeName = contentUpladeName;
     }
 
-    public User getUploaderName() {
+    public Integer getUploaderName() {
         return uploaderName;
     }
 
-    public void setUploaderName(User uploaderName) {
+    public void setUploaderName(Integer uploaderName) {
         this.uploaderName = uploaderName;
     }
 
@@ -177,17 +180,18 @@ public class Content implements Serializable {
         EntityManager em = emf.createEntityManager();
         try{
             StoredProcedureQuery spq = em.createStoredProcedureQuery("createContent");
-            spq.registerStoredProcedureParameter("uploader_id",Integer.class, ParameterMode.IN);
             spq.registerStoredProcedureParameter("adult_content", Boolean.class, ParameterMode.IN);
-            spq.registerStoredProcedureParameter("language",String.class, ParameterMode.IN);
-            spq.registerStoredProcedureParameter("content_type",String.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("uploader_id",Integer.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("language_IN",String.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("content_type",Boolean.class, ParameterMode.IN);
             spq.registerStoredProcedureParameter("content_uplade_name",String.class, ParameterMode.IN);
     
-            spq.setParameter("uploader_id",c.getUploaderName());
+          
             spq.setParameter("adult_content",c.getAdultContent());
-            spq.setParameter("language",c.getLanguage());
+            spq.setParameter("uploader_id",c.getUploaderName());
+            spq.setParameter("language_IN",c.getLanguage());
             spq.setParameter("content_type",c.getContentType());
-            spq.setParameter("content_uplade_name",c.getContentType());
+            spq.setParameter("content_uplade_name",c.getContentUpladeName());
             
             spq.execute();
             int randomNumber = (int)(Math.random() * 1000);
@@ -198,7 +202,7 @@ public class Content implements Serializable {
            
         }catch(Exception ex){
             System.out.println(ex.getMessage());
-            throw new Exception(""+ex.getMessage());
+            throw new Exception(""+ex.getMessage()+"Kecske");
 }
         finally{
             em.clear();
@@ -215,14 +219,11 @@ public class Content implements Serializable {
             spq.setParameter("idIN", id);
             spq.execute();
             
-          spq.registerStoredProcedureParameter("idIN", Integer.class, ParameterMode.IN);
-            spq.setParameter("idIN", id);
-            spq.execute();
             List<Object[]> result = spq.getResultList();
             Object[] r = result.get(0);
             Integer idd2 = Integer.parseInt(r[0].toString());
             
-            return id;
+            return idd2;
          }catch(Exception ex){
            System.out.println(ex.getMessage());
           throw new Exception(""+ex.getMessage());
