@@ -46,24 +46,9 @@ public class ContentController {
         String result = conts.createContent(content);
         return result;
     }
-    
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("getAllContent")
-    public Response getAllContent() {
-        List<Content> resultList;
-        try {
-            EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
-            EntityManager em = emf.createEntityManager();
-
-            resultList = em.createQuery("SELECT c FROM Content c", Content.class).getResultList();
-
-            em.clear();
-            em.close();
-            emf.close();
-        } catch (Exception ex) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage()).build();
-        }
-        return Response.ok(resultList).build();
-    }
 }
+    
+//    @GET
+//    @Produces(MediaType.APPLICATION_JSON)
+//    @Path("getAllContent")
+    
