@@ -4,6 +4,8 @@
 .mainbody{
   width: 100%;
   height: 100%;
+  display: flex;
+
 }
 .navbar{
   width: 100%;
@@ -45,3 +47,73 @@ span{
   color: #ffffff;
 }
 /*----------------------------------*/
+.priflediv{
+  width: 80%;
+  height: 80%;
+  background-color: #282828;
+  border-radius: 5px;
+  padding: 32px;
+  display: flex;
+
+  margin: auto;
+  padding: 0;
+
+}
+/*----------------------------------*/
+.inprofilnavbar{
+  width: 25%;
+  height: 100%;
+  padding: 0;
+  display: flex;
+  justify-content:center ;
+
+}
+.profilelabel{
+  color: white;
+  width: 93px;
+  height: 30px;
+  font-size: 30px;
+  margin: 0;
+  padding: 0;
+}
+.asd2{
+  display: flex;
+  justify-content: center;
+  margin: 30px;
+}
+.profilelabel{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+/*----------------------------------*/
+.profildata{
+  width: 75%;
+  height: 100%;
+  padding: 0;
+}
+#profilesettingsmodal{
+  display: none; /* Hidden by default */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+
+}
+#contentuploadmodul{
+  display: none; /* Hidden by default */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+}
+#likesmodul{
+  display: none; /* Hidden by default */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+}
