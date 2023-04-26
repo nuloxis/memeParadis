@@ -20,7 +20,7 @@ import javax.ws.rs.core.Response;
  * @author krist
  */
 public class ContentService {
-   Content c = new Content();
+ Content c = new Content();
    
    public String createContent(Content content){
        String result = "";

@@ -54,7 +54,7 @@ public class Content implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "adult_content")
-    private Boolean adultContent;
+    private boolean adultContent;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
@@ -67,17 +67,16 @@ public class Content implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "content_type")
-    private Boolean contentType;
+    private boolean contentType;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "content_uplade_name")
     private String contentUpladeName;
     @JoinColumn(name = "uploader_name", referencedColumnName = "id")
-    
-    private Integer uploaderName;
-    @NotNull
-    @Size(min = 1, max = 100)
+    @ManyToOne
+    private User uploaderName;
+
 
     public Content() {
     }
@@ -86,10 +85,9 @@ public class Content implements Serializable {
         this.id = id;
     }
 
-    public Content(Integer id, boolean adultContent,Integer uploaderId,String language, int likes, boolean contentType, String contentUpladeName) {
+    public Content(Integer id, boolean adultContent, String language, int likes, boolean contentType, String contentUpladeName) {
         this.id = id;
         this.adultContent = adultContent;
-        this.uploaderName = uploaderId;
         this.language = language;
         this.likes = likes;
         this.contentType = contentType;
@@ -144,11 +142,11 @@ public class Content implements Serializable {
         this.contentUpladeName = contentUpladeName;
     }
 
-    public Integer getUploaderName() {
+    public User getUploaderName() {
         return uploaderName;
     }
 
-    public void setUploaderName(Integer uploaderName) {
+    public void setUploaderName(User uploaderName) {
         this.uploaderName = uploaderName;
     }
 
@@ -224,13 +222,12 @@ public class Content implements Serializable {
               
             Integer idd = Integer.parseInt(r[0].toString()); 
             Boolean adult_contentt = Boolean.valueOf(r[1].toString());
-            Integer uploader_namee = Integer.parseInt(r[2].toString()); 
             String language2 = r[3].toString();
             Integer likes2 = Integer.parseInt(r[4].toString()); 
             Boolean content_type2 = Boolean.valueOf(r[5].toString()); 
             String content_uplade_name2 = r[6].toString();
          
-             Content content = new Content(idd, adult_contentt, uploader_namee, language2, likes2, content_type2,content_uplade_name2);
+             Content content = new Content(idd, adult_contentt, language2, likes2, content_type2,content_uplade_name2);
               
               contents.add(content);           
           }if (contents.isEmpty()) {
@@ -271,23 +268,23 @@ public class Content implements Serializable {
             emf.close();
          }
     }
-   public Integer getHowManyContent() throws Exception {
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
-    EntityManager em = emf.createEntityManager();
-    Integer result = 0;
-    try {
-        StoredProcedureQuery query = em.createStoredProcedureQuery("getHowManyContent");
-        query.execute();
-        result = (Integer) query.getOutputParameterValue(1);
-    } catch (Exception ex) {
-        System.out.println(ex.getMessage());
-        throw new Exception(""+ex.getMessage());
-    } finally {
-        em.clear();
-        em.close();
-        emf.close();
-    }
-    return result;
-}
+//   public Integer getHowManyContent() throws Exception {
+//    EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
+//    EntityManager em = emf.createEntityManager();
+//    Integer result = 0;
+//    try {
+//        StoredProcedureQuery query = em.createStoredProcedureQuery("getHowManyContent");
+//        query.execute();
+//        result = (Integer) query.getOutputParameterValue(1);
+//    } catch (Exception ex) {
+//        System.out.println(ex.getMessage());
+//        throw new Exception(""+ex.getMessage());
+//    } finally {
+//        em.clear();
+//        em.close();
+//        emf.close();
+//    }
+//    return result;
+//}
 
 }
