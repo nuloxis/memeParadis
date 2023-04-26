@@ -6,6 +6,7 @@ package com.mycompany.memeparadis.Service;
 
 import com.mycompany.memeparadis.Configuration.Database;
 import com.mycompany.memeparadis.Model.Content;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -30,6 +31,16 @@ public class ContentService {
            result = ex.getMessage();
        }
        return result;
+   }
+   public List<Content> getAllContent() throws Exception{
+       List result2 = new ArrayList();
+       try{
+         result2 =  c.getAllContent();
+         return result2;
+       }catch(Exception ex){
+           throw new Exception(""+ex.getMessage());
+       }
+       
    }
    
 }

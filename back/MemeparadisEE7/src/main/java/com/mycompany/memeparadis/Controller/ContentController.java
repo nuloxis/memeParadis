@@ -46,9 +46,13 @@ public class ContentController {
         String result = conts.createContent(content);
         return result;
     }
+    @GET
+    @Path("getAllContent")
+    @Produces(MediaType.APPLICATION_JSON)
+   public List<Content> getAllContent() throws Exception{
+       List content = conts.getAllContent();
+       return content;
+   } 
 }
     
-//    @GET
-//    @Produces(MediaType.APPLICATION_JSON)
-//    @Path("getAllContent")
     

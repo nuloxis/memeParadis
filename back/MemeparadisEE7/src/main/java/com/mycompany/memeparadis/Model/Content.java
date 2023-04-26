@@ -6,6 +6,7 @@ package com.mycompany.memeparadis.Model;
 
 import com.mycompany.memeparadis.Configuration.Database;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -210,6 +211,42 @@ public class Content implements Serializable {
             emf.close();    
         }
     }
+    public List<Content> getAllContent() throws Exception{
+          EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
+          EntityManager em = emf.createEntityManager();
+          
+          List<Content>contents = new ArrayList();
+          try{
+          StoredProcedureQuery spq = em.createStoredProcedureQuery("getAllContent");
+          spq.execute();
+          List<Object[]> result = spq.getResultList();
+        for(Object[] r: result){
+              
+            Integer idd = Integer.parseInt(r[0].toString()); 
+            Boolean adult_contentt = Boolean.valueOf(r[1].toString());
+            Integer uploader_namee = Integer.parseInt(r[2].toString()); 
+            String language2 = r[3].toString();
+            Integer likes2 = Integer.parseInt(r[4].toString()); 
+            Boolean content_type2 = Boolean.valueOf(r[5].toString()); 
+            String content_uplade_name2 = r[6].toString();
+         
+             Content content = new Content(idd, adult_contentt, uploader_namee, language2, likes2, content_type2,content_uplade_name2);
+              
+              contents.add(content);           
+          }if (contents.isEmpty()) {
+            throw new Exception("No content found");
+        }
+           return contents;
+          }catch(Exception ex){
+              System.out.println(ex.getMessage());
+              throw new Exception(""+ex.getMessage());
+          }finally{
+              em.clear();
+              em.close();
+              emf.close();
+          }
+    }
+    
     public Integer getContentById(Integer id) throws Exception{
          EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
          EntityManager em = emf.createEntityManager();
@@ -234,4 +271,23 @@ public class Content implements Serializable {
             emf.close();
          }
     }
+   public Integer getHowManyContent() throws Exception {
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
+    EntityManager em = emf.createEntityManager();
+    Integer result = 0;
+    try {
+        StoredProcedureQuery query = em.createStoredProcedureQuery("getHowManyContent");
+        query.execute();
+        result = (Integer) query.getOutputParameterValue(1);
+    } catch (Exception ex) {
+        System.out.println(ex.getMessage());
+        throw new Exception(""+ex.getMessage());
+    } finally {
+        em.clear();
+        em.close();
+        emf.close();
+    }
+    return result;
+}
+
 }
