@@ -20,7 +20,7 @@ import javax.ws.rs.core.Response;
  * @author krist
  */
 public class ContentService {
-   Content c = new Content();
+ Content c = new Content();
    
    public String createContent(Content content){
        String result = "";
@@ -32,15 +32,16 @@ public class ContentService {
        }
        return result;
    }
-   public List<Content> getAllContent() throws Exception{
-       List result2 = new ArrayList();
+ 
+   public Integer getHowManyContent() throws Exception{
+       Integer result2 = 0;
        try{
-         result2 =  c.getAllContent();
-         return result2;
+           result2 = c.getHowManyContent();
        }catch(Exception ex){
-           throw new Exception(""+ex.getMessage());
+         System.out.println(ex.getMessage());
+        throw new Exception(""+ex.getMessage());
        }
-       
+       return result2;
    }
-   
-}
+   }
+  
