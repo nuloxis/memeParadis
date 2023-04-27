@@ -74,8 +74,10 @@ public class Content implements Serializable {
     @Column(name = "content_uplade_name")
     private String contentUpladeName;
     @JoinColumn(name = "uploader_name", referencedColumnName = "id")
-    @ManyToOne
-    private User uploaderName;
+    @NotNull
+    @Column(name = "uploader_name")
+    @Size(min = 1, max = 100)
+    private Integer uploaderName;
 
 
     public Content() {
@@ -85,9 +87,10 @@ public class Content implements Serializable {
         this.id = id;
     }
 
-    public Content(Integer id, boolean adultContent, String language, int likes, boolean contentType, String contentUpladeName) {
+    public Content(Integer id, boolean adultContent,Integer uploaderName, String language, int likes, boolean contentType, String contentUpladeName) {
         this.id = id;
         this.adultContent = adultContent;
+        this.uploaderName = uploaderName;
         this.language = language;
         this.likes = likes;
         this.contentType = contentType;
@@ -142,11 +145,11 @@ public class Content implements Serializable {
         this.contentUpladeName = contentUpladeName;
     }
 
-    public User getUploaderName() {
+    public Integer getUploaderName() {
         return uploaderName;
     }
 
-    public void setUploaderName(User uploaderName) {
+    public void setUploaderName(Integer uploaderName) {
         this.uploaderName = uploaderName;
     }
 
