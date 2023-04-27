@@ -174,6 +174,7 @@ public class Content implements Serializable {
     public String toString() {
         return "com.mycompany.memeparadis.Model.Content[ id=" + id + " ]";
     }
+    
     public String createContent(Content c) throws Exception{
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
         EntityManager em = emf.createEntityManager();

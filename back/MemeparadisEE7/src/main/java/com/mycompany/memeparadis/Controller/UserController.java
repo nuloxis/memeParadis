@@ -6,6 +6,9 @@ package com.mycompany.memeparadis.Controller;
 
 import com.mycompany.memeparadis.Model.User;
 import com.mycompany.memeparadis.Service.userService;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
@@ -22,6 +25,13 @@ public class UserController {
     userService us = new userService();
 
     public UserController() {
+    }
+    public String encryptString(String input) throws NoSuchAlgorithmException{
+        MessageDigest md=MessageDigest.getInstance("MD5");
+        
+        byte[] messageDigest=md.digest(input.getBytes());
+        BigInteger bigInt =new BigInteger(1,messageDigest);
+        return bigInt.toString(16);
     }
 
 
@@ -49,7 +59,7 @@ public class UserController {
     public Response login(User user){
         User result;
         try {
-            result = us.login(user.getEmail(),user.getPassword());
+            result = us.login(user.getEmail(),encryptString(user.getPassword()));
         } catch (Exception ex) {
             System.err.println("");
             result = new User();

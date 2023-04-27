@@ -8,6 +8,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mycompany.memeparadis.Configuration.Database;
 import com.mycompany.memeparadis.Exception.PasswordException;
 import java.io.Serializable;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -216,6 +219,13 @@ public class User implements Serializable {
     public String toString() {
         return "com.mycompany.memeparadisee7.Model.User[ id=" + id + " ]";
     }
+    public String encryptString(String input) throws NoSuchAlgorithmException{
+        MessageDigest md=MessageDigest.getInstance("MD5");
+        
+        byte[] messageDigest=md.digest(input.getBytes());
+        BigInteger bigInt =new BigInteger(1,messageDigest);
+        return bigInt.toString(16);
+    }
      public String addNewUser(User u){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
         EntityManager em = emf.createEntityManager();
@@ -234,7 +244,7 @@ public class User implements Serializable {
             
             spq.setParameter("nameIN", u.getName());
             spq.setParameter("emailIN", u.getEmail());
-            spq.setParameter("passwordIN", u.getPassword());
+            spq.setParameter("passwordIN", encryptString(u.getPassword()));
             spq.setParameter("birth_dateIN", u.getBirthDate());
             
             spq.execute();
