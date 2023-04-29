@@ -43,5 +43,15 @@ public class ContentService {
        }
        return result2;
    }
+   public Content GetMostLikedPosts() throws Exception{
+       Content result3 = null;
+       try{
+           result3 = c.GetMostLikedPosts();
+       }catch(Exception ex){
+           System.out.println(ex.getMessage());
+           throw new Exception(""+ex.getMessage());
+       }
+       return result3;
+   }
    }
   

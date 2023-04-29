@@ -6,7 +6,6 @@ package com.mycompany.memeparadis.Model;
 
 import com.mycompany.memeparadis.Configuration.Database;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -16,8 +15,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.ParameterMode;
@@ -39,6 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Content.findAll", query = "SELECT c FROM Content c"),
     @NamedQuery(name = "Content.findById", query = "SELECT c FROM Content c WHERE c.id = :id"),
     @NamedQuery(name = "Content.findByAdultContent", query = "SELECT c FROM Content c WHERE c.adultContent = :adultContent"),
+    @NamedQuery(name = "Content.findByUploaderName", query = "SELECT c FROM Content c WHERE c.uploaderName = :uploaderName"),
     @NamedQuery(name = "Content.findByLanguage", query = "SELECT c FROM Content c WHERE c.language = :language"),
     @NamedQuery(name = "Content.findByLikes", query = "SELECT c FROM Content c WHERE c.likes = :likes"),
     @NamedQuery(name = "Content.findByContentType", query = "SELECT c FROM Content c WHERE c.contentType = :contentType"),
@@ -55,6 +53,8 @@ public class Content implements Serializable {
     @NotNull
     @Column(name = "adult_content")
     private boolean adultContent;
+    @Column(name = "uploader_name")
+    private Integer uploaderName;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
@@ -73,12 +73,6 @@ public class Content implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "content_uplade_name")
     private String contentUpladeName;
-    @JoinColumn(name = "uploader_name", referencedColumnName = "id")
-    @NotNull
-    @Column(name = "uploader_name")
-    @Size(min = 1, max = 100)
-    private Integer uploaderName;
-
 
     public Content() {
     }
@@ -87,10 +81,9 @@ public class Content implements Serializable {
         this.id = id;
     }
 
-    public Content(Integer id, boolean adultContent,Integer uploaderName, String language, int likes, boolean contentType, String contentUpladeName) {
+    public Content(Integer id, boolean adultContent, String language, int likes, boolean contentType, String contentUpladeName) {
         this.id = id;
         this.adultContent = adultContent;
-        this.uploaderName = uploaderName;
         this.language = language;
         this.likes = likes;
         this.contentType = contentType;
@@ -111,6 +104,14 @@ public class Content implements Serializable {
 
     public void setAdultContent(boolean adultContent) {
         this.adultContent = adultContent;
+    }
+
+    public Integer getUploaderName() {
+        return uploaderName;
+    }
+
+    public void setUploaderName(Integer uploaderName) {
+        this.uploaderName = uploaderName;
     }
 
     public String getLanguage() {
@@ -145,14 +146,6 @@ public class Content implements Serializable {
         this.contentUpladeName = contentUpladeName;
     }
 
-    public Integer getUploaderName() {
-        return uploaderName;
-    }
-
-    public void setUploaderName(Integer uploaderName) {
-        this.uploaderName = uploaderName;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -177,7 +170,6 @@ public class Content implements Serializable {
     public String toString() {
         return "com.mycompany.memeparadis.Model.Content[ id=" + id + " ]";
     }
-    
     public String createContent(Content c) throws Exception{
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
         EntityManager em = emf.createEntityManager();
@@ -258,5 +250,30 @@ public class Content implements Serializable {
     }
     return result;
 }
+public Content GetMostLikedPosts() throws Exception {
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
+    EntityManager em = emf.createEntityManager();
+    Content mostLikedPost = null;
 
+    try {
+        StoredProcedureQuery spq = em.createStoredProcedureQuery("GetMostLikedPosts");
+        spq.execute();
+
+        List<Object[]> resultList = spq.getResultList();
+        if (!resultList.isEmpty()) {
+            Object[] result = resultList.get(0);
+            Integer mostLikedPostId = (Integer) result[0];
+            mostLikedPost = em.find(Content.class, mostLikedPostId);
+        }
+    } catch (Exception ex) {
+        System.out.println(ex.getMessage());
+        throw new Exception("" + ex.getMessage());
+    } finally {
+        em.clear();
+        em.close();
+        emf.close();
+    }
+
+    return mostLikedPost;
+}
 }

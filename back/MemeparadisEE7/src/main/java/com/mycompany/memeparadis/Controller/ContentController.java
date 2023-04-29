@@ -53,6 +53,13 @@ public Integer getHowManyContent() throws Exception{
     Integer result = conts.getHowManyContent();
     return result;
 }
+@GET
+@Path("GetMostLikedPosts")
+@Produces(MediaType.APPLICATION_JSON)
+public Content GetMostLikedPosts() throws Exception{
+    Content result = conts.GetMostLikedPosts();
+    return result;
+}
 }
 
     
