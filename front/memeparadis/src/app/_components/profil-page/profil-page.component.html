@@ -1,43 +1,88 @@
 <html class="mainbody">
-  <body class="mainbody">
-    <div class="navbar">
-      <h1>MEME<span>PARADISE</span></h1>
-      <nav>
-        <ul class="navbarul">
-            <li class="navbarli"><a href="index.html">Home</a></li>
-            <li class="navbarli"><a href="picture.html">Pictures</a></li>
-            <li class="navbarli"><a href="videos.html">Videos</a></li>
-            <li class="navbarli"><a href="add.html">Add</a></li>
-            <li *ngIf="datauser" class="navbarli"><a href="profile">{{datauser.name}}</a></li>
 
-        </ul>
+<body class="mainbody">
+  <div class="navbar">
+    <h1 class="logoh1">MEME<span>PARADISE</span></h1>
+    <nav>
+      <ul class="navbarul">
+        <li class="navbarli"><a href="index.html">Home</a></li>
+        <li class="navbarli"><a href="picture.html">Pictures</a></li>
+        <li class="navbarli"><a href="videos.html">Videos</a></li>
+        <li class="navbarli"><a href="add.html">Add</a></li>
+        <li *ngIf="datauser" class="navbarli"><a href="profile">{{datauser.name}}</a></li>
+
+      </ul>
     </nav>
-    </div>
-    <div class="priflediv">
-      <div class="inprofilnavbar">
-        <div>
-          <div class="asd2"><label class="profilelabel" >Profile</label></div>
-          <div class="asd2"><button id="profilesettings" >Profile Setting</button></div>
-          <div class="asd2"><button id="contentupload">Content Uploade</button></div>
-          <div class="asd2"><button id="likescontent">Likes content</button></div>
+  </div>
+  <div class="priflediv">
+    <div class="inprofilnavbar">
+      <div>
+        <div class="asd2"><label class="profilelabel">Profile</label></div>
+        <div class="asd2"><button class="navbarbutton" id="profilesettings">Profile Setting</button></div>
+        <div class="asd2"><button class="navbarbutton" id="contentupload">Upload Content</button></div>
+        <div class="asd2"><button class="navbarbutton" id="likescontent">Uploaded Content</button></div>
 
+      </div>
+
+    </div>
+    <div class="profildata">
+      <div id="profilesettingsmodal">
+        <div>
+          <h1 class="myaccounth1">My account</h1>
+        </div>
+
+        <div class="profildatabigdiv">
+          <div class="profildatadivs">
+            <h3>Username:</h3>
+            <div class="profildatadivsinnn">
+              <div class="diva"><label class="pofildatalabels">{{datauser.name}}</label></div>
+              <div><button class="editingbutton">Editing</button></div>
+            </div>
+          </div>
+          <div class="profildatadivs">
+            <h3>E-Mail:</h3>
+            <div class="profildatadivsinnn">
+              <div class="diva"><label class="pofildatalabels">{{datauser.email}}</label></div>
+              <div><button class="editingbutton">Editing</button></div>
+            </div>
+          </div>
+          <div class="profildatadivs">
+            <h3>Birth date:</h3>
+            <div class="profildatadivsinnn">
+              <div class="diva"><label class="pofildatalabels">{{datauser.birthDate}}</label></div>
+              <div><button class="editingbutton">Editing</button></div>
+            </div>
+          </div>
+          <div>
+            <h3>Registration Date:</h3>
+            <div class="profildatadivsinnn">
+              <div class="diva"><label class="pofildatalabels">{{datauser.registrationDate}}</label></div>
+            </div>
+          </div>
         </div>
 
       </div>
-      <div  class="profildata">
-          <div id="profilesettingsmodal">
-            <p>profilesettings</p>
-            <button>as dadsad</button>
+      <div id="contentuploadmodul">
+        <div>
+          <h1 class="myaccounth1">Upload Content</h1>
+        </div>
+        <form>
+          <div class="profildatabigdiv">
+            <input type="file" id="file" class="fileinput" accept="video/*">
+            <label for="file" class="filelabel">Choose file...</label>
           </div>
-          <div id="contentuploadmodul">
-            <p>content Uploade</p>
-            <button>as dadsad</button>
-          </div>
-          <div id="likesmodul">
-            <p>Likes</p>
-            <button>as dadsad</button>
-          </div>
+        </form>
+
+
+      </div>
+      <div id="likesmodul">
+        <div>
+          <h1 class="myaccounth1">Uploaded Content</h1>
+        </div>
+
       </div>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>
