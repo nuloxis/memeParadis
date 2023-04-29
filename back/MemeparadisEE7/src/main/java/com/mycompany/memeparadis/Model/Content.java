@@ -193,11 +193,11 @@ public class Content implements Serializable {
             
           
 
-            return "Sikeres"+randomNumber;
+            return "Sikeres"+" "+"A randomszáma pedig:"+" "+randomNumber;
            
         }catch(Exception ex){
             System.out.println(ex.getMessage());
-            throw new Exception(""+ex.getMessage()+"Kecske");
+            throw new Exception(""+ex.getMessage());
 }
         finally{
             em.clear();
@@ -250,10 +250,10 @@ public class Content implements Serializable {
     }
     return result;
 }
-public Content GetMostLikedPosts() throws Exception {
+public Integer GetMostLikedPosts() throws Exception {
     EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
     EntityManager em = emf.createEntityManager();
-    Content mostLikedPost = null;
+    Integer mostLikedPost = null;
 
     try {
         StoredProcedureQuery spq = em.createStoredProcedureQuery("GetMostLikedPosts");
@@ -263,7 +263,7 @@ public Content GetMostLikedPosts() throws Exception {
         if (!resultList.isEmpty()) {
             Object[] result = resultList.get(0);
             Integer mostLikedPostId = (Integer) result[0];
-            mostLikedPost = em.find(Content.class, mostLikedPostId);
+            mostLikedPost = getContentById(mostLikedPostId);
         }
     } catch (Exception ex) {
         System.out.println(ex.getMessage());
