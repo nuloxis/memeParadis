@@ -4,17 +4,24 @@
  */
 package com.mycompany.memeparadis.Model;
 
+import com.mycompany.memeparadis.Configuration.Database;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.ParameterMode;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+import javax.persistence.StoredProcedureQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -109,5 +116,30 @@ public class Tags implements Serializable {
     public String toString() {
         return "com.mycompany.memeparadisee7.Model.Tags[ id=" + id + " ]";
     }
-    
+    public String createTag(Tags tag) throws Exception {
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
+    EntityManager em = emf.createEntityManager();
+    try {
+        StoredProcedureQuery spq = em.createStoredProcedureQuery("createTag");
+        spq.registerStoredProcedureParameter("tagIN", String.class, ParameterMode.IN);
+        
+        spq.setParameter("tagIN", tag.getTag());
+        
+        spq.execute();
+        
+        Query selectQuery = em.createNativeQuery("SELECT LAST_INSERT_ID()");
+        String lastInsertId = selectQuery.getSingleResult().toString();
+        
+        return lastInsertId;
+    } catch(Exception ex) {
+        System.out.println(ex.getMessage());
+        throw new Exception("" + ex.getMessage());
+    } finally {
+        em.clear();
+        em.close();
+        emf.close();
+    }
+}
+
+
 }
