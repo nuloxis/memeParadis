@@ -56,8 +56,8 @@ public Integer getHowManyContent() throws Exception{
 @GET
 @Path("GetMostLikedPosts")
 @Produces(MediaType.APPLICATION_JSON)
-public Integer GetMostLikedPosts() throws Exception{
-    Integer result = conts.GetMostLikedPosts();
+public Content GetMostLikedPosts() throws Exception{
+    Content result = conts.GetMostLikedPosts();
     return result;
 }
 }

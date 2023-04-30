@@ -205,30 +205,39 @@ public class Content implements Serializable {
             emf.close();    
         }
     }
-    public Integer getContentById(Integer id) throws Exception{
-         EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
-         EntityManager em = emf.createEntityManager();
-         try{
-             StoredProcedureQuery spq = em.createStoredProcedureQuery("getContentByID");
-            spq.registerStoredProcedureParameter("idIN", Integer.class, ParameterMode.IN);
-            spq.setParameter("idIN", id);
-            spq.execute();
-            
-            List<Object[]> result = spq.getResultList();
+   public Content getContentById(Integer id) throws Exception {
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
+    EntityManager em = emf.createEntityManager();
+    try {
+        StoredProcedureQuery spq = em.createStoredProcedureQuery("getContentByID");
+        spq.registerStoredProcedureParameter("idIN", Integer.class, ParameterMode.IN);
+        spq.setParameter("idIN", id);
+        spq.execute();
+
+        List<Object[]> result = spq.getResultList();
+        if (!result.isEmpty()) {
             Object[] r = result.get(0);
             Integer idd2 = Integer.parseInt(r[0].toString());
-            
-            return idd2;
-         }catch(Exception ex){
-           System.out.println(ex.getMessage());
-          throw new Exception(""+ex.getMessage());
-         }
-         finally{
-            em.clear();
-            em.close();
-            emf.close();
-         }
+            Boolean adultContent2 = Boolean.parseBoolean(r[1].toString());
+            String language2 = r[3].toString();
+            Integer likes2 = Integer.parseInt(r[4].toString());
+            Boolean contentType2 = Boolean.parseBoolean(r[1].toString());
+            String content_upload_name2 = r[6].toString();
+
+            Content content = new Content(idd2, adultContent2,language2, likes2, contentType2,content_upload_name2);
+            return content;
+        } else {
+            throw new Exception("Content not found for id: " + id);
+        }
+    } catch (Exception ex) {
+        System.out.println(ex.getMessage());
+        throw new Exception("" + ex.getMessage());
+    } finally {
+        em.clear();
+        em.close();
+        emf.close();
     }
+}
    public Integer getHowManyContent() throws Exception {
     EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
     EntityManager em = emf.createEntityManager();
@@ -250,10 +259,10 @@ public class Content implements Serializable {
     }
     return result;
 }
-public Integer GetMostLikedPosts() throws Exception {
+public Content GetMostLikedPosts() throws Exception {
     EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
     EntityManager em = emf.createEntityManager();
-    Integer mostLikedPost = null;
+    Content mostLikedContentDetails = null;
 
     try {
         StoredProcedureQuery spq = em.createStoredProcedureQuery("GetMostLikedPosts");
@@ -263,7 +272,18 @@ public Integer GetMostLikedPosts() throws Exception {
         if (!resultList.isEmpty()) {
             Object[] result = resultList.get(0);
             Integer mostLikedPostId = (Integer) result[0];
-            mostLikedPost = getContentById(mostLikedPostId);
+            Content mostLikedContent = getContentById(mostLikedPostId);
+
+            if (mostLikedContent != null) {
+                Integer id1 = mostLikedContent.getId();
+                Boolean adultContent1 = mostLikedContent.getAdultContent();
+                String language1 = mostLikedContent.getLanguage();
+                Integer likes1 = mostLikedContent.getLikes();
+                Boolean contentType1 = mostLikedContent.getContentType();
+                String content_upload_name = mostLikedContent.getContentUpladeName();
+
+                mostLikedContentDetails = new Content(id1,adultContent1,language1, likes1, contentType1,content_upload_name);
+            }
         }
     } catch (Exception ex) {
         System.out.println(ex.getMessage());
@@ -274,6 +294,6 @@ public Integer GetMostLikedPosts() throws Exception {
         emf.close();
     }
 
-    return mostLikedPost;
+    return mostLikedContentDetails;
 }
 }

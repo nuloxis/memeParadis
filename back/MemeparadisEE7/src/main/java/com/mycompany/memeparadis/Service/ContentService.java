@@ -43,8 +43,8 @@ public class ContentService {
        }
        return result2;
    }
-   public Integer GetMostLikedPosts() throws Exception{
-       Integer result3 = null;
+   public Content GetMostLikedPosts() throws Exception{
+       Content result3 = null;
        try{
            result3 = c.GetMostLikedPosts();
        }catch(Exception ex){
