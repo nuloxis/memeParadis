@@ -21,6 +21,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.ParameterMode;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.StoredProcedureQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -105,4 +106,34 @@ public class ContentTag implements Serializable {
     public String toString() {
         return "com.mycompany.memeparadisee7.Model.ContentTag[ id=" + id + " ]";
     }
+    public String createContent_tag(Tags tags, Content content) throws Exception {
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
+    EntityManager em = emf.createEntityManager();
+    try {
+        StoredProcedureQuery spq = em.createStoredProcedureQuery("createContent_tag");
+    
+        spq.registerStoredProcedureParameter("content_idIN", Integer.class, ParameterMode.IN);
+        spq.registerStoredProcedureParameter("tags_idIN", Integer.class, ParameterMode.IN);
+    
+        spq.setParameter("content_idIN", content.getId());
+        spq.setParameter("tags_idIN", tags.getId());
+    
+        spq.execute();
+
+   
+        Query insertQuery = em.createNativeQuery("INSERT INTO content_tag (content_id, tags_id) VALUES (?, ?)");
+        insertQuery.setParameter(1, content.getId());
+        insertQuery.setParameter(2, tags.getId());
+        insertQuery.executeUpdate();
+
+    } catch (Exception ex) {
+        System.out.println(ex.getMessage());
+        throw new Exception("" + ex.getMessage());
+    } finally {
+        em.clear();
+        em.close();
+        emf.close();
+    }
+    return "Sikeres beillesztés";
+}
 }
