@@ -183,11 +183,108 @@ span{
   display: none;
 }
 .filelabel{
-  background-color: #767373ad;
+  background-color: #7673735b;
   color: white;
-  height: 30px;
   width: 200px;
   border: none;
   border-radius: 5px;
-  border: 4px solid #767373ad;
+  border: 4px solid #7673735b;
+  height: 40px;
+
+}
+.uploaddd{
+  margin-bottom: 30px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.242);
+}
+.format{
+  margin-right: 20px;
+  height: 30px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.labelcontent{
+  font-size: x-large;
+
+}
+.chekboy{
+  width: 17px;
+  height: 17px;
+  margin-left: 20px;
+  margin-bottom: 10px;
+}
+.format2{
+  margin-right: 20px;
+  height: 30px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.addtaglabel{
+  font-size: x-large;
+
+}
+.inputtagsdiv{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.inputtagss{
+  margin-right: 20px;
+  border-radius: 5px;
+  width: 190px;
+  height: 25px;
+  font-size: 16px;
+
+}
+#addtagsbutton{
+
+  background-color: #767373ad;
+  color: white;
+  height: 30px;
+  width: 100px;
+  border: none;
+  border-radius: 5px;
+}
+#addtagsbutton:hover{
+  background-color: #404040 ;
+}
+#clearbutton{
+  margin-bottom: 15px;
+  background-color: #767373ad;
+  color: white;
+  height: 30px;
+  width: 100px;
+  border: none;
+  border-radius: 5px;
+}
+#clearbutton:hover{
+  background-color: #404040 ;
+}
+#tagdiv{
+  margin-bottom: 20px;
+}
+
+.uploadbutton{
+
+  background-color: #767373ad;
+  color: white;
+  height: 50px;
+  width: 130px;
+  border: none;
+  border-radius: 5px;
+  font-size: x-large;
+}
+.uploadbutton:hover{
+  background-color: #404040 ;
+}
+.magyarazat{
+  font-size: medium;
+  color: rgba(255, 255, 255, 0.652);
+}
+
+.uploadlastdiv{
+  display: flex;
+  justify-content: center ;
+
+
 }

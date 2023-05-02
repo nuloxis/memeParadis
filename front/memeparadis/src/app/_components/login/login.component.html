@@ -11,12 +11,13 @@
 
 
 
+
       <form #productsFrom="ngForm" (ngSubmit)="loginProduct(productsFrom.value)">
         <label class="maintext">Welcome back!</label>
         <div class="text_fieldd">
           <label class="textr">Email</label>
           <div class="input-box">
-            <input type="email" name="email" ngModel>
+            <input type="email" name="email" ngModel autocomplete="off">
           </div>
 
         </div>
@@ -30,7 +31,7 @@
         <div class="forgotpass textr">Forgot Password?</div>
         <button type="submit">Login</button>
         <div class="registration textr">
-          Not Registered? <a href="registration" class="hreftext" (click)="goToPage('registration')" >Register now</a>
+          Not Registered? <a href="registration" class="hreftext" (click)="goToPage('registration')"  >Register now</a>
         </div>
       </form>
 

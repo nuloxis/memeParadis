@@ -68,9 +68,49 @@
         </div>
         <form>
           <div class="profildatabigdiv">
-            <input type="file" id="file" class="fileinput" accept="video/*">
-            <label for="file" class="filelabel">Choose file...</label>
+            <div class="uploaddd">
+              <select name="format" id="format" class="format">
+                <option selected disabled>Choose file type</option>
+                <option value="video/*">Video</option>
+                <option value="image/*">Image</option>
+              </select>
+              <input type="file" id="file" class="fileinput">
+              <label for="file" class="filelabel">Choose file...</label>
+            </div>
+            <div class="uploaddd">
+              <label class="labelcontent">Sensitive Content:</label>
+              <input type="checkbox" class="chekboy">
+            </div>
+            <div class="uploaddd">
+              <select name="format2" id="language-select" class="format2">
+                <option selected disabled>What language is in content</option>
+                <option value="ENG">English</option>
+                <option value="HUN">Hungary</option>
+                <option value="OTHER">Other</option>
+              </select>
+            </div>
+            <div class="uploaddd">
+                <label class="addtaglabel">Add tags: </label>
+                <label class="magyarazat">Tags are descriptive keywords you can add to your content to make it easier to find.</label>
+                <div class="inputtagsdiv">
+                  <input class="inputtagss"type="text" id="inputtags" placeholder="Add a tag..." maxlength="25" autocomplete="off"><button id="addtagsbutton" >Add tags</button>
+                </div>
+                <button id="clearbutton">Clear tags</button>
+                <div id="tagdiv">
+
+                </div>
+
+
+            </div>
+            <div class="uploadlastdiv">
+              <button class="uploadbutton">Upload</button>
+            </div>
+
+
+
+
           </div>
+
         </form>
 
 
