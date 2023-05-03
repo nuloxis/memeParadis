@@ -4,6 +4,7 @@
  */
 package com.mycompany.memeparadis.Model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.mycompany.memeparadis.Configuration.Database;
 import java.io.Serializable;
 import java.util.List;
@@ -24,6 +25,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.StoredProcedureQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -44,12 +46,12 @@ public class ContentTag implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @JoinColumn(name = "content_id", referencedColumnName = "id")
-    @ManyToOne
-    private Content contentId;
-    @JoinColumn(name = "tags_id", referencedColumnName = "id")
-    @ManyToOne
-    private Tags tagsId;
+    @Transient
+    @JsonInclude
+    private Integer contentId;
+    @Transient
+    @JsonInclude
+    private Integer tagsId;
 
     public ContentTag() {
     }
@@ -66,19 +68,19 @@ public class ContentTag implements Serializable {
         this.id = id;
     }
 
-    public Content getContentId() {
+    public Integer getContentId() {
         return contentId;
     }
 
-    public void setContentId(Content contentId) {
+    public void setContentId(Integer contentId) {
         this.contentId = contentId;
     }
 
-    public Tags getTagsId() {
+    public Integer getTagsId() {
         return tagsId;
     }
 
-    public void setTagsId(Tags tagsId) {
+    public void setTagsId(Integer tagsId) {
         this.tagsId = tagsId;
     }
 
@@ -106,7 +108,7 @@ public class ContentTag implements Serializable {
     public String toString() {
         return "com.mycompany.memeparadisee7.Model.ContentTag[ id=" + id + " ]";
     }
-    public String createContent_tag(Tags tags, Content content) throws Exception {
+    public String createContent_tag(Integer tags, Integer content) throws Exception {
     EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
     EntityManager em = emf.createEntityManager();
     try {
@@ -115,15 +117,15 @@ public class ContentTag implements Serializable {
         spq.registerStoredProcedureParameter("content_idIN", Integer.class, ParameterMode.IN);
         spq.registerStoredProcedureParameter("tags_idIN", Integer.class, ParameterMode.IN);
     
-        spq.setParameter("content_idIN", content.getId());
-        spq.setParameter("tags_idIN", tags.getId());
+        spq.setParameter("content_idIN",content);
+        spq.setParameter("tags_idIN", tags);
     
         spq.execute();
 
    
         Query insertQuery = em.createNativeQuery("INSERT INTO content_tag (content_id, tags_id) VALUES (?, ?)");
-        insertQuery.setParameter(1, content.getId());
-        insertQuery.setParameter(2, tags.getId());
+        insertQuery.setParameter(1, content);
+        insertQuery.setParameter(2, tags);
         insertQuery.executeUpdate();
 
     } catch (Exception ex) {
@@ -136,4 +138,5 @@ public class ContentTag implements Serializable {
     }
     return "Sikeres beillesztés";
 }
+
 }

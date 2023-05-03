@@ -5,6 +5,7 @@
 package com.mycompany.memeparadis.Controller;
 
 import com.mycompany.memeparadis.Model.Content;
+import com.mycompany.memeparadis.Model.ContentTag;
 import com.mycompany.memeparadis.Model.Tags;
 import com.mycompany.memeparadis.Service.ContentTagService;
 import javax.ws.rs.Consumes;
@@ -36,8 +37,8 @@ public class ContentTagController {
 @POST
 @Path("createContent_tag")
 @Consumes(MediaType.APPLICATION_JSON)
-public String createContent_tag(Tags tag,Content content){
-    String result = contss.createContentTag(tag, content);
+public String createContent_tag(Tags content){
+    String result = contss.createContentTag(content.getTagsId(), content.getContentId());
     return result;
 }
 }

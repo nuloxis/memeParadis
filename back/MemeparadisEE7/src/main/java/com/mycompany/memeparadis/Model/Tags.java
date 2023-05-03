@@ -52,8 +52,8 @@ public class Tags implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "tag")
     private String tag;
-    @OneToMany(mappedBy = "tagsId")
-    private Collection<ContentTag> contentTagCollection;
+    private Integer contentId;
+    private Integer tagsId;
 
     public Tags() {
     }
@@ -65,6 +65,22 @@ public class Tags implements Serializable {
     public Tags(Integer id, String tag) {
         this.id = id;
         this.tag = tag;
+    }
+
+    public Integer getContentId() {
+        return contentId;
+    }
+
+    public void setContentId(Integer contentId) {
+        this.contentId = contentId;
+    }
+
+    public Integer getTagsId() {
+        return tagsId;
+    }
+
+    public void setTagsId(Integer tagsId) {
+        this.tagsId = tagsId;
     }
 
     public Integer getId() {
@@ -83,14 +99,6 @@ public class Tags implements Serializable {
         this.tag = tag;
     }
 
-    @XmlTransient
-    public Collection<ContentTag> getContentTagCollection() {
-        return contentTagCollection;
-    }
-
-    public void setContentTagCollection(Collection<ContentTag> contentTagCollection) {
-        this.contentTagCollection = contentTagCollection;
-    }
 
     @Override
     public int hashCode() {

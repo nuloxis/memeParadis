@@ -16,13 +16,14 @@ import com.mycompany.memeparadis.Model.Tags;
 public class ContentTagService {
  ContentTag contTS = new ContentTag();
  
- public String createContentTag(Tags tag,Content content){
-     String result = ""; 
-     try{
+public String createContentTag(Integer tag, Integer content) {
+    String result = ""; 
+    try {
         result = contTS.createContent_tag(tag, content);
-     }catch(Exception ex){
-         result= ex.getMessage();
- } 
-     return result;
+    } catch (Exception ex) {
+        result = ex.getMessage();
+    } 
+    return result;
 }
+
 }
