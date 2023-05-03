@@ -151,6 +151,12 @@ export class ProfilPageComponent implements OnInit {
 
 
   }
+  logoutfuntion():void{
+    localStorage.clear();
+    setTimeout(()=>{
+      window.location.reload()
+    }, 100);
+  }
 
 
   /*<span class="tagSpan" >${tag} <button class="deleteButton2" (click)="deleteButton222()" >Delete</button></span>*/

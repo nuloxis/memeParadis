@@ -100,6 +100,12 @@ span{
 .navbarbutton:hover{
   background-color: #404040 ;
 }
+.logoutbutton{
+  background-color: rgba(255, 0, 0, 0.581);
+}
+.logoutbutton:hover{
+  background-color: rgba(255, 0, 0, 0.149);
+}
 
 /*----------------------------------*/
 /*NAVBAR HIDDEN MENU*/
@@ -109,7 +115,7 @@ span{
   padding: 0;
 }
 #profilesettingsmodal{
-  display: none; /* Hidden by default */
+  display: block; /* Hidden by default */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
@@ -118,7 +124,7 @@ span{
 
 }
 #contentuploadmodul{
-  display: block; /* Hidden by default */
+  display: none; /* Hidden by default */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
