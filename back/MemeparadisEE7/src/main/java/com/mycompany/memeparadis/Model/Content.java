@@ -81,9 +81,10 @@ public class Content implements Serializable {
         this.id = id;
     }
 
-    public Content(Integer id, boolean adultContent, String language, int likes, boolean contentType, String contentUpladeName) {
+    public Content(Integer id, boolean adultContent,Integer uploaderName, String language, int likes, boolean contentType, String contentUpladeName) {
         this.id = id;
         this.adultContent = adultContent;
+        this.uploaderName = uploaderName;
         this.language = language;
         this.likes = likes;
         this.contentType = contentType;
@@ -219,12 +220,13 @@ public class Content implements Serializable {
             Object[] r = result.get(0);
             Integer idd2 = Integer.parseInt(r[0].toString());
             Boolean adultContent2 = Boolean.parseBoolean(r[1].toString());
+            Integer uploaderName2 = Integer.parseInt(r[2].toString());
             String language2 = r[3].toString();
             Integer likes2 = Integer.parseInt(r[4].toString());
-            Boolean contentType2 = Boolean.parseBoolean(r[1].toString());
+            Boolean contentType2 = Boolean.parseBoolean(r[5].toString());
             String content_upload_name2 = r[6].toString();
 
-            Content content = new Content(idd2, adultContent2,language2, likes2, contentType2,content_upload_name2);
+            Content content = new Content(idd2, adultContent2,uploaderName2,language2, likes2, contentType2,content_upload_name2);
             return content;
         } else {
             throw new Exception("Content not found for id: " + id);
@@ -277,12 +279,13 @@ public Content GetMostLikedPosts() throws Exception {
             if (mostLikedContent != null) {
                 Integer id1 = mostLikedContent.getId();
                 Boolean adultContent1 = mostLikedContent.getAdultContent();
+                Integer uploaderName1 = mostLikedContent.getUploaderName();
                 String language1 = mostLikedContent.getLanguage();
                 Integer likes1 = mostLikedContent.getLikes();
                 Boolean contentType1 = mostLikedContent.getContentType();
                 String content_upload_name = mostLikedContent.getContentUpladeName();
 
-                mostLikedContentDetails = new Content(id1,adultContent1,language1, likes1, contentType1,content_upload_name);
+                mostLikedContentDetails = new Content(id1,adultContent1,uploaderName1,language1, likes1, contentType1,content_upload_name);
             }
         }
     } catch (Exception ex) {
