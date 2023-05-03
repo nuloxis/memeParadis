@@ -3,6 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { MyResponse } from 'src/app/my-response';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ObserversModule } from '@angular/cdk/observers';
+import { Content } from '../../models/content';
+import { LoginRegistrationPageService } from 'src/app/_services/login-page.service';
+import * as fs from 'fs';
 
 
 @Component({
@@ -12,13 +17,64 @@ import { MyResponse } from 'src/app/my-response';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private router:Router,private http:HttpClient) { }
+  content!:Content;
+
+
+
+  constructor(private router:Router,private http:HttpClient, private loginservices:LoginRegistrationPageService) { }
+
 
   ngOnInit(): void {
+
+    const loginmeme=document.getElementById("loginmeme") as HTMLDivElement;
+
+    this.http.get<Content>('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/Content/GetMostLikedPosts').subscribe(
+      res=>{
+        this.content=res;
+        console.log(this.content.id)
+        console.log(this.content.adultContent)
+        console.log(this.content.uploaderName)
+        console.log(this.content.language)
+        console.log(this.content.likes)
+        console.log(this.content.contentType)
+        console.log(this.content.contentUpladeName)
+
+        if (this.content.contentType==false){
+          const img=`
+            <img src="../assets/content/picture/${this.content.contentUpladeName}" style="max-width: 678px;
+            height: auto;
+            width: 100%; max-height:676px;"  class="imagememe" alt="">
+
+          `
+          loginmeme.innerHTML+=img;
+        }
+        else{
+          const img=`
+            <img src="../assets/content/video/${this.content.contentUpladeName}" class="imagememe" style="height: 678px; width: 676px;" alt="">
+
+          `
+          loginmeme.innerHTML+=img;
+        }
+
+      }
+    )
+
   }
+
+
+  loadMostpopularpost(){
+    this.loginservices.getMostLikedPosts().subscribe() ;
+
+  }
+
+
+
   goToPage(pageName:string):void{
     this.router.navigate([`${pageName}`]);
   }
+
+
+
 
 
 
