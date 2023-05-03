@@ -52,7 +52,7 @@ public class Content implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "adult_content")
-    private boolean adultContent;
+    private Boolean adultContent;
     @Column(name = "uploader_name")
     private Integer uploaderName;
     @Basic(optional = false)
@@ -63,11 +63,11 @@ public class Content implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "likes")
-    private int likes;
+    private Integer likes;
     @Basic(optional = false)
     @NotNull
     @Column(name = "content_type")
-    private boolean contentType;
+    private Boolean contentType;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
@@ -81,7 +81,7 @@ public class Content implements Serializable {
         this.id = id;
     }
 
-    public Content(Integer id, boolean adultContent,Integer uploaderName, String language, int likes, boolean contentType, String contentUpladeName) {
+    public Content(Integer id, Boolean adultContent,Integer uploaderName, String language, Integer likes, Boolean contentType, String contentUpladeName) {
         this.id = id;
         this.adultContent = adultContent;
         this.uploaderName = uploaderName;
@@ -103,7 +103,7 @@ public class Content implements Serializable {
         return adultContent;
     }
 
-    public void setAdultContent(boolean adultContent) {
+    public void setAdultContent(Boolean adultContent) {
         this.adultContent = adultContent;
     }
 
@@ -123,19 +123,19 @@ public class Content implements Serializable {
         this.language = language;
     }
 
-    public int getLikes() {
+    public Integer getLikes() {
         return likes;
     }
 
-    public void setLikes(int likes) {
+    public void setLikes(Integer likes) {
         this.likes = likes;
     }
 
-    public boolean getContentType() {
+    public Boolean getContentType() {
         return contentType;
     }
 
-    public void setContentType(boolean contentType) {
+    public void setContentType(Boolean contentType) {
         this.contentType = contentType;
     }
 
