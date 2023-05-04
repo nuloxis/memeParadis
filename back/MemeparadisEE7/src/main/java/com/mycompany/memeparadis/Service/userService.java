@@ -6,6 +6,7 @@ package com.mycompany.memeparadis.Service;
 
 import com.mycompany.memeparadis.Exception.InvalidCredentialsException;
 import com.mycompany.memeparadis.Model.User;
+import java.util.Date;
 
 /**
  *
@@ -58,6 +59,16 @@ public class userService {
     String result = "";
         try{
             u.updateEmail(email, id);
+            result = "Sikeres frissítés";
+        }catch(Exception ex){
+        result = ex.getMessage();
+        } 
+        return result;
+    }
+    public String updateBirthDate(Date date,Integer id){
+    String result = "";
+        try{
+            u.updateBirthDate(date, id);
             result = "Sikeres frissítés";
         }catch(Exception ex){
         result = ex.getMessage();

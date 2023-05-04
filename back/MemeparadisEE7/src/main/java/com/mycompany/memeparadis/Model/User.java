@@ -467,4 +467,27 @@ public class User implements Serializable {
         emf.close();
     }
 }
+    public String updateBirthDate(Date date,Integer id) throws Exception{
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
+    EntityManager em = emf.createEntityManager();
+    try{
+        StoredProcedureQuery spq = em.createStoredProcedureQuery("updateBirthDate");
+         spq.registerStoredProcedureParameter("birthDateIN", Date.class, ParameterMode.IN);
+         spq.registerStoredProcedureParameter("idIN", Integer.class, ParameterMode.IN);
+        
+         spq.setParameter("birthDateIN",date );
+         spq.setParameter("idIN", id);
+         
+         spq.execute();
+         
+         return "Sikeres módosítás";
+    }catch(Exception ex){
+          System.out.println(ex.getMessage());
+           throw new Exception(""+ex.getMessage());
+    }finally{
+        em.clear();
+        em.close();
+        emf.close();
+    }
+}
 }
