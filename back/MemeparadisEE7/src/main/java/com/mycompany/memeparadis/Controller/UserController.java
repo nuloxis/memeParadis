@@ -69,10 +69,10 @@ public class UserController {
     @PUT
     @Path("updateUserName")
     @Consumes(MediaType.APPLICATION_JSON)
-    public String updateUserName(String username,Integer id){
+    public String updateUserName(User nameup){
         String result = "";
         try{
-            result = us.updateUserName(username, id);
+            result = us.updateUserName(nameup.getName(), nameup.getId());
         }catch(Exception ex){
         System.err.println(""+ex.getMessage());
         }
