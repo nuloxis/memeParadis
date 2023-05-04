@@ -44,4 +44,14 @@ public class userService {
 //        }
        return user;
     }
+    public String updateUserName(String username,Integer id){
+    String result = "";
+        try{
+            u.updateUserName(username, id);
+            result = "Sikeres frissítés";
+        }catch(Exception ex){
+        result = ex.getMessage();
+        } 
+        return result;
+    }
 }

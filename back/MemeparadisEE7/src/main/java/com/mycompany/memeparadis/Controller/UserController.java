@@ -66,4 +66,16 @@ public class UserController {
         }
         return Response.status(Response.Status.OK).entity(result).type(MediaType.APPLICATION_JSON).build();
     }
+    @PUT
+    @Path("updateUserName")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String updateUserName(String username,Integer id){
+        String result = "";
+        try{
+            result = us.updateUserName(username, id);
+        }catch(Exception ex){
+        System.err.println(""+ex.getMessage());
+        }
+        return result;
+    }
 }

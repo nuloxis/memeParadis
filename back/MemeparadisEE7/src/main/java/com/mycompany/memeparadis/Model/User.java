@@ -420,4 +420,28 @@ public class User implements Serializable {
     public void setContentCollection(Collection<Content> contentCollection) {
         this.contentCollection = contentCollection;
     }
+    public String updateUserName(String username,Integer id) throws Exception{
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
+    EntityManager em = emf.createEntityManager();
+    try{
+        StoredProcedureQuery spq = em.createStoredProcedureQuery("updateUserName");
+         spq.registerStoredProcedureParameter("usernameIN", String.class, ParameterMode.IN);
+         spq.registerStoredProcedureParameter("idIN", Integer.class, ParameterMode.IN);
+        
+         spq.setParameter("usernameIN",username );
+         spq.setParameter("idIN", id);
+         
+         spq.execute();
+         
+         return "Sikeres módosítás";
+    }catch(Exception ex){
+          System.out.println(ex.getMessage());
+           throw new Exception(""+ex.getMessage());
+    }finally{
+        em.clear();
+        em.close();
+        emf.close();
+    }
+    
+    }
 }
