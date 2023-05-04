@@ -103,4 +103,16 @@ public class UserController {
         }
         return result;
     }
-}
+  @PUT
+  @Path("updateBirthDate")
+  @Consumes(MediaType.APPLICATION_JSON)
+  public String updateBirthDate(User dateup){
+  String result = "";
+        try{
+            result = us.updateBirthDate(dateup.getBirthDate(), dateup.getId());
+        }catch(Exception ex){
+        System.err.println(""+ex.getMessage());
+        }
+        return result;
+    }
+  }
