@@ -467,27 +467,33 @@ public class User implements Serializable {
         emf.close();
     }
 }
-    public String updateBirthDate(Date date,Integer id) throws Exception{
+    
+   
+    public String updatePassword(String currentPW,String newPw,String emailIN) throws Exception{
     EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
     EntityManager em = emf.createEntityManager();
     try{
-        StoredProcedureQuery spq = em.createStoredProcedureQuery("updateBirthDate");
-         spq.registerStoredProcedureParameter("birthDateIN", Date.class, ParameterMode.IN);
-         spq.registerStoredProcedureParameter("idIN", Integer.class, ParameterMode.IN);
+        StoredProcedureQuery spq = em.createNamedStoredProcedureQuery("updatePassword");
+        spq.registerStoredProcedureParameter("currentPwIN", String.class, ParameterMode.IN);
+        spq.registerStoredProcedureParameter("newPwIN", String.class, ParameterMode.IN);
+        spq.registerStoredProcedureParameter("emailIN", String.class, ParameterMode.IN);
+        spq.registerStoredProcedureParameter("result", String.class, ParameterMode.OUT);
         
-         spq.setParameter("birthDateIN",date );
-         spq.setParameter("idIN", id);
-         
-         spq.execute();
-         
-         return "Sikeres módosítás";
+        spq.setParameter("currentPwIN", currentPW);
+        spq.setParameter("newPwIN",encryptString(newPw));
+        spq.setParameter("emailIN", emailIN);
+        
+        spq.execute();
+        
+        String result = (String) spq.getOutputParameterValue("result");
+        return result;
     }catch(Exception ex){
-          System.out.println(ex.getMessage());
-           throw new Exception(""+ex.getMessage());
+    System.out.println(ex.getMessage());
+   throw new Exception(""+ex.getMessage());
     }finally{
         em.clear();
         em.close();
         emf.close();
     }
-}
+    }
 }

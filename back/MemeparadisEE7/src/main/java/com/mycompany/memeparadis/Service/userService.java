@@ -65,11 +65,11 @@ public class userService {
         } 
         return result;
     }
-    public String updateBirthDate(Date date,Integer id){
+    public String updatePassword(String currentPW,String newPw,String email){
     String result = "";
         try{
-            u.updateBirthDate(date, id);
-            result = "Sikeres frissítés";
+            result = u.updatePassword(currentPW, newPw, email);
+            
         }catch(Exception ex){
         result = ex.getMessage();
         } 

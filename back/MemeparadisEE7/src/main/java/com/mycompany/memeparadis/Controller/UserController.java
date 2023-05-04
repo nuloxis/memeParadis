@@ -9,6 +9,7 @@ import com.mycompany.memeparadis.Service.userService;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
@@ -91,12 +92,12 @@ public class UserController {
         return result;
     }
     @PUT
-    @Path("updateBirthDate")
+    @Path("updatePassword")
     @Consumes(MediaType.APPLICATION_JSON)
-    public String updateBirthDate(User dateup){
+    public String updatePassword(String currentPW,String newPw,String email){
         String result = "";
         try{
-            result = us.updateBirthDate(dateup.getBirthDate(), dateup.getId());
+            result = us.updatePassword(currentPW,newPw,email);
         }catch(Exception ex){
         System.err.println(""+ex.getMessage());
         }
