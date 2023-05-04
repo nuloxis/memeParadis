@@ -54,4 +54,14 @@ public class userService {
         } 
         return result;
     }
+    public String updateEmail(String email,Integer id){
+    String result = "";
+        try{
+            u.updateEmail(email, id);
+            result = "Sikeres frissítés";
+        }catch(Exception ex){
+        result = ex.getMessage();
+        } 
+        return result;
+    }
 }

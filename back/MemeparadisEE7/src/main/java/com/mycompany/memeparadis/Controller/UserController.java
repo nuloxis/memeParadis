@@ -78,4 +78,16 @@ public class UserController {
         }
         return result;
     }
+    @PUT
+    @Path("updateEmail")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String updateEmail(User emailup){
+        String result = "";
+        try{
+            result = us.updateUserName(emailup.getEmail(), emailup.getId());
+        }catch(Exception ex){
+        System.err.println(""+ex.getMessage());
+        }
+        return result;
+    }
 }
