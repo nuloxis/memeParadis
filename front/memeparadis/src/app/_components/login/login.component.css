@@ -91,7 +91,7 @@ button{
   margin-top: 15px;
 }
 button:hover{
-  background-color: #278d50;
+  background-color: #3ebe719c;
   color: rgb(195, 192, 192);
   touch-action: 5s;
   transition: 0.2s;

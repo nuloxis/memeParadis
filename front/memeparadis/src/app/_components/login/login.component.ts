@@ -62,20 +62,9 @@ export class LoginComponent implements OnInit {
   }
 
 
-  loadMostpopularpost(){
-    this.loginservices.getMostLikedPosts().subscribe() ;
-
-  }
-
-
-
   goToPage(pageName:string):void{
     this.router.navigate([`${pageName}`]);
   }
-
-
-
-
 
 
   loginProduct(addUser: any){

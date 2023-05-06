@@ -1,12 +1,8 @@
+import { HttpClient,HttpHeaders } from '@angular/common/http';
 import {  OnInit } from '@angular/core';
-
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import {Component, ElementRef, ViewChild} from '@angular/core';
-import {FormControl} from '@angular/forms';
-import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
-import {MatChipInputEvent} from '@angular/material/chips';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import {Component} from '@angular/core';
+import { Content } from 'src/app/models/content';
+import {NgForm} from '@angular/forms';
 
 
 
@@ -17,55 +13,15 @@ import {map, startWith} from 'rxjs/operators';
 })
 export class ProfilPageComponent implements OnInit {
   datauser:any;
+  file:any;
 
+  content!:Content;
+  filename!:String
 
-  separatorKeysCodes: number[] = [ENTER, COMMA];
-  fruitCtrl = new FormControl('');
-  filteredFruits: Observable<string[]>;
-  fruits: string[] = ['Lemon'];
-  allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
+  constructor(private http:HttpClient) {
 
-  @ViewChild('fruitInput') fruitInput!: ElementRef<HTMLInputElement>;
-
-  constructor() {
-    this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
-      startWith(null),
-      map((fruit: string | null) => (fruit ? this._filter(fruit) : this.allFruits.slice())),
-    );
-  }
-  add(event: MatChipInputEvent): void {
-    const value = (event.value || '').trim();
-
-    // Add our fruit
-    if (value) {
-      this.fruits.push(value);
-    }
-
-    // Clear the input value
-    event.chipInput!.clear();
-
-    this.fruitCtrl.setValue(null);
   }
 
-  remove(fruit: string): void {
-    const index = this.fruits.indexOf(fruit);
-
-    if (index >= 0) {
-      this.fruits.splice(index, 1);
-    }
-  }
-
-  selected(event: MatAutocompleteSelectedEvent): void {
-    this.fruits.push(event.option.viewValue);
-    this.fruitInput.nativeElement.value = '';
-    this.fruitCtrl.setValue(null);
-  }
-
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.allFruits.filter(fruit => fruit.toLowerCase().includes(filterValue));
-  }
 
   ngOnInit(): void {
     let data:any=localStorage.getItem('name');
@@ -150,6 +106,7 @@ export class ProfilPageComponent implements OnInit {
     }
 
 
+
   }
   logoutfuntion():void{
     localStorage.clear();
@@ -157,7 +114,83 @@ export class ProfilPageComponent implements OnInit {
       window.location.reload()
     }, 100);
   }
+  creatContentfunctione(){
 
+    const content2: Content = {id:0,adultContent:false,uploaderName:0,language:"",likes:0,contentType:false,contentUpladeName:"",};
+
+    const selectmenu2=document.getElementById("format") as HTMLSelectElement;
+    const language_select=document.getElementById("language-select") as HTMLSelectElement;
+    const fileid=document.getElementById("file") as HTMLInputElement;
+
+
+    let data:any=localStorage.getItem('name');
+    this.datauser=JSON.parse(data);
+    content2.uploaderName=this.datauser.id;
+
+
+
+
+
+
+    if(selectmenu2.value=="video/*"){
+      content2.contentType=true;
+    }
+    else if(selectmenu2.value=="image/*"){
+      content2.contentType=false;
+    }
+
+    if (language_select.value=="ENG"){
+      content2.language="ENG";
+    }
+    else if(language_select.value=="HUN"){
+      content2.language="HUN";
+    }else{
+      content2.language="OTHER";
+    }
+    content2.contentUpladeName+=this.file.name;
+
+
+    const filedata=this.file;
+    var myFormData = new FormData();
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'multipart/form-data');
+    headers.append('Accept', 'application/json');
+    myFormData.append('video', filedata);
+
+    this.http.post('http://localhost/saves.php', myFormData, {
+    headers: headers,
+    }).subscribe(data => {
+
+     /*console.log(data);*/
+    });
+
+
+    this.http.post('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/Content/createContent',content2).subscribe((res)=>{
+      /*console.log(res);*/
+    })
+
+  }
+
+  getFile(event:any){
+    const file: File = event.currentTarget.files[0];
+    this.file=event.currentTarget.files[0];
+    const filename2=file.name;
+    this.filename=filename2
+
+
+  }
+
+  generateRandomString(length: number): string {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let result = "";
+    for (let i = 0; i < length; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+  }
+  generateRandomNumber(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
 
   /*<span class="tagSpan" >${tag} <button class="deleteButton2" (click)="deleteButton222()" >Delete</button></span>*/
   /*deleteButton222():void{
