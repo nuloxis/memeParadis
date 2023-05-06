@@ -53,6 +53,23 @@ export class ProfilPageComponent implements OnInit {
       modal3.style.display="block";
     }
 
+    const editingnamebutton = document.getElementById("edditnamebutton") as HTMLButtonElement;
+    const editinglabel=document.getElementById("editinglabel") as HTMLLabelElement;
+    const edditname=document.getElementById("edditname") as HTMLInputElement;
+    let isEditing = false;
+
+    editingnamebutton.onclick = function() {
+      if (!isEditing) {
+        editinglabel.style.display = "none";
+        edditname.style.display = "block";
+        isEditing = true;
+      } else {
+        edditname.style.display = "none";
+        editinglabel.style.display = "contents";
+        isEditing = false;
+      }
+    }
+
 
 
     const selectmenu2=document.getElementById("format") as HTMLSelectElement;
@@ -198,7 +215,7 @@ export class ProfilPageComponent implements OnInit {
       }`
       let sendcreatecontent_tag=JSON.parse(content_tag);
       console.log(sendcreatecontent_tag);
-      this.http.post('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/ContentTags/createContent_tag',sendcreatecontent_tag).subscribe((res)=>{
+      this.http.post('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/ContentTag/createContent_tag',sendcreatecontent_tag).subscribe((res)=>{
         console.log(res);
 
       });

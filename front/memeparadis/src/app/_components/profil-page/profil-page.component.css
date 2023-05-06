@@ -183,6 +183,13 @@ span{
 .diva{
   width: 70%;
 }
+#edditname{
+  display: none;
+}
+#editinglabel{
+  display: contents;
+}
+
 /*----------------------------------*/
 /*CONTENT UPLOADE*/
 .fileinput[type="file"]{
