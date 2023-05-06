@@ -6,6 +6,7 @@ package com.mycompany.memeparadis.Model;
 
 import com.mycompany.memeparadis.Configuration.Database;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -299,4 +300,5 @@ public Content GetMostLikedPosts() throws Exception {
 
     return mostLikedContentDetails;
 }
+
 }
