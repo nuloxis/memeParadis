@@ -5,6 +5,7 @@
 package com.mycompany.memeparadis.Model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.mycompany.memeparadis.Configuration.Database;
 import com.mycompany.memeparadis.Exception.PasswordException;
 import java.io.Serializable;
@@ -36,6 +37,7 @@ import javax.persistence.StoredProcedureQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
@@ -112,6 +114,12 @@ public class User implements Serializable {
     @NotNull
     @Column(name = "is_deleted")
     private boolean isDeleted;
+    @Transient
+    @JsonInclude
+    private String currentPw;
+    @Transient
+    @JsonInclude
+    private String newPw;
 
     public User() {
     }
@@ -469,17 +477,17 @@ public class User implements Serializable {
 }
     
    
-    public String updatePassword(String currentPW,String newPw,String emailIN) throws Exception{
+    public String updatePassword(String currentPw,String newPw,String emailIN) throws Exception{
     EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
     EntityManager em = emf.createEntityManager();
     try{
-        StoredProcedureQuery spq = em.createNamedStoredProcedureQuery("updatePassword");
+        StoredProcedureQuery spq = em.createStoredProcedureQuery("updatePassword");
         spq.registerStoredProcedureParameter("currentPwIN", String.class, ParameterMode.IN);
         spq.registerStoredProcedureParameter("newPwIN", String.class, ParameterMode.IN);
         spq.registerStoredProcedureParameter("emailIN", String.class, ParameterMode.IN);
         spq.registerStoredProcedureParameter("result", String.class, ParameterMode.OUT);
         
-        spq.setParameter("currentPwIN", currentPW);
+        spq.setParameter("currentPwIN", currentPw);
         spq.setParameter("newPwIN",encryptString(newPw));
         spq.setParameter("emailIN", emailIN);
         

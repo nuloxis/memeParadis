@@ -94,7 +94,8 @@ public class UserController {
     @PUT
     @Path("updatePassword")
     @Consumes(MediaType.APPLICATION_JSON)
-    public String updatePassword(String currentPW,String newPw,String email){
+    @Produces(MediaType.APPLICATION_JSON)
+    public String updatePassword(String currentPW,String newPw,String email) throws NoSuchAlgorithmException{
         String result = "";
         try{
             result = us.updatePassword(currentPW,newPw,email);
