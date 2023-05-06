@@ -114,13 +114,19 @@ export class ProfilPageComponent implements OnInit {
       window.location.reload()
     }, 100);
   }
-  creatContentfunctione(){
+  async creatContentfunctione(){
+    let howmanycontent:number=0 ;
+
+    this.http.get<number>('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/Content/getHowManyContent').subscribe(res=>{
+        howmanycontent=res;
+
+    })
+    await new Promise(resolve => setTimeout(resolve, 800));
+
 
     const content2: Content = {id:0,adultContent:false,uploaderName:0,language:"",likes:0,contentType:false,contentUpladeName:"",};
-
     const selectmenu2=document.getElementById("format") as HTMLSelectElement;
     const language_select=document.getElementById("language-select") as HTMLSelectElement;
-    const fileid=document.getElementById("file") as HTMLInputElement;
 
 
     let data:any=localStorage.getItem('name');
@@ -128,15 +134,38 @@ export class ProfilPageComponent implements OnInit {
     content2.uploaderName=this.datauser.id;
 
 
-
+    const filedata=this.file;
+    var myFormData = new FormData();
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'multipart/form-data');
+    headers.append('Accept', 'application/json');
+    myFormData.append('video', filedata);
 
 
 
     if(selectmenu2.value=="video/*"){
       content2.contentType=true;
+      this.http.post('http://localhost:3306/saves.php', myFormData, {
+        headers: headers,
+      }).subscribe(data => {
+
+        console.log(data);
+      },err=>{
+        console.log("")
+      });
+      await new Promise(resolve => setTimeout(resolve, 800));
     }
     else if(selectmenu2.value=="image/*"){
       content2.contentType=false;
+      this.http.post('http://localhost:3306/saves2.php', myFormData, {
+        headers: headers,
+      }).subscribe(data => {
+
+        console.log(data);
+      },err=>{
+        console.log("")
+      });
+      await new Promise(resolve => setTimeout(resolve, 800));
     }
 
     if (language_select.value=="ENG"){
@@ -150,24 +179,49 @@ export class ProfilPageComponent implements OnInit {
     content2.contentUpladeName+=this.file.name;
 
 
-    const filedata=this.file;
-    var myFormData = new FormData();
-    const headers = new HttpHeaders();
-    headers.append('Content-Type', 'multipart/form-data');
-    headers.append('Accept', 'application/json');
-    myFormData.append('video', filedata);
+    const buttonTexts = this.getButtonTexts();
+    await new Promise(resolve => setTimeout(resolve, 800));
 
-    this.http.post('http://localhost/saves.php', myFormData, {
-    headers: headers,
-    }).subscribe(data => {
 
-     /*console.log(data);*/
-    });
+    for (const buttonText of buttonTexts) {
+      let jsonStr = `{"tag": "${buttonText}"}`;
+      let obj = JSON.parse(jsonStr);
+      let tagsid:number|null=0;
+      this.http.post<number>('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/Tags/createTag',obj).subscribe((res)=>{
+        console.log(res)
+        tagsid=res;
+      });
+      await new Promise(resolve => setTimeout(resolve, 800));
+      let content_tag=`{
+        "contentId": ${howmanycontent},
+        "tagsId": ${tagsid}
+      }`
+      let sendcreatecontent_tag=JSON.parse(content_tag);
+      console.log(sendcreatecontent_tag);
+      this.http.post('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/ContentTags/createContent_tag',sendcreatecontent_tag).subscribe((res)=>{
+        console.log(res);
+
+      });
+      await new Promise(resolve => setTimeout(resolve, 800));
+      jsonStr = "";
+      obj = null;
+      tagsid=null;
+      content_tag="";
+
+      console.log(jsonStr);
+      console.log(obj)
+
+    }
+
+    /**/
 
 
     this.http.post('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/Content/createContent',content2).subscribe((res)=>{
-      /*console.log(res);*/
+      console.log(res);
+    },err=>{
+      console.log("")
     })
+    await new Promise(resolve => setTimeout(resolve, 800));
 
   }
 
@@ -179,18 +233,14 @@ export class ProfilPageComponent implements OnInit {
 
 
   }
+  getButtonTexts() {
+    const tagDiv = document.getElementById("tagdiv")  as HTMLDivElement;
+    const buttonTexts = Array.from(tagDiv.querySelectorAll("button")).map((button) => {
+      return button.innerText;
+    });
+    return buttonTexts;
+  }
 
-  generateRandomString(length: number): string {
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    let result = "";
-    for (let i = 0; i < length; i++) {
-      result += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return result;
-  }
-  generateRandomNumber(min: number, max: number): number {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  }
 
   /*<span class="tagSpan" >${tag} <button class="deleteButton2" (click)="deleteButton222()" >Delete</button></span>*/
   /*deleteButton222():void{
