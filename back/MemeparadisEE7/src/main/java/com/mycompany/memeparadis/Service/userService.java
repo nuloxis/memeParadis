@@ -6,6 +6,9 @@ package com.mycompany.memeparadis.Service;
 
 import com.mycompany.memeparadis.Exception.InvalidCredentialsException;
 import com.mycompany.memeparadis.Model.User;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
 /**
@@ -14,6 +17,14 @@ import java.util.Date;
  */
 public class userService {
     User u = new User();
+    
+    public String encryptString(String input) throws NoSuchAlgorithmException{
+        MessageDigest md=MessageDigest.getInstance("MD5");
+        
+        byte[] messageDigest=md.digest(input.getBytes());
+        BigInteger bigInt =new BigInteger(1,messageDigest);
+        return bigInt.toString(16);
+    }
     
     public String addNewUser(User user){
     
@@ -68,7 +79,8 @@ public class userService {
     public String updatePassword(String currentPW,String newPw,String email){
     String result = "";
         try{
-            result = u.updatePassword(currentPW, newPw, email);
+
+            result = u.updatePassword(currentPW,newPw, email);
             
         }catch(Exception ex){
         result = ex.getMessage();

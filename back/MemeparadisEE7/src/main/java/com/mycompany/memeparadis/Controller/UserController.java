@@ -97,8 +97,9 @@ public class UserController {
     @Produces(MediaType.APPLICATION_JSON)
     public String updatePassword(String currentPW,String newPw,String email) throws NoSuchAlgorithmException{
         String result = "";
+        String encryptedNewPW = encryptString(newPw);
         try{
-            result = us.updatePassword(currentPW,newPw,email);
+            result = us.updatePassword(currentPW,encryptedNewPW,email);
         }catch(Exception ex){
         System.err.println(""+ex.getMessage());
         }

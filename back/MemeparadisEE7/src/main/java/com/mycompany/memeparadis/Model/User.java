@@ -394,13 +394,13 @@ public class User implements Serializable {
             
             User user=new User(idd,namee,emaile,passworde,registrationDatee,birthDatee,accessTypee,false);
             
-//            throw new Exception(""+id);
+
             return user;
         }
         catch(Exception ex){
             System.out.println(ex.getMessage());
             throw new Exception(""+ex.getMessage());
-//            return new User();
+
         }
         finally{
             em.clear();
@@ -477,7 +477,7 @@ public class User implements Serializable {
 }
     
    
-    public String updatePassword(String currentPw,String newPw,String emailIN) throws Exception{
+    public String updatePassword(String currentPw, String newPw, String emailIN) throws Exception{
     EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
     EntityManager em = emf.createEntityManager();
     try{
@@ -488,16 +488,17 @@ public class User implements Serializable {
         spq.registerStoredProcedureParameter("result", String.class, ParameterMode.OUT);
         
         spq.setParameter("currentPwIN", currentPw);
-        spq.setParameter("newPwIN",encryptString(newPw));
+        spq.setParameter("newPwIN",newPw);
         spq.setParameter("emailIN", emailIN);
         
         spq.execute();
-        
+        System.out.println("A jelenlegi jelszó:"+" "+currentPw);
+        System.out.println("Az új jelszó"+" "+newPw);
         String result = (String) spq.getOutputParameterValue("result");
         return result;
     }catch(Exception ex){
-    System.out.println(ex.getMessage());
-   throw new Exception(""+ex.getMessage());
+        System.out.println(ex.getMessage());
+        throw new Exception(""+ex.getMessage());
     }finally{
         em.clear();
         em.close();
