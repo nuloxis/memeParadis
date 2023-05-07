@@ -162,7 +162,7 @@ export class ProfilPageComponent implements OnInit {
 
     if(selectmenu2.value=="video/*"){
       content2.contentType=true;
-      this.http.post('http://localhost:3306/saves.php', myFormData, {
+      this.http.post('http://localhost/saves.php', myFormData, {
         headers: headers,
       }).subscribe(data => {
 
@@ -174,7 +174,7 @@ export class ProfilPageComponent implements OnInit {
     }
     else if(selectmenu2.value=="image/*"){
       content2.contentType=false;
-      this.http.post('http://localhost:3306/saves2.php', myFormData, {
+      this.http.post('http://localhost/saves2.php', myFormData, {
         headers: headers,
       }).subscribe(data => {
 
