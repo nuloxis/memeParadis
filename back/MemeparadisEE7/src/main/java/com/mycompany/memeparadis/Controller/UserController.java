@@ -95,11 +95,11 @@ public class UserController {
     @Path("updatePassword")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String updatePassword(String currentPW,String newPw,String email) throws NoSuchAlgorithmException{
+    public String updatePassword(User u) throws NoSuchAlgorithmException{
         String result = "";
-        String encryptedNewPW = encryptString(newPw);
+        String encryptedNewPW = encryptString(u.getNewPw());
         try{
-            result = us.updatePassword(currentPW,encryptedNewPW,email);
+            result = us.updatePassword(u.getCurrentPw(),encryptedNewPW,u.getId());
         }catch(Exception ex){
         System.err.println(""+ex.getMessage());
         }

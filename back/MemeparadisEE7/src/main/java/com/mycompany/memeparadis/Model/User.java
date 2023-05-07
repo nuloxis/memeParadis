@@ -14,8 +14,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -120,6 +118,22 @@ public class User implements Serializable {
     @Transient
     @JsonInclude
     private String newPw;
+
+    public String getCurrentPw() {
+        return currentPw;
+    }
+
+    public void setCurrentPw(String currentPw) {
+        this.currentPw = currentPw;
+    }
+
+    public String getNewPw() {
+        return newPw;
+    }
+
+    public void setNewPw(String newPw) {
+        this.newPw = newPw;
+    }
 
     public User() {
     }
@@ -477,19 +491,19 @@ public class User implements Serializable {
 }
     
    
-    public String updatePassword(String currentPw, String newPw, String emailIN) throws Exception{
+    public String updatePassword(String currentPw, String newPw, Integer id) throws Exception{
     EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
     EntityManager em = emf.createEntityManager();
     try{
         StoredProcedureQuery spq = em.createStoredProcedureQuery("updatePassword");
-        spq.registerStoredProcedureParameter("currentPwIN", String.class, ParameterMode.IN);
+        spq.registerStoredProcedureParameter("currentPwIN", String.class, ParameterMode.IN);       
         spq.registerStoredProcedureParameter("newPwIN", String.class, ParameterMode.IN);
-        spq.registerStoredProcedureParameter("emailIN", String.class, ParameterMode.IN);
+        spq.registerStoredProcedureParameter("idIN", Integer.class, ParameterMode.IN);
         spq.registerStoredProcedureParameter("result", String.class, ParameterMode.OUT);
         
         spq.setParameter("currentPwIN", currentPw);
         spq.setParameter("newPwIN",newPw);
-        spq.setParameter("emailIN", emailIN);
+        spq.setParameter("idIN",id);
         
         spq.execute();
         System.out.println("A jelenlegi jelszó:"+" "+currentPw);

@@ -76,11 +76,11 @@ public class userService {
         } 
         return result;
     }
-    public String updatePassword(String currentPW,String newPw,String email){
+    public String updatePassword(String currentPW,String newPw,Integer id){
     String result = "";
         try{
 
-            result = u.updatePassword(currentPW,newPw, email);
+            result = u.updatePassword(currentPW,newPw, id);
             
         }catch(Exception ex){
         result = ex.getMessage();
