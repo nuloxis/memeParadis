@@ -18,6 +18,8 @@ export class ProfilPageComponent implements OnInit {
   content!:Content;
   filename!:String
 
+
+
   constructor(private http:HttpClient) {
 
   }
@@ -26,6 +28,9 @@ export class ProfilPageComponent implements OnInit {
   ngOnInit(): void {
     let data:any=localStorage.getItem('name');
     this.datauser=JSON.parse(data);
+    const username=this.datauser.name;
+    const userid=this.datauser.id;
+
 
 
 
@@ -57,16 +62,35 @@ export class ProfilPageComponent implements OnInit {
     const editinglabel=document.getElementById("editinglabel") as HTMLLabelElement;
     const edditname=document.getElementById("edditname") as HTMLInputElement;
     let isEditing = false;
+    const updatename :any={name:"",id:0};
+    updatename.id=userid;
 
-    editingnamebutton.onclick = function() {
+    const user = JSON.parse(localStorage.getItem("name")!);
+
+
+    editingnamebutton.onclick = ()=> {
+
       if (!isEditing) {
         editinglabel.style.display = "none";
         edditname.style.display = "block";
         isEditing = true;
+        edditname.value=username;
+        editingnamebutton.textContent="Send!";
       } else {
         edditname.style.display = "none";
         editinglabel.style.display = "contents";
         isEditing = false;
+        editingnamebutton.textContent="Editing";
+        updatename.name=edditname.value;
+        if(edditname.value!=username){
+          this.editusername(updatename);
+          user.name=edditname.value;
+          localStorage.removeItem("name");
+          localStorage.setItem("name", JSON.stringify(user));
+          setTimeout(()=>{
+            window.location.reload()
+          }, 500);
+        }
       }
     }
 
@@ -124,7 +148,12 @@ export class ProfilPageComponent implements OnInit {
 
 
 
-  }
+  };
+  editusername(user:any){
+    this.http.put('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/User/updateUserName',user).subscribe(res=>{
+      console.log("sikeres");
+    })
+  };
   logoutfuntion():void{
     localStorage.clear();
     setTimeout(()=>{
@@ -166,7 +195,7 @@ export class ProfilPageComponent implements OnInit {
         headers: headers,
       }).subscribe(data => {
 
-        console.log(data);
+        console.log("");
       },err=>{
         console.log("")
       });
@@ -178,7 +207,7 @@ export class ProfilPageComponent implements OnInit {
         headers: headers,
       }).subscribe(data => {
 
-        console.log(data);
+        console.log("");
       },err=>{
         console.log("")
       });
@@ -205,7 +234,7 @@ export class ProfilPageComponent implements OnInit {
       let obj = JSON.parse(jsonStr);
       let tagsid:number|null=0;
       this.http.post<number>('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/Tags/createTag',obj).subscribe((res)=>{
-        console.log(res)
+        console.log("")
         tagsid=res;
       });
       await new Promise(resolve => setTimeout(resolve, 800));
@@ -214,9 +243,9 @@ export class ProfilPageComponent implements OnInit {
         "tagsId": ${tagsid}
       }`
       let sendcreatecontent_tag=JSON.parse(content_tag);
-      console.log(sendcreatecontent_tag);
+
       this.http.post('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/ContentTag/createContent_tag',sendcreatecontent_tag).subscribe((res)=>{
-        console.log(res);
+        console.log("");
 
       });
       await new Promise(resolve => setTimeout(resolve, 800));
@@ -225,8 +254,6 @@ export class ProfilPageComponent implements OnInit {
       tagsid=null;
       content_tag="";
 
-      console.log(jsonStr);
-      console.log(obj)
 
     }
 
@@ -234,7 +261,8 @@ export class ProfilPageComponent implements OnInit {
 
 
     this.http.post('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/Content/createContent',content2).subscribe((res)=>{
-      console.log(res);
+      console.log("Sikeres feltöltés");
+      alert("Successful upload!")
     },err=>{
       console.log("")
     })
