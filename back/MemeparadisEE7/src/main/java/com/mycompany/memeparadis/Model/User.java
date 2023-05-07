@@ -470,7 +470,7 @@ public class User implements Serializable {
     EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
     EntityManager em = emf.createEntityManager();
     try{
-        StoredProcedureQuery spq = em.createStoredProcedureQuery("updateUserName");
+        StoredProcedureQuery spq = em.createStoredProcedureQuery("updateEmail");
          spq.registerStoredProcedureParameter("emailIN", String.class, ParameterMode.IN);
          spq.registerStoredProcedureParameter("idIN", Integer.class, ParameterMode.IN);
         
