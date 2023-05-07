@@ -20,8 +20,10 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.ParameterMode;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.StoredProcedureQuery;
 import javax.persistence.Table;
+import javax.persistence.TypedQuery;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -302,5 +304,26 @@ public Content GetMostLikedPosts() throws Exception {
 
     return mostLikedContentDetails;
 }
-
+//public List<Content> getEnglishContents() throws Exception {
+//    EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
+//    EntityManager em = emf.createEntityManager();
+//    List<Content> result = new ArrayList<>();
+//    try {
+//        Query query = em.createQuery("SELECT c FROM Content c", Content.class);
+//        List<Content> contents = query.getResultList();
+//        for (Content content : contents) {
+//            if (content.getLanguage().equals("English")) {
+//                result.add(content);
+//            }
+//        }
+//    } catch (Exception ex) {
+//        System.out.println(ex.getMessage());
+//        throw new Exception("" + ex.getMessage());
+//    } finally {
+//        em.clear();
+//        em.close();
+//        emf.close();
+//    }
+//    return result;
+//}
 }

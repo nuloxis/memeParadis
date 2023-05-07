@@ -11,6 +11,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
@@ -53,5 +54,17 @@ public class ContentService {
        }
        return result3;
    }
+//   public List<Content> getEnglishContents() throws Exception {
+//    List<Content> result = null;
+//    try {
+//      result = c.getEnglishContents();
+//    } catch (Exception ex) {
+//        System.out.println(ex.getMessage());
+//        throw new Exception("" + ex.getMessage());
+//    }
+//    return result;
+//   }
+//}
 }
+
   

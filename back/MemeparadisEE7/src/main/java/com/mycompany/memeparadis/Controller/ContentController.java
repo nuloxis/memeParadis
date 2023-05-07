@@ -7,10 +7,12 @@ package com.mycompany.memeparadis.Controller;
 import com.mycompany.memeparadis.Configuration.Database;
 import com.mycompany.memeparadis.Model.Content;
 import com.mycompany.memeparadis.Service.ContentService;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -60,6 +62,14 @@ public Content GetMostLikedPosts() throws Exception{
     Content result = conts.GetMostLikedPosts();
     return result;
 }
+//@GET
+//@Path("getEnglishContents")
+//@Produces(MediaType.APPLICATION_JSON)
+//public List<Content> getEnglishContents() throws Exception{
+// List<Content> result = conts.getEnglishContents();
+//return result;
+//}
+
 }
 
     
