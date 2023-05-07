@@ -182,6 +182,7 @@ public class Content implements Serializable {
             spq.registerStoredProcedureParameter("language_IN",String.class, ParameterMode.IN);
             spq.registerStoredProcedureParameter("content_type",Boolean.class, ParameterMode.IN);
             spq.registerStoredProcedureParameter("content_uplade_name",String.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("new_id", Integer.class, ParameterMode.OUT);
     
           
             spq.setParameter("adult_content",c.getAdultContent());
@@ -191,11 +192,12 @@ public class Content implements Serializable {
             spq.setParameter("content_uplade_name",c.getContentUpladeName());
             
             spq.execute();
-            int randomNumber = (int)(Math.random() * 1000);
             
-          
+          int contentId = (int) spq.getOutputParameterValue("new_id");
+           c.setId(contentId);
 
-            return "Sikeres"+" "+"A randomszáma pedig:"+" "+randomNumber;
+
+            return "Sikeres"+" "+"Az idja pedig:"+" "+c.getId();
            
         }catch(Exception ex){
             System.out.println(ex.getMessage());
