@@ -158,27 +158,17 @@ export class ProfilPageComponent implements OnInit {
     localStorage.clear();
     setTimeout(()=>{
       window.location.reload()
-    }, 100);
+    }, 200);
   }
   async creatContentfunctione(){
+
     let howmanycontent:number=0 ;
-
-    this.http.get<number>('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/Content/getHowManyContent').subscribe(res=>{
-        howmanycontent=res;
-
-    })
-    await new Promise(resolve => setTimeout(resolve, 800));
-
-
-    const content2: Content = {id:0,adultContent:false,uploaderName:0,language:"",likes:0,contentType:false,contentUpladeName:"",};
+    const content2: Content = {adultContent:false,uploaderName:0,language:"",contentType:false,contentUpladeName:""};
     const selectmenu2=document.getElementById("format") as HTMLSelectElement;
     const language_select=document.getElementById("language-select") as HTMLSelectElement;
-
-
     let data:any=localStorage.getItem('name');
     this.datauser=JSON.parse(data);
     content2.uploaderName=this.datauser.id;
-
 
     const filedata=this.file;
     var myFormData = new FormData();
@@ -187,31 +177,17 @@ export class ProfilPageComponent implements OnInit {
     headers.append('Accept', 'application/json');
     myFormData.append('video', filedata);
 
-
-
     if(selectmenu2.value=="video/*"){
       content2.contentType=true;
       this.http.post('http://localhost/saves.php', myFormData, {
         headers: headers,
-      }).subscribe(data => {
-
-        console.log("");
-      },err=>{
-        console.log("")
       });
-      await new Promise(resolve => setTimeout(resolve, 800));
     }
     else if(selectmenu2.value=="image/*"){
       content2.contentType=false;
       this.http.post('http://localhost/saves2.php', myFormData, {
         headers: headers,
-      }).subscribe(data => {
-
-        console.log("");
-      },err=>{
-        console.log("")
       });
-      await new Promise(resolve => setTimeout(resolve, 800));
     }
 
     if (language_select.value=="ENG"){
@@ -223,18 +199,20 @@ export class ProfilPageComponent implements OnInit {
       content2.language="OTHER";
     }
     content2.contentUpladeName+=this.file.name;
+    this.http.post('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/Content/createContent',content2,{responseType:'text'}).subscribe((res)=>{
+      console.log("Sikeres feltöltés");
+      const id = parseInt(res.split(': ')[1]);
+      howmanycontent=id;
 
-
-    const buttonTexts = this.getButtonTexts();
+    })
     await new Promise(resolve => setTimeout(resolve, 800));
 
-
+    const buttonTexts = this.getButtonTexts();
     for (const buttonText of buttonTexts) {
       let jsonStr = `{"tag": "${buttonText}"}`;
       let obj = JSON.parse(jsonStr);
       let tagsid:number|null=0;
       this.http.post<number>('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/Tags/createTag',obj).subscribe((res)=>{
-        console.log("")
         tagsid=res;
       });
       await new Promise(resolve => setTimeout(resolve, 800));
@@ -245,8 +223,6 @@ export class ProfilPageComponent implements OnInit {
       let sendcreatecontent_tag=JSON.parse(content_tag);
 
       this.http.post('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/ContentTag/createContent_tag',sendcreatecontent_tag).subscribe((res)=>{
-        console.log("");
-
       });
       await new Promise(resolve => setTimeout(resolve, 800));
       jsonStr = "";
@@ -254,20 +230,7 @@ export class ProfilPageComponent implements OnInit {
       tagsid=null;
       content_tag="";
 
-
     }
-
-    /**/
-
-
-    this.http.post('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/Content/createContent',content2).subscribe((res)=>{
-      console.log("Sikeres feltöltés");
-      alert("Successful upload!")
-    },err=>{
-      console.log("")
-    })
-    await new Promise(resolve => setTimeout(resolve, 800));
-
   }
 
   getFile(event:any){
@@ -285,47 +248,6 @@ export class ProfilPageComponent implements OnInit {
     });
     return buttonTexts;
   }
-
-
-  /*<span class="tagSpan" >${tag} <button class="deleteButton2" (click)="deleteButton222()" >Delete</button></span>*/
-  /*deleteButton222():void{
-    console.log("deleteButton2")
-    const deleteButton2 = document.querySelectorAll<HTMLButtonElement>('.deleteButton2');
-    deleteButton2.forEach((button) => {
-      console.log("asfdas");
-      button.addEventListener("click", () => {
-        const tagSpan = button.parentElement!;
-        tagSpan.remove();
-      });
-    });
-  }*/
-
-/*
-  selectmenuasd(): void{
-    console.log("sadasd")
-
-    const selectmenu2=document.getElementById("format") as HTMLSelectElement;
-    const fileinput=document.getElementById("file") as HTMLInputElement;
-
-
-    if(selectmenu2.value=="video/*"){
-      fileinput.accept="video/*";
-      console.log(fileinput.accept.valueOf())
-
-
-    }
-    else if(selectmenu2.value=="image/*"){
-
-      fileinput.accept="";
-      fileinput.accept="image/*";
-    }
-
-  }
-*/
-
-
-
-
 
 
 }

@@ -31,13 +31,6 @@ export class LoginComponent implements OnInit {
     this.http.get<Content>('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/Content/GetMostLikedPosts').subscribe(
       res=>{
         this.content=res;
-        console.log(this.content.id)
-        console.log(this.content.adultContent)
-        console.log(this.content.uploaderName)
-        console.log(this.content.language)
-        console.log(this.content.likes)
-        console.log(this.content.contentType)
-        console.log(this.content.contentUpladeName)
 
         if (this.content.contentType==false){
           const img=`
