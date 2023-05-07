@@ -85,7 +85,7 @@ public class UserController {
     public String updateEmail(User emailup){
         String result = "";
         try{
-            result = us.updateUserName(emailup.getEmail(), emailup.getId());
+            result = us.updateEmail(emailup.getEmail(), emailup.getId());
         }catch(Exception ex){
         System.err.println(""+ex.getMessage());
         }
