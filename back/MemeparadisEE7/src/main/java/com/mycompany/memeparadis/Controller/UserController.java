@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -117,4 +118,18 @@ public class UserController {
         }
         return result;
     }
+@DELETE
+@Path("deleteUser")
+@Consumes(MediaType.APPLICATION_JSON)
+public String deleteUser(User u){
+  String result = "";  
+  try{
+    result = us.deleteUser(u.getId(), u.getCurrentPw());
+  } catch(Exception ex){
+      System.err.println("" + ex.getMessage());
+      result = ex.getMessage();
   }
+  return result;
+}
+}
+

@@ -506,8 +506,6 @@ public class User implements Serializable {
         spq.setParameter("idIN",id);
         
         spq.execute();
-        System.out.println("A jelenlegi jelszó:"+" "+currentPw);
-        System.out.println("Az új jelszó"+" "+newPw);
         String result = (String) spq.getOutputParameterValue("result");
         return result;
     }catch(Exception ex){
@@ -542,4 +540,29 @@ public class User implements Serializable {
         emf.close();
     }
 }
+    public String deleteUser(Integer id,String currentPw) throws Exception{
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
+    EntityManager em = emf.createEntityManager();
+    try{
+    StoredProcedureQuery spq = em.createStoredProcedureQuery("deleteUser");
+    
+    spq.registerStoredProcedureParameter("idIN", Integer.class, ParameterMode.IN);
+    spq.registerStoredProcedureParameter("currentPwIN", String.class, ParameterMode.IN);
+    spq.registerStoredProcedureParameter("result", String.class, ParameterMode.OUT);
+    
+    spq.setParameter("idIN",id);
+    spq.setParameter("currentPwIN", encryptString(currentPw));
+    
+    spq.execute();
+    String result = (String) spq.getOutputParameterValue("result");
+    return result;
+    }catch(Exception ex){
+    System.out.println(ex.getMessage());
+    throw new Exception(""+ex.getMessage());
+    }finally{
+    em.clear();
+    em.close();
+    emf.close();
+    }
+    }
 }

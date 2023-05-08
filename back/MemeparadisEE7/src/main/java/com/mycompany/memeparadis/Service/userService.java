@@ -97,4 +97,14 @@ public class userService {
         } 
         return result;
     }
+    public String deleteUser(Integer id,String currentPw){
+    String result = "";
+    try{
+      String user  = u.deleteUser(id, currentPw);
+      result = user;
+    }catch(Exception ex){
+    result = ex.getMessage();
+    }
+    return result;
+    }
 }
