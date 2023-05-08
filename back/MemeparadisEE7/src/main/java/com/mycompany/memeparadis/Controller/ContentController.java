@@ -69,7 +69,13 @@ public List<Content> getEnglishContents() throws Exception{
  List<Content> result = conts.getEnglishContents();
 return result;
 }
-
+@GET
+@Path("getHungarianContents")
+@Produces(MediaType.APPLICATION_JSON)
+public List<Content> getHungarianContents () throws Exception{
+ List<Content> result = conts.getHungarianContents();
+return result;
+}
 }
 
     

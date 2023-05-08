@@ -64,6 +64,16 @@ public class ContentService {
     }
     return result;
    }
+   public List<Content> getHungarianContents() throws Exception {
+    List<Content> result = null;
+    try {
+      result = c.getHungarianContents();
+    } catch (Exception ex) {
+        System.out.println(ex.getMessage());
+        throw new Exception("" + ex.getMessage());
+    }
+    return result;
+   }
 }
 
   

@@ -322,8 +322,22 @@ public List<Content> getEnglishContents() throws Exception {
     }
     return result;
 }
-
-
-
-
+public List<Content> getHungarianContents() throws Exception {
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
+    EntityManager em = emf.createEntityManager();
+    List<Content> result = new ArrayList<>();
+    try {
+        StoredProcedureQuery spq = em.createStoredProcedureQuery("getHungarianContents");
+        spq.execute();
+        result = spq.getResultList();
+    } catch (Exception ex) {
+        System.out.println(ex.getMessage());
+        throw new Exception("" + ex.getMessage());
+    } finally {
+        em.clear();
+        em.close();
+        emf.close();
+    }
+    return result;
+}
 }
