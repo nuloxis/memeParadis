@@ -104,6 +104,16 @@ public class ContentService {
     }
     return result;
    }
+   public String updateTag(String tag,Integer id){
+    String result = "";
+        try{
+            c.updateTag(tag, id);
+            result = "Sikeres frissítés";
+        }catch(Exception ex){
+        result = ex.getMessage();
+        } 
+        return result;
+    }
 }
 
   

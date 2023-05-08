@@ -6,6 +6,8 @@ package com.mycompany.memeparadis.Controller;
 
 import com.mycompany.memeparadis.Configuration.Database;
 import com.mycompany.memeparadis.Model.Content;
+import com.mycompany.memeparadis.Model.Tags;
+import com.mycompany.memeparadis.Model.User;
 import com.mycompany.memeparadis.Service.ContentService;
 import java.util.ArrayList;
 import java.util.List;
@@ -97,6 +99,17 @@ public List<Content> getAllContentRand () throws Exception{
  List<Content> result = conts.getAllContentRand();
 return result;
 }
+@GET
+@Path("updateTag")
+public String updateTag(Tags tag ){
+  String result = "";
+        try{
+            result = conts.updateTag(tag.getTag(),tag.getId());
+        }catch(Exception ex){
+        System.err.println(""+ex.getMessage());
+        }
+        return result;
+    }
 }
 
     
