@@ -501,7 +501,7 @@ public class User implements Serializable {
         spq.registerStoredProcedureParameter("idIN", Integer.class, ParameterMode.IN);
         spq.registerStoredProcedureParameter("result", String.class, ParameterMode.OUT);
         
-        spq.setParameter("currentPwIN", currentPw);
+        spq.setParameter("currentPwIN", encryptString(currentPw));
         spq.setParameter("newPwIN",newPw);
         spq.setParameter("idIN",id);
         

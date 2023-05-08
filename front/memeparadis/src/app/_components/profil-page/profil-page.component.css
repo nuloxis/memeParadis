@@ -187,8 +187,38 @@ span{
   display: none;
 
 }
+#edditemail{
+  display: none;
+  width: 240px;
+}
+#edditpasswordold{
+  display: none;
+}
+#edditpasswordnew{
+  display: none;
+}
 #editinglabel{
   display: contents;
+}
+#editinglabel2{
+  display: contents;
+}
+#editinglabel3{
+  display: contents;
+}
+input{
+  background-color: #1E1F22;
+  color: white;
+  width: 177px;
+  height: 21px;
+  border: 0;
+  border-radius: 5px;
+}
+#labeltext{
+  display: none;
+}
+#labeltext2{
+  display: none;
 }
 
 /*----------------------------------*/

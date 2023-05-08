@@ -43,15 +43,15 @@
           <div class="profildatadivs">
             <h3>E-Mail:</h3>
             <div class="profildatadivsinnn">
-              <div class="diva"><label class="pofildatalabels">{{datauser.email}}</label></div>
-              <div><button class="editingbutton">Editing</button></div>
+              <div class="diva"><label class="pofildatalabels" id="editinglabel2">{{datauser.email}}</label><input id="edditemail" type="text"></div>
+              <div><button class="editingbutton" id="edditemailbutton2">Editing</button></div>
             </div>
           </div>
           <div class="profildatadivs">
-            <h3>Birth date:</h3>
+            <h3>Password:</h3>
             <div class="profildatadivsinnn">
-              <div class="diva"><label class="pofildatalabels">{{datauser.birthDate}}</label></div>
-              <div><button class="editingbutton">Editing</button></div>
+              <div class="diva"><label class="pofildatalabels" id="editinglabel3">{{hiddenPassword}}</label><label id="labeltext">Current password:<input id="edditpasswordold" type="text"></label><label id="labeltext2">New password:<input id="edditpasswordnew" type="text"></label></div>
+              <div><button class="editingbutton" id="edditemailbutton3">Editing</button></div>
             </div>
           </div>
           <div>
@@ -71,7 +71,7 @@
           <div class="profildatabigdiv">
             <div class="uploaddd">
               <select name="format" id="format" class="format">
-                <option selected disabled>Choose file type</option>
+                <option name="option2" selected disabled>Choose file type</option>
                 <option value="video/*">Video</option>
                 <option value="image/*">Image</option>
               </select>
@@ -84,7 +84,7 @@
             </div>-->
             <div class="uploaddd">
               <select name="format2" id="language-select" class="format2">
-                <option selected disabled>What language is in content</option>
+                <option id="option1" selected disabled>What language is in content</option>
                 <option value="ENG">English</option>
                 <option value="HUN">Hungary</option>
                 <option value="OTHER">Other</option>

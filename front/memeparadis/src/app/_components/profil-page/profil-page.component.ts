@@ -17,6 +17,8 @@ export class ProfilPageComponent implements OnInit {
 
   content!:Content;
   filename!:String
+  public hiddenPassword: string = '';
+
 
 
 
@@ -28,10 +30,11 @@ export class ProfilPageComponent implements OnInit {
   ngOnInit(): void {
     let data:any=localStorage.getItem('name');
     this.datauser=JSON.parse(data);
-    const username=this.datauser.name;
     const userid=this.datauser.id;
+    const username=this.datauser.name;
+    const useremail=this.datauser.email;
 
-
+    this.hiddenPassword = '*'.repeat(this.datauser.password.length);
 
 
     const modal = document.getElementById("profilesettingsmodal") as HTMLElement;
@@ -94,6 +97,94 @@ export class ProfilPageComponent implements OnInit {
       }
     }
 
+    const editingnamebutton2 = document.getElementById("edditemailbutton2") as HTMLButtonElement;
+    const editinglabel2=document.getElementById("editinglabel2") as HTMLLabelElement;
+    const edditname2=document.getElementById("edditemail") as HTMLInputElement;
+    let isEditing2 = false;
+    const updateemail :any={email:"",id:0};
+    updateemail.id=userid;
+
+
+
+    editingnamebutton2.onclick = ()=> {
+
+      if (!isEditing2) {
+        editinglabel2.style.display = "none";
+        edditname2.style.display = "block";
+        isEditing2 = true;
+        edditname2.value=useremail;
+        editingnamebutton2.textContent="Send!";
+      } else {
+        edditname2.style.display = "none";
+        editinglabel2.style.display = "contents";
+        isEditing2 = false;
+        editingnamebutton2.textContent="Editing";
+        updateemail.email=edditname2.value;
+        if(edditname2.value!=useremail){
+          this.edituseremail(updateemail);
+          user.email=edditname2.value;
+          localStorage.removeItem("name");
+          localStorage.setItem("name", JSON.stringify(user));
+          setTimeout(()=>{
+            window.location.reload()
+          }, 500);
+        }
+      }
+    }
+
+
+    const edditemailbutton3 = document.getElementById("edditemailbutton3") as HTMLButtonElement;
+    const editinglabel3=document.getElementById("editinglabel3") as HTMLLabelElement;
+    const labeltext=document.getElementById("labeltext") as HTMLLabelElement;
+    const labeltext2=document.getElementById("labeltext2") as HTMLLabelElement;
+    const edditpasswordold=document.getElementById("edditpasswordold") as HTMLInputElement;
+    const edditpasswordnew=document.getElementById("edditpasswordnew") as HTMLInputElement;
+
+    let isEditing3 = false;
+    const updatepassword :any={currentPw:"",newPw:"",id:0};
+    updatepassword.id=userid;
+
+
+
+    edditemailbutton3.onclick = async ()=> {
+
+      if (!isEditing3) {
+        editinglabel3.style.display = "none";
+        edditpasswordold.style.display = "block";
+        edditpasswordnew.style.display = "block";
+        labeltext.style.display = "block";
+        labeltext2.style.display = "block";
+        isEditing3 = true;
+        edditemailbutton3.textContent="Send!";
+      } else {
+        editinglabel3.style.display = "contents";
+        edditpasswordold.style.display = "none";
+        edditpasswordnew.style.display = "none";
+        labeltext.style.display = "none";
+        labeltext2.style.display = "none";
+        isEditing3 = false;
+        edditemailbutton3.textContent="Editing";
+        updatepassword.currentPw=edditpasswordold.value;
+        updatepassword.newPw=edditpasswordnew.value;
+        if(edditpasswordold.value!="" && edditpasswordnew.value!=""){
+          try {
+            this.http.put('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/User/updatePassword',updatepassword).subscribe()
+
+            user.password=edditpasswordnew.value;
+            localStorage.removeItem("name");
+            localStorage.setItem("name", JSON.stringify(user));
+            /*setTimeout(()=>{
+              window.location.reload()
+            }, 500);*/
+          } catch (error) {
+            alert("Error!");
+          }
+
+
+        }
+      }
+    }
+
 
 
     const selectmenu2=document.getElementById("format") as HTMLSelectElement;
@@ -105,15 +196,15 @@ export class ProfilPageComponent implements OnInit {
       if(selectmenu2.value=="video/*"){
         fileinput.accept="";
         fileinput.accept="video/*";
-        console.log(fileinput.accept.valueOf())
+
       }
       else if(selectmenu2.value=="image/*"){
         fileinput.accept="";
         fileinput.accept="image/*";
-        console.log(fileinput.accept.valueOf())
+
       }
       else{
-        console.log(fileinput.textContent);
+
 
       }
     }
@@ -126,7 +217,6 @@ export class ProfilPageComponent implements OnInit {
 
     addtagsbutton.onclick=function(){
       const tag=inputtags.value;
-      console.log(tag);
       const createlab=`
       <label class="tagdi2v">
         <button class="deleteButton2" onclick="this.parentElement.remove()">${tag}</button>
@@ -151,8 +241,13 @@ export class ProfilPageComponent implements OnInit {
   };
   editusername(user:any){
     this.http.put('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/User/updateUserName',user).subscribe(res=>{
-      console.log("sikeres");
     })
+  };
+  edituseremail(email:any){
+    this.http.put('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/User/updateEmail',email).subscribe()
+  };
+  edituserpassword(password:any){
+    this.http.put('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/User/updatePassword',password).subscribe()
   };
   logoutfuntion():void{
     localStorage.clear();
@@ -162,75 +257,95 @@ export class ProfilPageComponent implements OnInit {
   }
   async creatContentfunctione(){
 
-    let howmanycontent:number=0 ;
-    const content2: Content = {adultContent:false,uploaderName:0,language:"",contentType:false,contentUpladeName:""};
-    const selectmenu2=document.getElementById("format") as HTMLSelectElement;
-    const language_select=document.getElementById("language-select") as HTMLSelectElement;
-    let data:any=localStorage.getItem('name');
-    this.datauser=JSON.parse(data);
-    content2.uploaderName=this.datauser.id;
+    try {
+      let howmanycontent:number=0 ;
+      const content2: Content = {adultContent:false,uploaderName:0,language:"",contentType:false,contentUpladeName:""};
+      const selectmenu2=document.getElementById("format") as HTMLSelectElement;
+      const language_select=document.getElementById("language-select") as HTMLSelectElement;
+      let data:any=localStorage.getItem('name');
+      this.datauser=JSON.parse(data);
+      content2.uploaderName=this.datauser.id;
 
-    const filedata=this.file;
-    var myFormData = new FormData();
-    const headers = new HttpHeaders();
-    headers.append('Content-Type', 'multipart/form-data');
-    headers.append('Accept', 'application/json');
-    myFormData.append('video', filedata);
+      const filedata=this.file;
+      var myFormData = new FormData();
+      const headers = new HttpHeaders();
+      headers.append('Content-Type', 'multipart/form-data');
+      headers.append('Accept', 'application/json');
+      myFormData.append('video', filedata);
+      const fileinput=document.getElementById("file") as HTMLInputElement;
 
-    if(selectmenu2.value=="video/*"){
-      content2.contentType=true;
-      this.http.post('http://localhost/saves.php', myFormData, {
-        headers: headers,
-      });
-    }
-    else if(selectmenu2.value=="image/*"){
-      content2.contentType=false;
-      this.http.post('http://localhost/saves2.php', myFormData, {
-        headers: headers,
-      });
-    }
+      if(selectmenu2.value=="video/*"){
+        content2.contentType=true;
+        this.http.post('http://localhost/saves.php', myFormData, {
+          headers: headers,
+        });
+      }
+      else if(selectmenu2.value=="image/*"){
+        content2.contentType=false;
+        this.http.post('http://localhost/saves2.php', myFormData, {
+          headers: headers,
+        });
+      }
 
-    if (language_select.value=="ENG"){
-      content2.language="ENG";
-    }
-    else if(language_select.value=="HUN"){
-      content2.language="HUN";
-    }else{
-      content2.language="OTHER";
-    }
-    content2.contentUpladeName+=this.file.name;
-    this.http.post('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/Content/createContent',content2,{responseType:'text'}).subscribe((res)=>{
-      console.log("Sikeres feltöltés");
-      const id = parseInt(res.split(': ')[1]);
-      howmanycontent=id;
+      if (language_select.value=="ENG"){
+        content2.language="ENG";
+      }
+      else if(language_select.value=="HUN"){
+        content2.language="HUN";
+      }else{
+        content2.language="OTHER";
+      }
+      content2.contentUpladeName+=this.file.name;
+      this.http.post('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/Content/createContent',content2,{responseType:'text'}).subscribe((res)=>{
+        const id = parseInt(res.split(': ')[1]);
+        howmanycontent=id;
 
-    })
-    await new Promise(resolve => setTimeout(resolve, 800));
-
-    const buttonTexts = this.getButtonTexts();
-    for (const buttonText of buttonTexts) {
-      let jsonStr = `{"tag": "${buttonText}"}`;
-      let obj = JSON.parse(jsonStr);
-      let tagsid:number|null=0;
-      this.http.post<number>('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/Tags/createTag',obj).subscribe((res)=>{
-        tagsid=res;
-      });
+      })
       await new Promise(resolve => setTimeout(resolve, 800));
-      let content_tag=`{
-        "contentId": ${howmanycontent},
-        "tagsId": ${tagsid}
-      }`
-      let sendcreatecontent_tag=JSON.parse(content_tag);
 
-      this.http.post('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/ContentTag/createContent_tag',sendcreatecontent_tag).subscribe((res)=>{
-      });
-      await new Promise(resolve => setTimeout(resolve, 800));
-      jsonStr = "";
-      obj = null;
-      tagsid=null;
-      content_tag="";
+      const buttonTexts = this.getButtonTexts();
+      for (const buttonText of buttonTexts) {
+        let jsonStr = `{"tag": "${buttonText}"}`;
+        let obj = JSON.parse(jsonStr);
+        let tagsid:number|null=0;
+        this.http.post<number>('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/Tags/createTag',obj).subscribe((res)=>{
+          tagsid=res;
+        });
+        await new Promise(resolve => setTimeout(resolve, 800));
+        let content_tag=`{
+          "contentId": ${howmanycontent},
+          "tagsId": ${tagsid}
+        }`
+        let sendcreatecontent_tag=JSON.parse(content_tag);
 
+        this.http.post('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/ContentTag/createContent_tag',sendcreatecontent_tag,{responseType:'text'}).subscribe((res)=>{
+        });
+        await new Promise(resolve => setTimeout(resolve, 800));
+        jsonStr = "";
+        obj = null;
+        tagsid=null;
+        content_tag="";
+
+      }
+
+
+      const parentElement = document.getElementById("tagdiv");
+        while (parentElement!.firstChild) {
+          parentElement!.removeChild(parentElement!.firstChild);
+        }
+      selectmenu2.options[0].selected = true;
+      language_select.options[0].selected=true;
+
+
+      alert("Successful upload!")
+    } catch (error) {
+      alert("Some required fields are missing!")
     }
+
+
+
+
+
   }
 
   getFile(event:any){
