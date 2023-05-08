@@ -311,16 +311,7 @@ public List<Content> getEnglishContents() throws Exception {
     try {
         StoredProcedureQuery spq = em.createStoredProcedureQuery("getEnglishContents");
         spq.execute();
-        List<Object[]> contents = spq.getResultList();
-
-      for (Object[] contentArr : contents) {
-    if (contentArr[0] instanceof Content) {
-        Content content = (Content) contentArr[0];
-        if (content.getLanguage().equals("English")) {
-            result.add(content);
-        }
-    }
-}
+        result = spq.getResultList();
     } catch (Exception ex) {
         System.out.println(ex.getMessage());
         throw new Exception("" + ex.getMessage());
@@ -331,6 +322,8 @@ public List<Content> getEnglishContents() throws Exception {
     }
     return result;
 }
+
+
 
 
 }
