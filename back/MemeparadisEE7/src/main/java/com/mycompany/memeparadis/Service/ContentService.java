@@ -94,6 +94,16 @@ public class ContentService {
     }
     return result;
    }
+   public List<Content> getAllContentRand() throws Exception {
+    List<Content> result = null;
+    try {
+      result = c.getAllContentRand();
+    } catch (Exception ex) {
+        System.out.println(ex.getMessage());
+        throw new Exception("" + ex.getMessage());
+    }
+    return result;
+   }
 }
 
   

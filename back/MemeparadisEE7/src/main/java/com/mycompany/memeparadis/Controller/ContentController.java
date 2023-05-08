@@ -90,6 +90,13 @@ public List<Content> getVideos () throws Exception{
  List<Content> result = conts.getVideos();
 return result;
 }
+@GET
+@Path("getAllContentRand")
+@Produces(MediaType.APPLICATION_JSON)
+public List<Content> getAllContentRand () throws Exception{
+ List<Content> result = conts.getAllContentRand();
+return result;
+}
 }
 
     
