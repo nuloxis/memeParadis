@@ -99,7 +99,7 @@ public List<Content> getAllContentRand () throws Exception{
  List<Content> result = conts.getAllContentRand();
 return result;
 }
-@GET
+@POST
 @Path("updateTag")
 public String updateTag(Tags tag ){
   String result = "";
