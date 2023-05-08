@@ -74,6 +74,26 @@ public class ContentService {
     }
     return result;
    }
+   public List<Content> getPictures() throws Exception {
+    List<Content> result = null;
+    try {
+      result = c.getPictures();
+    } catch (Exception ex) {
+        System.out.println(ex.getMessage());
+        throw new Exception("" + ex.getMessage());
+    }
+    return result;
+   }
+   public List<Content> getVideos() throws Exception {
+    List<Content> result = null;
+    try {
+      result = c.getVideos();
+    } catch (Exception ex) {
+        System.out.println(ex.getMessage());
+        throw new Exception("" + ex.getMessage());
+    }
+    return result;
+   }
 }
 
   

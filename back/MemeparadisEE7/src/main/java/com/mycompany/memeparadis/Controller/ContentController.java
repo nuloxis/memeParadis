@@ -76,6 +76,20 @@ public List<Content> getHungarianContents () throws Exception{
  List<Content> result = conts.getHungarianContents();
 return result;
 }
+@GET
+@Path("getPictures")
+@Produces(MediaType.APPLICATION_JSON)
+public List<Content> getPictures () throws Exception{
+ List<Content> result = conts.getPictures();
+return result;
+}
+@GET
+@Path("getVideos")
+@Produces(MediaType.APPLICATION_JSON)
+public List<Content> getVideos () throws Exception{
+ List<Content> result = conts.getVideos();
+return result;
+}
 }
 
     
