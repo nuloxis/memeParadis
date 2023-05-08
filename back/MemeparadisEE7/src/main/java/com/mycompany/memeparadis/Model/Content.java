@@ -304,26 +304,33 @@ public Content GetMostLikedPosts() throws Exception {
 
     return mostLikedContentDetails;
 }
-//public List<Content> getEnglishContents() throws Exception {
-//    EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
-//    EntityManager em = emf.createEntityManager();
-//    List<Content> result = new ArrayList<>();
-//    try {
-//        Query query = em.createQuery("SELECT c FROM Content c", Content.class);
-//        List<Content> contents = query.getResultList();
-//        for (Content content : contents) {
-//            if (content.getLanguage().equals("English")) {
-//                result.add(content);
-//            }
-//        }
-//    } catch (Exception ex) {
-//        System.out.println(ex.getMessage());
-//        throw new Exception("" + ex.getMessage());
-//    } finally {
-//        em.clear();
-//        em.close();
-//        emf.close();
-//    }
-//    return result;
-//}
+public List<Content> getEnglishContents() throws Exception {
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
+    EntityManager em = emf.createEntityManager();
+    List<Content> result = new ArrayList<>();
+    try {
+        StoredProcedureQuery spq = em.createStoredProcedureQuery("getEnglishContents");
+        spq.execute();
+        List<Object[]> contents = spq.getResultList();
+
+      for (Object[] contentArr : contents) {
+    if (contentArr[0] instanceof Content) {
+        Content content = (Content) contentArr[0];
+        if (content.getLanguage().equals("English")) {
+            result.add(content);
+        }
+    }
+}
+    } catch (Exception ex) {
+        System.out.println(ex.getMessage());
+        throw new Exception("" + ex.getMessage());
+    } finally {
+        em.clear();
+        em.close();
+        emf.close();
+    }
+    return result;
+}
+
+
 }

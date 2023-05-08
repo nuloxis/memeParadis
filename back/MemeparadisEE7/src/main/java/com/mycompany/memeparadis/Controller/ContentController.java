@@ -62,13 +62,13 @@ public Content GetMostLikedPosts() throws Exception{
     Content result = conts.GetMostLikedPosts();
     return result;
 }
-//@GET
-//@Path("getEnglishContents")
-//@Produces(MediaType.APPLICATION_JSON)
-//public List<Content> getEnglishContents() throws Exception{
-// List<Content> result = conts.getEnglishContents();
-//return result;
-//}
+@GET
+@Path("getEnglishContents")
+@Produces(MediaType.APPLICATION_JSON)
+public List<Content> getEnglishContents() throws Exception{
+ List<Content> result = conts.getEnglishContents();
+return result;
+}
 
 }
 

@@ -54,17 +54,16 @@ public class ContentService {
        }
        return result3;
    }
-//   public List<Content> getEnglishContents() throws Exception {
-//    List<Content> result = null;
-//    try {
-//      result = c.getEnglishContents();
-//    } catch (Exception ex) {
-//        System.out.println(ex.getMessage());
-//        throw new Exception("" + ex.getMessage());
-//    }
-//    return result;
-//   }
-//}
+   public List<Content> getEnglishContents() throws Exception {
+    List<Content> result = null;
+    try {
+      result = c.getEnglishContents();
+    } catch (Exception ex) {
+        System.out.println(ex.getMessage());
+        throw new Exception("" + ex.getMessage());
+    }
+    return result;
+   }
 }
 
   
