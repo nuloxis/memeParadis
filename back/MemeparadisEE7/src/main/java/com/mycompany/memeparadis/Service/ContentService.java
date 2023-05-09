@@ -54,7 +54,7 @@ public class ContentService {
        }
        return result3;
    }
-   public List<Content> getEnglishContents() throws Exception {
+   public List<Content> getEnglishContents() throws Exception{
     List<Content> result = null;
     try {
       result = c.getEnglishContents();

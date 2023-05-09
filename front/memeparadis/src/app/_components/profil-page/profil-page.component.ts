@@ -168,14 +168,18 @@ export class ProfilPageComponent implements OnInit {
         updatepassword.newPw=edditpasswordnew.value;
         if(edditpasswordold.value!="" && edditpasswordnew.value!=""){
           try {
-            this.http.put('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/User/updatePassword',updatepassword).subscribe()
+            this.http.put('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/User/updatePassword',updatepassword,{responseType:'text'}).subscribe((res)=>{
+              console.log(res);
+              if(res=="A jelenlegi jelszó vagy az új jelszó nem megfelelő."){
+                alert("Error!");
+              }
+              else{
+                alert("Successful password change!");
+                this.logoutfuntion();
+              }
 
-            user.password=edditpasswordnew.value;
-            localStorage.removeItem("name");
-            localStorage.setItem("name", JSON.stringify(user));
-            /*setTimeout(()=>{
-              window.location.reload()
-            }, 500);*/
+            })
+
           } catch (error) {
             alert("Error!");
           }

@@ -50,65 +50,65 @@ public class ContentController {
         String result = conts.createContent(content);
         return result;
     }
-@GET
-@Path("getHowManyContent")
-@Produces(MediaType.APPLICATION_JSON)
-public Integer getHowManyContent() throws Exception{
-    Integer result = conts.getHowManyContent();
-    return result;
-}
-@GET
-@Path("GetMostLikedPosts")
-@Produces(MediaType.APPLICATION_JSON)
-public Content GetMostLikedPosts() throws Exception{
-    Content result = conts.GetMostLikedPosts();
-    return result;
-}
-@GET
-@Path("getEnglishContents")
-@Produces(MediaType.APPLICATION_JSON)
-public List<Content> getEnglishContents() throws Exception{
- List<Content> result = conts.getEnglishContents();
-return result;
-}
-@GET
-@Path("getHungarianContents")
-@Produces(MediaType.APPLICATION_JSON)
-public List<Content> getHungarianContents () throws Exception{
- List<Content> result = conts.getHungarianContents();
-return result;
-}
-@GET
-@Path("getPictures")
-@Produces(MediaType.APPLICATION_JSON)
-public List<Content> getPictures () throws Exception{
- List<Content> result = conts.getPictures();
-return result;
-}
-@GET
-@Path("getVideos")
-@Produces(MediaType.APPLICATION_JSON)
-public List<Content> getVideos () throws Exception{
- List<Content> result = conts.getVideos();
-return result;
-}
-@GET
-@Path("getAllContentRand")
-@Produces(MediaType.APPLICATION_JSON)
-public List<Content> getAllContentRand () throws Exception{
- List<Content> result = conts.getAllContentRand();
-return result;
-}
-@POST
-@Path("updateTag")
-public String updateTag(Tags tag ){
-  String result = "";
-        try{
-            result = conts.updateTag(tag.getTag(),tag.getId());
-        }catch(Exception ex){
-        System.err.println(""+ex.getMessage());
-        }
+    @GET
+    @Path("getHowManyContent")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Integer getHowManyContent() throws Exception{
+        Integer result = conts.getHowManyContent();
         return result;
+    }
+    @GET
+    @Path("GetMostLikedPosts")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Content GetMostLikedPosts() throws Exception{
+        Content result = conts.GetMostLikedPosts();
+        return result;
+    }
+    @GET
+    @Path("getEnglishContents")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Content> getEnglishContents() throws Exception{
+     List<Content> result = conts.getEnglishContents();
+    return result;
+    }
+    @GET
+    @Path("getHungarianContents")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Content> getHungarianContents () throws Exception{
+     List<Content> result = conts.getHungarianContents();
+    return result;
+    }
+    @GET
+    @Path("getPictures")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Content> getPictures () throws Exception{
+     List<Content> result = conts.getPictures();
+    return result;
+    }
+    @GET
+    @Path("getVideos")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Content> getVideos () throws Exception{
+     List<Content> result = conts.getVideos();
+    return result;
+    }
+    @GET
+    @Path("getAllContentRand")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Content> getAllContentRand () throws Exception{
+     List<Content> result = conts.getAllContentRand();
+    return result;
+    }
+    @POST
+    @Path("updateTag")
+    public String updateTag(Tags tag ){
+      String result = "";
+            try{
+                result = conts.updateTag(tag.getTag(),tag.getId());
+            }catch(Exception ex){
+            System.err.println(""+ex.getMessage());
+            }
+            return result;
     }
 }
 
