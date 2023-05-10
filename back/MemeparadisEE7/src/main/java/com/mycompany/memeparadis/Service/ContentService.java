@@ -113,7 +113,18 @@ public class ContentService {
         result = ex.getMessage();
         } 
         return result;
-    }
+   }
 }
+//   public String deleteContent(Integer id,String currentPw){
+//    String result = "";
+//    try{
+//      String content  =  c.deleteContent(id, currentPw);
+//      result = content;
+//    }catch(Exception ex){
+//    result = ex.getMessage();
+//    }
+//    return result;
+//    }
+//}
 
   

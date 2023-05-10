@@ -6,6 +6,9 @@ package com.mycompany.memeparadis.Model;
 
 import com.mycompany.memeparadis.Configuration.Database;
 import java.io.Serializable;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
@@ -171,6 +174,14 @@ public class Content implements Serializable {
     @Override
     public String toString() {
         return "com.mycompany.memeparadis.Model.Content[ id=" + id + " ]";
+    }
+    
+    public String encryptString(String input) throws NoSuchAlgorithmException{
+        MessageDigest md=MessageDigest.getInstance("MD5");
+        
+        byte[] messageDigest=md.digest(input.getBytes());
+        BigInteger bigInt =new BigInteger(1,messageDigest);
+        return bigInt.toString(16);
     }
     public String createContent(Content c) throws Exception{
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
@@ -413,6 +424,27 @@ public String updateTag(String tag,Integer id) throws Exception{
         em.clear();
         em.close();
         emf.close();
-    }
+    } 
 }
-}
+//public String deleteContent(Integer id,String currentPw) throws Exception{
+//EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
+//EntityManager em = emf.createEntityManager();
+//try{
+//    StoredProcedureQuery spq = em.createStoredProcedureQuery("deleteContent");
+//    
+//    spq.registerStoredProcedureParameter("idIN", Integer.class, ParameterMode.IN);
+//    spq.registerStoredProcedureParameter("currentPwIN", String.class, ParameterMode.IN);
+//    spq.registerStoredProcedureParameter("result", String.class, ParameterMode.OUT);
+//    
+//    spq.setParameter("idIN",id);
+//    spq.setParameter("currentPwIN", encryptString(currentPw));
+//    
+//    spq.execute();
+//    String result = (String) spq.getOutputParameterValue("result");
+//    return result;
+//}catch(Exception ex){
+//  System.out.println(ex.getMessage());
+//  throw new Exception(""+ex.getMessage());  
+//}
+
+}   

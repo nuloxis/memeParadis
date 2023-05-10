@@ -16,6 +16,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -110,6 +111,19 @@ public class ContentController {
             }
             return result;
     }
+//  @DELETE
+//@Path("deleteContent")
+//@Consumes(MediaType.APPLICATION_JSON)
+//public String deleteContent(User u){
+//  String result = "";  
+//  try{
+//    result = conts.deleteContent(u.getId(), u.getCurrentPw());
+//  } catch(Exception ex){
+//      System.err.println("" + ex.getMessage());
+//      result = ex.getMessage();
+//  }
+//  return result;
+//}  
 }
 
     
