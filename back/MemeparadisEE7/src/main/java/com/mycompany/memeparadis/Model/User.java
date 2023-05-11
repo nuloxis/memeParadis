@@ -565,4 +565,23 @@ public class User implements Serializable {
     emf.close();
     }
     }
+    public List<Content> getContentByUserId(Integer userId) throws Exception{
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
+    EntityManager em = emf.createEntityManager();
+    try{
+    StoredProcedureQuery spq = em.createStoredProcedureQuery("getContentByUserId");
+    
+    spq.registerStoredProcedureParameter("user_id", Integer.class, ParameterMode.IN);
+    spq.setParameter("user_id", userId);
+        List<Content> contentList = spq.getResultList();
+        return contentList;
+    }catch(Exception ex){
+        System.out.println(ex.getMessage());
+        throw new Exception(""+ex.getMessage());
+    }finally{
+        em.clear();
+        em.close();
+        emf.close();
+    }
+    }
 }

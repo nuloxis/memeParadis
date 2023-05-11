@@ -5,11 +5,13 @@
 package com.mycompany.memeparadis.Service;
 
 import com.mycompany.memeparadis.Exception.InvalidCredentialsException;
+import com.mycompany.memeparadis.Model.Content;
 import com.mycompany.memeparadis.Model.User;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -106,5 +108,15 @@ public class userService {
     result = ex.getMessage();
     }
     return result;
+    }
+    public List<Content> getContentByUserId(Integer userId) throws Exception{
+     List<Content> result = null;
+     try{
+     result = u.getContentByUserId(userId);
+     }catch(Exception ex){
+        System.out.println(ex.getMessage());
+        throw new Exception("" + ex.getMessage());
+     }
+     return result;
     }
 }

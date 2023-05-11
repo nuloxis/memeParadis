@@ -4,12 +4,14 @@
  */
 package com.mycompany.memeparadis.Controller;
 
+import com.mycompany.memeparadis.Model.Content;
 import com.mycompany.memeparadis.Model.User;
 import com.mycompany.memeparadis.Service.userService;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
@@ -18,6 +20,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -131,5 +134,12 @@ public String deleteUser(User u){
   }
   return result;
 }
+@GET
+@Path("getContentByUserId/{userId}")
+@Produces(MediaType.APPLICATION_JSON)
+public List<Content>  getContentByUserId(@PathParam("userId") Integer userId) throws Exception{
+     List<Content> result = us.getContentByUserId(userId);
+    return result;
+    }
 }
 
