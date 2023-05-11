@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
     this.http.get<Content>('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/Content/GetMostLikedPosts').subscribe(
       res=>{
         this.content=res;
-        console.log(res)
+
         if (this.content.contentType==false){
           const img=`
             <img src="../assets/content/picture/${this.content.contentUpladeName}" style="max-width: 678px;
@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
 
 
   loginProduct(addUser: any){
-    console.log(addUser);
+
     this.http.post<MyResponse>('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/User/login',addUser).subscribe((res)=>{
       const resId=res;
 

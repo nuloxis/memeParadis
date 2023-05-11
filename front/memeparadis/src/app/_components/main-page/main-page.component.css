@@ -4,12 +4,13 @@
 .mainbody{
   width: 100%;
   height: 100%;
+
 }
 .navbar{
   width: 100%;
   height: 70px;
   background-color: #282828;
-  position: fixed;
+
 }
 .navbarul{
   width: auto;
@@ -45,3 +46,9 @@ span{
   color: #ffffff;
 }
 /*----------------------------------*/
+#memes{
+  height: 100%;
+  width: 100%;
+  display: flow-root;
+}
+

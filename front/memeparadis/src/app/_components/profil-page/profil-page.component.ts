@@ -275,20 +275,27 @@ export class ProfilPageComponent implements OnInit {
       const headers = new HttpHeaders();
       headers.append('Content-Type', 'multipart/form-data');
       headers.append('Accept', 'application/json');
-      myFormData.append('video', filedata);
+      myFormData.append('picture', filedata);
       const fileinput=document.getElementById("file") as HTMLInputElement;
 
       if(selectmenu2.value=="video/*"){
         content2.contentType=true;
         this.http.post('http://localhost/saves.php', myFormData, {
           headers: headers,
-        });
+
+        }).subscribe();
+        console.clear();
+
       }
       else if(selectmenu2.value=="image/*"){
+
         content2.contentType=false;
         this.http.post('http://localhost/saves2.php', myFormData, {
           headers: headers,
-        });
+        }).subscribe();
+        console.clear();
+
+
       }
 
       if (language_select.value=="ENG"){
@@ -342,6 +349,7 @@ export class ProfilPageComponent implements OnInit {
 
 
       alert("Successful upload!")
+      console.clear();
     } catch (error) {
       alert("Some required fields are missing!")
     }

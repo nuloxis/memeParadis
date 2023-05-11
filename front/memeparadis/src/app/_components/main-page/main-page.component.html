@@ -4,14 +4,18 @@
       <h1>MEME<span>PARADISE</span></h1>
       <nav>
         <ul class="navbarul">
-            <li class="navbarli"><a href="index.html">Home</a></li>
-            <li class="navbarli"><a href="picture.html">Pictures</a></li>
-            <li class="navbarli"><a href="videos.html">Videos</a></li>
+            <li class="navbarli"><a href="main">Home</a></li>
+            <li class="navbarli"><a (click)="loadallpicture()" >Pictures</a></li>
+            <li class="navbarli"><a (click)="loadallvideo()">Videos</a></li>
             <li class="navbarli"><a href="add.html">Add</a></li>
             <li *ngIf="datauser" class="navbarli"><a href="profile">{{datauser.name}}</a></li>
 
         </ul>
     </nav>
+    </div>
+    <div id="memes">
+
+
     </div>
   </body>
 </html>

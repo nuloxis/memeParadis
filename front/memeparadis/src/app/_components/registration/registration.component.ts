@@ -33,7 +33,7 @@ export class RegistrationComponent implements OnInit {
 
     if(age>=18){
       this.http.post('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/User/addNewUser',addNewUser,{responseType:'text'}).subscribe((res)=>{
-        console.log(res);
+
         if(addNewUser.name.length<5){
           alert("User name must be at least 5 characters!")
         }
