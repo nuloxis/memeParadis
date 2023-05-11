@@ -8,12 +8,14 @@ import com.mycompany.memeparadis.Model.Content;
 import com.mycompany.memeparadis.Model.ContentTag;
 import com.mycompany.memeparadis.Model.Tags;
 import com.mycompany.memeparadis.Service.ContentTagService;
+import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -41,5 +43,16 @@ public class ContentTagController {
 public Response createContent_tag(Tags content){
     String result = contss.createContentTag(content.getTagsId(), content.getContentId());
     return Response.status(Response.Status.OK).entity(result).type(MediaType.APPLICATION_JSON).build();
+}
+@GET
+@Path("getContentBytag")
+public List<Content> getContentBytag(@QueryParam("tagsId") Integer tag_id){
+    List<Content> result = null;
+try{
+    result = contss.getContentByTag(tag_id);
+}catch(Exception ex){
+System.out.println(""+ex.getMessage());
+}
+return result;
 }
 }
