@@ -21,6 +21,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -126,15 +127,20 @@ public class ContentController {
 //  return result;
 //}
 @GET
-@Path("getContentBytag")
-public List<Content> getContentBytag(@QueryParam("tagsId") Integer tag_id){
-    List<Content> result = null;
-try{
-    result = conts.getContentByTag(tag_id);
-}catch(Exception ex){
-System.out.println(""+ex.getMessage());
-}
-return result;
+@Path("getContentBytag/{tagId}")
+@Produces(MediaType.APPLICATION_JSON)
+public Response getContentByTag(@PathParam("tagId") Integer tagId) {
+    try {
+        List<Content> contentList = ContentService.getContentByTag(tagId);
+        if (contentList != null && !contentList.isEmpty()) {
+            return Response.ok(contentList).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+    }
 }
 }
 

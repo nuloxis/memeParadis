@@ -4,6 +4,7 @@
  */
 package com.mycompany.memeparadis.Service;
 
+import com.google.protobuf.ServiceException;
 import com.mycompany.memeparadis.Configuration.Database;
 import com.mycompany.memeparadis.Model.Content;
 import java.util.ArrayList;
@@ -114,17 +115,15 @@ public class ContentService {
         } 
         return result;
    }
- public List<Content> getContentByTag(Integer tagId) throws Exception{
-List<Content> result = null;
-try{
-result = c.getContentBytag(tagId);
-}catch(Exception ex){
-System.out.println(ex.getMessage());
-throw new Exception("" + ex.getMessage());
+public static List<Content> getContentByTag(Integer tagId) throws ServiceException {
+    try {
+        return Content.getContentBytag(tagId);
+    } catch (Exception e) {
+        throw new ServiceException("Error retrieving content by tag: " + e.getMessage(), e);
+    }
 }
-return result;
-}  
 }
+
 //   public String deleteContent(Integer id,String currentPw){
 //    String result = "";
 //    try{

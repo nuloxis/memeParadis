@@ -446,7 +446,7 @@ public String updateTag(String tag,Integer id) throws Exception{
 //  System.out.println(ex.getMessage());
 //  throw new Exception(""+ex.getMessage());  
 //}
-public List<Content> getContentBytag(Integer tag_id) throws Exception {
+public static List<Content> getContentBytag(Integer tag_id) throws Exception {
     EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
     EntityManager em = emf.createEntityManager();
     try {
