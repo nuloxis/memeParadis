@@ -137,22 +137,5 @@ public class ContentTag implements Serializable {
     }
     return "Sikeres beillesztés";
 }
-public List<Content> getContentBytag(Integer tag_id) throws Exception {
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
-    EntityManager em = emf.createEntityManager();
-    try {
-        StoredProcedureQuery spq = em.createStoredProcedureQuery("getContentBytag");
-        spq.registerStoredProcedureParameter("tag_id", Integer.class, ParameterMode.IN);
-        
-        spq.setParameter("tag_id", tag_id);
-        List<Content> contents = spq.getResultList();
-        return contents;
-    } catch(Exception ex) {
-        throw new Exception("" + ex.getMessage());
-    } finally {
-        em.clear();
-        em.close();
-        emf.close();
-    }
-}
+
 }

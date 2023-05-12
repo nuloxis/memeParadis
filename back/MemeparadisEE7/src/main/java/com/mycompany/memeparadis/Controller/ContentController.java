@@ -22,6 +22,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -123,7 +124,18 @@ public class ContentController {
 //      result = ex.getMessage();
 //  }
 //  return result;
-//}  
+//}
+@GET
+@Path("getContentBytag")
+public List<Content> getContentBytag(@QueryParam("tagsId") Integer tag_id){
+    List<Content> result = null;
+try{
+    result = conts.getContentByTag(tag_id);
+}catch(Exception ex){
+System.out.println(""+ex.getMessage());
+}
+return result;
+}
 }
 
     

@@ -26,14 +26,4 @@ public String createContentTag(Integer tag, Integer content) {
     } 
     return result;
 }
-public List<Content> getContentByTag(Integer tagId) throws Exception{
-List <Content> result = null;
-try{
-result = contTS.getContentBytag(tagId);
-}catch(Exception ex){
-System.out.println(ex.getMessage());
-throw new Exception("" + ex.getMessage());
-}
-return result;
-}
 }

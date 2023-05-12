@@ -44,15 +44,5 @@ public Response createContent_tag(Tags content){
     String result = contss.createContentTag(content.getTagsId(), content.getContentId());
     return Response.status(Response.Status.OK).entity(result).type(MediaType.APPLICATION_JSON).build();
 }
-@GET
-@Path("getContentBytag")
-public List<Content> getContentBytag(@QueryParam("tagsId") Integer tag_id){
-    List<Content> result = null;
-try{
-    result = contss.getContentByTag(tag_id);
-}catch(Exception ex){
-System.out.println(""+ex.getMessage());
-}
-return result;
-}
+
 }
