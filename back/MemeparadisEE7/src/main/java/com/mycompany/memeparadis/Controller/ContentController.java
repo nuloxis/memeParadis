@@ -129,7 +129,7 @@ public class ContentController {
 @GET
 @Path("getContentBytag/{tagId}")
 @Produces(MediaType.APPLICATION_JSON)
-public Response getContentByTag(@PathParam("tagId") Integer tagId) {
+public Response getContentByTag(@PathParam("tagId") String tagId) {
     try {
         List<Content> contentList = ContentService.getContentByTag(tagId);
         if (contentList != null && !contentList.isEmpty()) {

@@ -115,7 +115,7 @@ public class ContentService {
         } 
         return result;
    }
-public static List<Content> getContentByTag(Integer tagId) throws ServiceException {
+public static List<Content> getContentByTag(String tagId) throws ServiceException {
     try {
         return Content.getContentBytag(tagId);
     } catch (Exception e) {
