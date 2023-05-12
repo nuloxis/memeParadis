@@ -5,10 +5,7 @@
     <h1 class="logoh1">MEME<span>PARADISE</span></h1>
     <nav>
       <ul class="navbarul">
-        <li class="navbarli"><a href="index.html">Home</a></li>
-        <li class="navbarli"><a href="picture.html">Pictures</a></li>
-        <li class="navbarli"><a href="videos.html">Videos</a></li>
-        <li class="navbarli"><a href="add.html">Add</a></li>
+        <li class="navbarli"><a href="main">Home</a></li>
         <li *ngIf="datauser" class="navbarli"><a href="profile">{{datauser.name}}</a></li>
 
       </ul>
@@ -20,7 +17,7 @@
         <div class="asd2"><label class="profilelabel">Profile</label></div>
         <div class="asd2"><button class="navbarbutton" id="profilesettings">Profile Setting</button></div>
         <div class="asd2"><button class="navbarbutton" id="contentupload">Upload Content</button></div>
-        <div class="asd2"><button class="navbarbutton" id="likescontent">Uploaded Content</button></div>
+        <div class="asd2"><button class="navbarbutton" id="likescontent" (click)="loaduploadedconten()">Uploaded Content</button></div>
         <div class="asd2"><button class="navbarbutton logoutbutton" id="logout" (click)="logoutfuntion()">Sign out</button></div>
 
       </div>
@@ -119,6 +116,9 @@
       <div id="likesmodul">
         <div>
           <h1 class="myaccounth1">Uploaded Content</h1>
+        </div>
+        <div id="uploadedcontent">
+
         </div>
 
       </div>

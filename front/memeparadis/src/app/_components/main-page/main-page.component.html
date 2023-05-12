@@ -7,7 +7,8 @@
             <li class="navbarli"><a href="main">Home</a></li>
             <li class="navbarli"><a (click)="loadallpicture()" >Pictures</a></li>
             <li class="navbarli"><a (click)="loadallvideo()">Videos</a></li>
-            <li class="navbarli"><a href="add.html">Add</a></li>
+            <li class="navbarli"><a (click)="loadEnglish()">English</a></li>
+            <li class="navbarli"><a (click)="loadHungary()">Hungary</a></li>
             <li *ngIf="datauser" class="navbarli"><a href="profile">{{datauser.name}}</a></li>
 
         </ul>
