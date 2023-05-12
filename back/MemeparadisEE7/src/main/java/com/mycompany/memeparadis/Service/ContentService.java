@@ -115,7 +115,7 @@ public class ContentService {
         return result;
    }
  public List<Content> getContentByTag(Integer tagId) throws Exception{
-List <Content> result = null;
+List<Content> result = null;
 try{
 result = c.getContentBytag(tagId);
 }catch(Exception ex){
