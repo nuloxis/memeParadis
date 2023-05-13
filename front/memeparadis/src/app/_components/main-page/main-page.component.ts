@@ -29,9 +29,9 @@ export class MainPageComponent implements OnInit {
 
         if (meme[5]==false){
           const img=`
-            <img src="../assets/content/picture/${meme[6]}" style="max-width: 440px;
+            <img src="../assets/content/picture/${meme[6]}"  style="max-width: 440px ;
 
-            width: 100%; max-height:380px; height:100%; margin:10px;"  class="imagememe" alt="">
+            width: 100%; max-height:380px; height:100%; margin:10px;"  class="imagememe" alt="" (click)="openpicture()">
 
           `
           loginmeme.innerHTML+=img;
@@ -95,5 +95,82 @@ export class MainPageComponent implements OnInit {
       }
     })
   }
+  openpicture():void{
+    console.log("asdasd")
+  }
+  loadEnglish():void{
 
+    const loginmeme=document.getElementById("memes") as HTMLDivElement;
+    while (loginmeme.firstChild) {
+      loginmeme.removeChild(loginmeme.firstChild);
+    }
+    this.http.get<Content>('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/Content/getEnglishContents').subscribe(res=>{
+      this.content=res;
+
+
+      for(const meme of Object.values(res)){
+
+
+        if (meme[5]==false){
+          const img=`
+            <img src="../assets/content/picture/${meme[6]}"  style="max-width: 440px ;
+
+            width: 100%; max-height:380px; height:100%; margin:10px;"  class="imagememe" alt="" (click)="openpicture()">
+
+          `
+          loginmeme.innerHTML+=img;
+        }
+        else{
+          const img=`
+            <video src="../assets/content/video/${meme[6]}" style="max-width: 440px;
+
+            width: 100%; max-height:380px; margin:10px; height:100%;"  class="imagememe" alt="" controls></video>
+
+          `
+          loginmeme.innerHTML+=img;
+        }
+      }
+
+
+
+    })
+  }
+
+  loadHungary():void{
+
+    const loginmeme=document.getElementById("memes") as HTMLDivElement;
+    while (loginmeme.firstChild) {
+      loginmeme.removeChild(loginmeme.firstChild);
+    }
+    this.http.get<Content>('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/Content/getHungarianContents').subscribe(res=>{
+      this.content=res;
+
+
+      for(const meme of Object.values(res)){
+
+
+        if (meme[5]==false){
+          const img=`
+            <img src="../assets/content/picture/${meme[6]}"  style="max-width: 440px ;
+
+            width: 100%; max-height:380px; height:100%; margin:10px;"  class="imagememe" alt="" (click)="openpicture()">
+
+          `
+          loginmeme.innerHTML+=img;
+        }
+        else{
+          const img=`
+            <video src="../assets/content/video/${meme[6]}" style="max-width: 440px;
+
+            width: 100%; max-height:380px; margin:10px; height:100%;"  class="imagememe" alt="" controls></video>
+
+          `
+          loginmeme.innerHTML+=img;
+        }
+      }
+
+
+
+    })
+  }
 }
