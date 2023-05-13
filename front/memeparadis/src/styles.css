@@ -9,3 +9,26 @@ html, body {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+::-webkit-scrollbar {
+  width: 10px; /* A görgető sáv szélessége */
+  height: 10px; /* A görgető sáv magassága */
+  background-color: #00000084; /* A görgető sáv hátterének színe */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #00000084; /* A görgető sáv "hüvelykujjának" (thumb) színe */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #00000084; /* A görgető sáv "hüvelykujjának" (thumb) színe, ha a kurzor fölötte van */
+}
+
+::-webkit-scrollbar-track {
+  background-color: #544f4f; /* A görgető sáv "távolságtartó" (track) részének színe */
+}
+
+::-webkit-scrollbar-track:hover {
+  background-color: #544f4f; /* A görgető sáv "távolságtartó" (track) részének színe, ha a kurzor fölötte van */
+}

@@ -16,7 +16,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatIconModule} from '@angular/material/icon';
 import {MatGridListModule} from '@angular/material/grid-list';
-
+import { LightboxModule } from 'ngx-lightbox';
 
 
 import { ReactiveFormsModule} from '@angular/forms';
@@ -45,6 +45,7 @@ import {MatNativeDateModule} from '@angular/material/core';
     MatGridListModule,
     ReactiveFormsModule,
     MatNativeDateModule,
+    LightboxModule
 
 
 

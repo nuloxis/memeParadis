@@ -34,9 +34,9 @@ export class LoginComponent implements OnInit {
 
         if (this.content.contentType==false){
           const img=`
-            <img src="../assets/content/picture/${this.content.contentUpladeName}" style="max-width: 678px;
+            <img src="../assets/content/picture/${this.content.contentUpladeName}" onclick="showImage('../assets/content/picture/${this.content.contentUpladeName}')" style="max-width: 678px;
             height: auto;
-            width: 100%; max-height:676px;"  class="imagememe" alt="">
+            width: 100%; max-height:676px; cursor: pointer;"  class="imagememe" alt="">
 
           `
           loginmeme.innerHTML+=img;

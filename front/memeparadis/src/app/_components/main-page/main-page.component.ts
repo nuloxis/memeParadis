@@ -29,9 +29,9 @@ export class MainPageComponent implements OnInit {
 
         if (meme[5]==false){
           const img=`
-            <img src="../assets/content/picture/${meme[6]}"  style="max-width: 440px ;
+            <img src="../assets/content/picture/${meme[6]}" onclick="showImage('../assets/content/picture/${meme[6]}')"  style="max-width: 440px ;
 
-            width: 100%; max-height:380px; height:100%; margin:10px;"  class="imagememe" alt="" (click)="openpicture()">
+            width: 100%; max-height:380px; height:100%; margin:10px; cursor: pointer; border-radius: 5px; "  class="imagememe" alt="" (click)="openpicture()">
 
           `
           loginmeme.innerHTML+=img;
@@ -40,7 +40,7 @@ export class MainPageComponent implements OnInit {
           const img=`
             <video src="../assets/content/video/${meme[6]}" style="max-width: 440px;
 
-            width: 100%; max-height:380px; margin:10px; height:100%;"  class="imagememe" alt="" controls></video>
+            width: 100%; max-height:380px; margin:10px; height:100%; border-radius: 5px;"  class="imagememe" alt="" controls></video>
 
           `
           loginmeme.innerHTML+=img;
@@ -65,8 +65,8 @@ export class MainPageComponent implements OnInit {
 
       for(const meme of Object.values(res)){
         const img=`
-          <img src="../assets/content/picture/${meme[6]}" style="max-width: 440px;
-          width: 100%; max-height:380px; height:100%; margin:10px;"  class="imagememe" alt="">
+          <img src="../assets/content/picture/${meme[6]}" onclick="showImage('../assets/content/picture/${meme[6]}')" style="max-width: 440px;
+          width: 100%; max-height:380px; height:100%; margin:10px; cursor: pointer; border-radius: 5px;"  class="imagememe" alt="">
         `
         loginmeme.innerHTML+=img;
 
@@ -87,7 +87,7 @@ export class MainPageComponent implements OnInit {
         const img=`
             <video src="../assets/content/video/${meme[6]}" style="max-width: 440px;
 
-            width: 100%; max-height:380px; margin:10px; height:100%;"  class="imagememe" alt="" controls></video>
+            width: 100%; max-height:380px; margin:10px; height:100%; border-radius: 5px;"  class="imagememe" alt="" controls></video>
 
           `
         loginmeme.innerHTML+=img;
@@ -113,9 +113,9 @@ export class MainPageComponent implements OnInit {
 
         if (meme[5]==false){
           const img=`
-            <img src="../assets/content/picture/${meme[6]}"  style="max-width: 440px ;
+            <img src="../assets/content/picture/${meme[6]}" onclick="showImage('../assets/content/picture/${meme[6]}')"  style="max-width: 440px ;
 
-            width: 100%; max-height:380px; height:100%; margin:10px;"  class="imagememe" alt="" (click)="openpicture()">
+            width: 100%; max-height:380px; height:100%; margin:10px; cursor: pointer; border-radius: 5px;"  class="imagememe" alt="" (click)="openpicture()">
 
           `
           loginmeme.innerHTML+=img;
@@ -124,7 +124,7 @@ export class MainPageComponent implements OnInit {
           const img=`
             <video src="../assets/content/video/${meme[6]}" style="max-width: 440px;
 
-            width: 100%; max-height:380px; margin:10px; height:100%;"  class="imagememe" alt="" controls></video>
+            width: 100%; max-height:380px; margin:10px; height:100%; border-radius: 5px;"  class="imagememe" alt="" controls></video>
 
           `
           loginmeme.innerHTML+=img;
@@ -151,9 +151,9 @@ export class MainPageComponent implements OnInit {
 
         if (meme[5]==false){
           const img=`
-            <img src="../assets/content/picture/${meme[6]}"  style="max-width: 440px ;
+            <img src="../assets/content/picture/${meme[6]}" onclick="showImage('../assets/content/picture/${meme[6]}')"  style="max-width: 440px ;
 
-            width: 100%; max-height:380px; height:100%; margin:10px;"  class="imagememe" alt="" (click)="openpicture()">
+            width: 100%; max-height:380px; height:100%; margin:10px; cursor: pointer; border-radius: 5px;"  class="imagememe" alt="" (click)="openpicture()">
 
           `
           loginmeme.innerHTML+=img;
@@ -162,7 +162,7 @@ export class MainPageComponent implements OnInit {
           const img=`
             <video src="../assets/content/video/${meme[6]}" style="max-width: 440px;
 
-            width: 100%; max-height:380px; margin:10px; height:100%;"  class="imagememe" alt="" controls></video>
+            width: 100%; max-height:380px; margin:10px; height:100%; border-radius: 5px;"  class="imagememe" alt="" controls></video>
 
           `
           loginmeme.innerHTML+=img;
@@ -173,4 +173,6 @@ export class MainPageComponent implements OnInit {
 
     })
   }
+
+
 }
