@@ -426,26 +426,6 @@ public String updateTag(String tag,Integer id) throws Exception{
         emf.close();
     } 
 }
-//public String deleteContent(Integer id,String currentPw) throws Exception{
-//EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
-//EntityManager em = emf.createEntityManager();
-//try{
-//    StoredProcedureQuery spq = em.createStoredProcedureQuery("deleteContent");
-//    
-//    spq.registerStoredProcedureParameter("idIN", Integer.class, ParameterMode.IN);
-//    spq.registerStoredProcedureParameter("currentPwIN", String.class, ParameterMode.IN);
-//    spq.registerStoredProcedureParameter("result", String.class, ParameterMode.OUT);
-//    
-//    spq.setParameter("idIN",id);
-//    spq.setParameter("currentPwIN", encryptString(currentPw));
-//    
-//    spq.execute();
-//    String result = (String) spq.getOutputParameterValue("result");
-//    return result;
-//}catch(Exception ex){
-//  System.out.println(ex.getMessage());
-//  throw new Exception(""+ex.getMessage());  
-//}
 public static List<Content> getContentBytag(String tag_id) throws Exception {
     EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
     EntityManager em = emf.createEntityManager();
@@ -458,6 +438,40 @@ public static List<Content> getContentBytag(String tag_id) throws Exception {
         return contents;
     } catch(Exception ex) {
         throw new Exception("" + ex.getMessage());
+    } finally {
+        em.clear();
+        em.close();
+        emf.close();
+    } 
+}
+public String addLiketoContent(Integer content_id) throws Exception {
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
+    EntityManager em = emf.createEntityManager();
+    try {
+        StoredProcedureQuery spq = em.createStoredProcedureQuery("addLiketoContent");
+        spq.registerStoredProcedureParameter("content_id", Integer.class, ParameterMode.IN);
+        spq.setParameter("content_id", content_id);
+        spq.execute();
+        return "Sikeres volt a kedvelés";
+    } catch(Exception ex) {
+        throw new Exception ("Hiba történt fel a kedvelés közbe"+ex.getMessage());
+    } finally {
+        em.clear();
+        em.close();
+        emf.close();
+    }
+}
+public String removeLikeContent(Integer content_id) throws Exception {
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
+    EntityManager em = emf.createEntityManager();
+    try {
+        StoredProcedureQuery spq = em.createStoredProcedureQuery("removeLikeContent");
+        spq.registerStoredProcedureParameter("content_id", Integer.class, ParameterMode.IN);
+        spq.setParameter("content_id", content_id);
+        spq.execute();
+        return "Sikeres volt a kedvelés eltávolítása";
+    } catch(Exception ex) {
+        throw new Exception ("Hiba történt fel a kedvelés eltávolítása közbe"+ex.getMessage());
     } finally {
         em.clear();
         em.close();

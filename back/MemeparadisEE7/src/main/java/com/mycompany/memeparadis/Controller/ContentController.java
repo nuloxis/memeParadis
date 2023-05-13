@@ -113,19 +113,6 @@ public class ContentController {
             }
             return result;
     }
-//  @DELETE
-//@Path("deleteContent")
-//@Consumes(MediaType.APPLICATION_JSON)
-//public String deleteContent(User u){
-//  String result = "";  
-//  try{
-//    result = conts.deleteContent(u.getId(), u.getCurrentPw());
-//  } catch(Exception ex){
-//      System.err.println("" + ex.getMessage());
-//      result = ex.getMessage();
-//  }
-//  return result;
-//}
 @GET
 @Path("getContentBytag/{tagId}")
 @Produces(MediaType.APPLICATION_JSON)
@@ -141,6 +128,30 @@ public Response getContentByTag(@PathParam("tagId") String tagId) {
         e.printStackTrace();
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
     }
+}
+@PUT
+@Path("addLiketoContent")
+@Consumes(MediaType.APPLICATION_JSON)
+public String addLiketoContent(Content content){
+    String result = "";   
+    try{
+        result = conts.addLiketoContent(content.getId());
+    } catch(Exception ex){
+        System.out.println("Hiba történt a kedvelés közben"+ex.getMessage());
+    }
+    return result;
+}
+@PUT
+@Path("removeLikeContent")
+@Consumes(MediaType.APPLICATION_JSON)
+public String removeLikeContent(Content content){
+    String result = "";   
+    try{
+        result = conts.removeLikeContent(content.getId());
+    } catch(Exception ex){
+        System.out.println("Hiba történt a kedvelés közben"+ex.getMessage());
+    }
+    return result;
 }
 }
 

@@ -122,8 +122,29 @@ public static List<Content> getContentByTag(String tagId) throws ServiceExceptio
         throw new ServiceException("Error retrieving content by tag: " + e.getMessage(), e);
     }
 }
-}
+public String addLiketoContent(Integer content_id){
+    String result = "";
+        try{
 
+            result = c.addLiketoContent(content_id);
+            
+        }catch(Exception ex){
+        result = ex.getMessage();
+        } 
+        return result;
+    }
+public String removeLikeContent(Integer content_id){
+    String result = "";
+        try{
+
+            result = c.removeLikeContent(content_id);
+            
+        }catch(Exception ex){
+        result = ex.getMessage();
+        } 
+        return result;
+    }
+}
 //   public String deleteContent(Integer id,String currentPw){
 //    String result = "";
 //    try{
