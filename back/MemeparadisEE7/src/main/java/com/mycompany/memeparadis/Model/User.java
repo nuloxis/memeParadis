@@ -59,8 +59,6 @@ import javax.xml.bind.annotation.XmlTransient;
 public class User implements Serializable {
 
     @OneToMany(mappedBy = "userId")
-    private Collection<Comment> commentCollection;
-    @OneToMany(mappedBy = "uploaderName")
     private Collection<Content> contentCollection;
 //
 //    @OneToMany(mappedBy = "userId")
@@ -425,14 +423,6 @@ public class User implements Serializable {
         
 }
 
-    @XmlTransient
-    public Collection<Comment> getCommentCollection() {
-        return commentCollection;
-    }
-
-    public void setCommentCollection(Collection<Comment> commentCollection) {
-        this.commentCollection = commentCollection;
-    }
 
     @XmlTransient
     public Collection<Content> getContentCollection() {
