@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Content } from 'src/app/models/content';
+import { MatDialog } from '@angular/material/dialog';
+
+import { MainalertComponent } from 'src/app/pop_up/mainalert/mainalert.component';
 
 @Component({
   selector: 'app-main-page',
@@ -13,7 +16,7 @@ export class MainPageComponent implements OnInit {
   datauser:any;
   router: any;
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient, private matdialog:MatDialog) { }
 
   ngOnInit(): void {
 
@@ -97,7 +100,7 @@ export class MainPageComponent implements OnInit {
       }
       inputtagss.value="";
     },err=>{
-      alert("Ilyen nincs");
+      this.opendialog()
       console.clear();
       inputtagss.value="";
 
@@ -242,5 +245,8 @@ export class MainPageComponent implements OnInit {
   }
 
 
+  opendialog(){
+    this.matdialog.open(MainalertComponent);
+  }
 
 }

@@ -7,27 +7,27 @@
 
   <div class="main">
     <div class="registration">
-      <form #productsFrom="ngForm" (ngSubmit)="onProductCreate(productsFrom.value)">
+      <form [formGroup]="productsFrom" (ngSubmit)="onProductCreate()">
         <label class="maintext">Create account</label>
 
         <div class="text_fieldd">
           <label class="textr">Name</label>
-          <input type="text" name="name" ngModel>
+          <input type="text" name="name" autocomplete="off"   formControlName="name">
         </div>
 
         <div class="text_fieldd">
           <label class="textr">Email</label>
-          <input type="text" name="email" ngModel>
+          <input type="text" name="email" autocomplete="off"   formControlName="email">
         </div>
 
         <div class="text_fieldd">
           <label class="textr">Password</label>
-          <input type="password" name="password" ngModel>
+          <input type="password" name="password"   formControlName="password">
         </div>
 
         <div class="text_fieldd">
           <label class="textr">Birth Date</label>
-          <input type="date" name="birthDate" ngModel>
+          <input type="date" name="birthDate"   formControlName="birthDate">
         </div>
 
         <div class="login textr">

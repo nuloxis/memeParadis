@@ -8,6 +8,9 @@ import { ObserversModule } from '@angular/cdk/observers';
 import { Content } from '../../models/content';
 import { LoginRegistrationPageService } from 'src/app/_services/login-page.service';
 import * as fs from 'fs';
+import { MatDialog } from '@angular/material/dialog';
+import { LoginalertComponent } from 'src/app/pop_up/loginalert/loginalert.component';
+
 
 
 @Component({
@@ -21,7 +24,7 @@ export class LoginComponent implements OnInit {
 
 
 
-  constructor(private router:Router,private http:HttpClient, private loginservices:LoginRegistrationPageService) { }
+  constructor(private router:Router,private http:HttpClient, private loginservices:LoginRegistrationPageService, private matdialog:MatDialog) { }
 
 
   ngOnInit(): void {
@@ -68,13 +71,17 @@ export class LoginComponent implements OnInit {
       const resId=res;
 
       if(resId.name===null){
-        alert("HIBA");
+        this.opendialog()
       }else{
         localStorage.setItem('name',JSON.stringify(res));
         this.router.navigate(["main"]);
       }
 
     });
+  }
+
+  opendialog(){
+    this.matdialog.open(LoginalertComponent);
   }
 
 

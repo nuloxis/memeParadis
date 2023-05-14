@@ -5,6 +5,11 @@ import { Content } from 'src/app/models/content';
 import {NgForm} from '@angular/forms';
 import { Lightbox } from 'ngx-lightbox';
 import { LoginRegistrationPageService } from 'src/app/_services/login-page.service';
+import { ProfilpagepsawwordComponent } from 'src/app/pop_up/profilpagepsawword/profilpagepsawword.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ProfilpagepsawwordSuccesfuleComponent } from 'src/app/pop_up/profilpagepsawword-succesfule/profilpagepsawword-succesfule.component';
+import { ProfilpageuploadComponent } from 'src/app/pop_up/profilpageupload/profilpageupload.component';
+import { ProfilpageuploadsucessfulComponent } from 'src/app/pop_up/profilpageuploadsucessful/profilpageuploadsucessful.component';
 
 
 
@@ -24,7 +29,7 @@ export class ProfilPageComponent implements OnInit {
 
 
 
-  constructor(private http:HttpClient,private lightbox: Lightbox,private shiwimg:LoginRegistrationPageService) {
+  constructor(private http:HttpClient,private lightbox: Lightbox,private shiwimg:LoginRegistrationPageService,private matdialog:MatDialog) {
 
   }
   showImage(url: string) {
@@ -174,19 +179,19 @@ export class ProfilPageComponent implements OnInit {
         if(edditpasswordold.value!="" && edditpasswordnew.value!=""){
           try {
             this.http.put('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/User/updatePassword',updatepassword,{responseType:'text'}).subscribe((res)=>{
-              console.log(res);
+
               if(res=="A jelenlegi jelszó vagy az új jelszó nem megfelelő."){
-                alert("Error!");
+                this.opendialogpasswordcshange()
               }
               else{
-                alert("Successful password change!");
+                this.opendialogpasswordcshangeSucc()
                 this.logoutfuntion();
               }
 
             })
 
           } catch (error) {
-            alert("Error!");
+            this.opendialogpasswordcshange()
           }
 
 
@@ -355,10 +360,10 @@ export class ProfilPageComponent implements OnInit {
       language_select.options[0].selected=true;
 
 
-      alert("Successful upload!")
+      this.opendialoguploadsucessful()
       console.clear();
     } catch (error) {
-      alert("Some required fields are missing!")
+      this.opendialogupload()
     }
 
 
@@ -429,6 +434,18 @@ export class ProfilPageComponent implements OnInit {
     })
   }
 
+  opendialogpasswordcshange(){
+    this.matdialog.open(ProfilpagepsawwordComponent);
+  }
+  opendialogpasswordcshangeSucc(){
+    this.matdialog.open(ProfilpagepsawwordSuccesfuleComponent);
+  }
+  opendialogupload(){
+    this.matdialog.open(ProfilpageuploadComponent);
+  }
+  opendialoguploadsucessful(){
+    this.matdialog.open(ProfilpageuploadsucessfulComponent);
+  }
 
 
 

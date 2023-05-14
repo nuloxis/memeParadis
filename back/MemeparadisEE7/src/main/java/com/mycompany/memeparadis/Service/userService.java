@@ -33,10 +33,12 @@ public class userService {
         String result = "";
         
         if( !(u.checkEmailUnique(user.getEmail()))){
+            
             result = "Email is already taken!";
         }
         
         else if(user.getName().length() < 5){
+            
             result = "firstname must be at least 5 characters";   
         }
         else{

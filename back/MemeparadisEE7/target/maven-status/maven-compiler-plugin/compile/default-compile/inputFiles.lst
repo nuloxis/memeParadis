@@ -5,7 +5,6 @@ C:\xampp\htdocs\memeParadis\back\MemeparadisEE7\src\main\java\com\mycompany\meme
 C:\xampp\htdocs\memeParadis\back\MemeparadisEE7\src\main\java\com\mycompany\memeparadis\Exception\PasswordException.java
 C:\xampp\htdocs\memeParadis\back\MemeparadisEE7\src\main\java\com\mycompany\memeparadis\Service\userService.java
 C:\xampp\htdocs\memeParadis\back\MemeparadisEE7\src\main\java\com\mycompany\memeparadis\Exception\InvalidCredentialsException.java
-C:\xampp\htdocs\memeParadis\back\MemeparadisEE7\src\main\java\com\mycompany\memeparadis\Model\Comment.java
 C:\xampp\htdocs\memeParadis\back\MemeparadisEE7\src\main\java\com\mycompany\memeparadis\Model\Tags.java
 C:\xampp\htdocs\memeParadis\back\MemeparadisEE7\src\main\java\com\mycompany\memeparadis\Configuration\Database.java
 C:\xampp\htdocs\memeParadis\back\MemeparadisEE7\src\main\java\com\mycompany\memeparadis\Confjaxrs\JAXRSConfiguration.java
