@@ -405,7 +405,8 @@ export class ProfilPageComponent implements OnInit {
           const img=`
             <img src="../assets/content/picture/${meme[6]}" onclick="showImage('../assets/content/picture/${meme[6]}')"  style="max-width: 640px ;
 
-            width: 100%; max-height:580px; height:100%; margin:15px; cursor: pointer;"  class="imagememe" alt="" >
+            width: 100%; max-height:580px; height:100%; margin:15px; cursor: pointer;  border-radius: 5px;"  class="imagememe" alt="" onmouseover="this.style.filter='brightness(0.8)'"
+            onmouseout="this.style.filter='brightness(1)'">
 
           `
           loginmeme.innerHTML+=img;
@@ -414,7 +415,8 @@ export class ProfilPageComponent implements OnInit {
           const img=`
             <video src="../assets/content/video/${meme[6]}" style="max-width: 640px;
 
-            width: 100%; max-height:580px; margin:15px; height:100%;"  class="imagememe" alt="" controls></video>
+            width: 100%; max-height:580px; margin:15px; height:100%;  border-radius: 5px;"  class="imagememe" alt="" controls onmouseover="this.style.filter='brightness(0.8)'"
+            onmouseout="this.style.filter='brightness(1)'"></video>
 
           `
           loginmeme.innerHTML+=img;

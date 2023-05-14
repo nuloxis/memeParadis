@@ -52,3 +52,24 @@ span{
   display: flow-root;
 }
 
+input{
+  background-color: #1E1F22;
+  color: white;
+  width: 177px;
+  height: 25px;
+  border: 0;
+  border-radius: 5px;
+
+}
+#search{
+  background-color: #767373ad;
+  color: white;
+  height: 25px;
+  width: 100px;
+  border: none;
+  border-radius: 5px;
+  margin-left: 5px;
+}
+#search:hover{
+  background-color: #404040 ;
+}

@@ -11,6 +11,7 @@ export class MainPageComponent implements OnInit {
 
   content!:Content
   datauser:any;
+  router: any;
 
   constructor(private http:HttpClient) { }
 
@@ -31,7 +32,8 @@ export class MainPageComponent implements OnInit {
           const img=`
             <img src="../assets/content/picture/${meme[6]}" onclick="showImage('../assets/content/picture/${meme[6]}')"  style="max-width: 440px ;
 
-            width: 100%; max-height:380px; height:100%; margin:10px; cursor: pointer; border-radius: 5px; "  class="imagememe" alt="" (click)="openpicture()">
+            width: 100%; max-height:380px; height:100%; margin:10px; cursor: pointer; border-radius: 5px;  "  class="imagememe" alt="" onmouseover="this.style.filter='brightness(0.8)'"
+            onmouseout="this.style.filter='brightness(1)'">
 
           `
           loginmeme.innerHTML+=img;
@@ -40,7 +42,8 @@ export class MainPageComponent implements OnInit {
           const img=`
             <video src="../assets/content/video/${meme[6]}" style="max-width: 440px;
 
-            width: 100%; max-height:380px; margin:10px; height:100%; border-radius: 5px;"  class="imagememe" alt="" controls></video>
+            width: 100%; max-height:380px; margin:10px; height:100%; border-radius: 5px;"  class="imagememe" alt="" controls onmouseover="this.style.filter='brightness(0.8)'"
+            onmouseout="this.style.filter='brightness(1)'"></video>
 
           `
           loginmeme.innerHTML+=img;
@@ -50,6 +53,64 @@ export class MainPageComponent implements OnInit {
 
 
     })
+
+
+
+
+
+
+  }
+  searchcontent(){
+
+    const inputtagss=document.getElementById("inputtagss") as HTMLInputElement;
+    const valuetag=inputtagss.value;
+    if(valuetag!=""){
+      const loginmeme=document.getElementById("memes") as HTMLDivElement;
+      while (loginmeme.firstChild) {
+        loginmeme.removeChild(loginmeme.firstChild);
+      }
+      this.http.get<Content>(`http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/Content/getContentBytag/${valuetag}`).subscribe(res=>{
+      this.content=res;
+      for(const meme of Object.values(res)){
+
+
+        if (meme[5]==false){
+          const img=`
+            <img src="../assets/content/picture/${meme[6]}" onclick="showImage('../assets/content/picture/${meme[6]}')"  style="max-width: 440px ;
+
+            width: 100%; max-height:380px; height:100%; margin:10px; cursor: pointer; border-radius: 5px;  "  class="imagememe" alt="" onmouseover="this.style.filter='brightness(0.8)'"
+            onmouseout="this.style.filter='brightness(1)'">
+
+          `
+          loginmeme.innerHTML+=img;
+        }
+        else{
+          const img=`
+            <video src="../assets/content/video/${meme[6]}" style="max-width: 440px;
+
+            width: 100%; max-height:380px; margin:10px; height:100%; border-radius: 5px;"  class="imagememe" alt="" controls onmouseover="this.style.filter='brightness(0.8)'"
+            onmouseout="this.style.filter='brightness(1)'"></video>
+
+          `
+          loginmeme.innerHTML+=img;
+        }
+      }
+      inputtagss.value="";
+    },err=>{
+      alert("Ilyen nincs");
+      console.clear();
+      inputtagss.value="";
+
+
+    })
+    }
+
+
+
+  }
+
+  goToPage(pageName:string):void{
+    this.router.navigate([`${pageName}`]);
   }
 
 
@@ -66,7 +127,8 @@ export class MainPageComponent implements OnInit {
       for(const meme of Object.values(res)){
         const img=`
           <img src="../assets/content/picture/${meme[6]}" onclick="showImage('../assets/content/picture/${meme[6]}')" style="max-width: 440px;
-          width: 100%; max-height:380px; height:100%; margin:10px; cursor: pointer; border-radius: 5px;"  class="imagememe" alt="">
+          width: 100%; max-height:380px; height:100%; margin:10px; cursor: pointer; border-radius: 5px;"  class="imagememe" alt="" onmouseover="this.style.filter='brightness(0.8)'"
+          onmouseout="this.style.filter='brightness(1)'">
         `
         loginmeme.innerHTML+=img;
 
@@ -87,7 +149,8 @@ export class MainPageComponent implements OnInit {
         const img=`
             <video src="../assets/content/video/${meme[6]}" style="max-width: 440px;
 
-            width: 100%; max-height:380px; margin:10px; height:100%; border-radius: 5px;"  class="imagememe" alt="" controls></video>
+            width: 100%; max-height:380px; margin:10px; height:100%; border-radius: 5px;"  class="imagememe" alt="" controls onmouseover="this.style.filter='brightness(0.8)'"
+            onmouseout="this.style.filter='brightness(1)'"></video>
 
           `
         loginmeme.innerHTML+=img;
@@ -115,7 +178,8 @@ export class MainPageComponent implements OnInit {
           const img=`
             <img src="../assets/content/picture/${meme[6]}" onclick="showImage('../assets/content/picture/${meme[6]}')"  style="max-width: 440px ;
 
-            width: 100%; max-height:380px; height:100%; margin:10px; cursor: pointer; border-radius: 5px;"  class="imagememe" alt="" (click)="openpicture()">
+            width: 100%; max-height:380px; height:100%; margin:10px; cursor: pointer; border-radius: 5px;"  class="imagememe" alt="" (click)="openpicture()" onmouseover="this.style.filter='brightness(0.8)'"
+            onmouseout="this.style.filter='brightness(1)'">
 
           `
           loginmeme.innerHTML+=img;
@@ -124,7 +188,8 @@ export class MainPageComponent implements OnInit {
           const img=`
             <video src="../assets/content/video/${meme[6]}" style="max-width: 440px;
 
-            width: 100%; max-height:380px; margin:10px; height:100%; border-radius: 5px;"  class="imagememe" alt="" controls></video>
+            width: 100%; max-height:380px; margin:10px; height:100%; border-radius: 5px;"  class="imagememe" alt="" controls onmouseover="this.style.filter='brightness(0.8)'"
+            onmouseout="this.style.filter='brightness(1)'"></video>
 
           `
           loginmeme.innerHTML+=img;
@@ -153,7 +218,8 @@ export class MainPageComponent implements OnInit {
           const img=`
             <img src="../assets/content/picture/${meme[6]}" onclick="showImage('../assets/content/picture/${meme[6]}')"  style="max-width: 440px ;
 
-            width: 100%; max-height:380px; height:100%; margin:10px; cursor: pointer; border-radius: 5px;"  class="imagememe" alt="" (click)="openpicture()">
+            width: 100%; max-height:380px; height:100%; margin:10px; cursor: pointer; border-radius: 5px;"  class="imagememe" alt="" (click)="openpicture()" onmouseover="this.style.filter='brightness(0.8)'"
+            onmouseout="this.style.filter='brightness(1)'">
 
           `
           loginmeme.innerHTML+=img;
@@ -162,7 +228,8 @@ export class MainPageComponent implements OnInit {
           const img=`
             <video src="../assets/content/video/${meme[6]}" style="max-width: 440px;
 
-            width: 100%; max-height:380px; margin:10px; height:100%; border-radius: 5px;"  class="imagememe" alt="" controls></video>
+            width: 100%; max-height:380px; margin:10px; height:100%; border-radius: 5px;"  class="imagememe" alt="" controls onmouseover="this.style.filter='brightness(0.8)'"
+            onmouseout="this.style.filter='brightness(1)'"></video>
 
           `
           loginmeme.innerHTML+=img;
@@ -173,6 +240,7 @@ export class MainPageComponent implements OnInit {
 
     })
   }
+
 
 
 }

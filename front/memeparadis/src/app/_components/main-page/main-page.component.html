@@ -9,6 +9,7 @@
             <li class="navbarli"><a (click)="loadallvideo()">Videos</a></li>
             <li class="navbarli"><a (click)="loadEnglish()">English</a></li>
             <li class="navbarli"><a (click)="loadHungary()">Hungary</a></li>
+            <li class="navbarli"><input class="inputtagss" id="inputtagss"  type="text" placeholder="tags" maxlength="25" autocomplete="off" > <button id="search" (click)="searchcontent()">Search</button></li>
             <li *ngIf="datauser" class="navbarli"><a href="profile">{{datauser.name}}</a></li>
 
         </ul>
