@@ -3,6 +3,8 @@ import {  OnInit } from '@angular/core';
 import {Component} from '@angular/core';
 import { Content } from 'src/app/models/content';
 import {NgForm} from '@angular/forms';
+import { Lightbox } from 'ngx-lightbox';
+import { LoginRegistrationPageService } from 'src/app/_services/login-page.service';
 
 
 
@@ -22,8 +24,11 @@ export class ProfilPageComponent implements OnInit {
 
 
 
-  constructor(private http:HttpClient) {
+  constructor(private http:HttpClient,private lightbox: Lightbox,private shiwimg:LoginRegistrationPageService) {
 
+  }
+  showImage(url: string) {
+    this.shiwimg.showImage(url);
   }
 
 
@@ -242,6 +247,8 @@ export class ProfilPageComponent implements OnInit {
 
 
 
+
+
   };
   editusername(user:any){
     this.http.put('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/User/updateUserName',user).subscribe(res=>{
@@ -396,18 +403,20 @@ export class ProfilPageComponent implements OnInit {
 
         if (meme[5]==false){
           const img=`
-            <img src="../assets/content/picture/${meme[6]}"  style="max-width: 540px ;
+            <img src="../assets/content/picture/${meme[6]}" onclick="showImage('../assets/content/picture/${meme[6]}')"  style="max-width: 640px ;
 
-            width: 100%; max-height:480px; height:100%; margin:15px;"  class="imagememe" alt="" (click)="openpicture()">
+            width: 100%; max-height:580px; height:100%; margin:15px; cursor: pointer;  border-radius: 5px;"  class="imagememe" alt="" onmouseover="this.style.filter='brightness(0.8)'"
+            onmouseout="this.style.filter='brightness(1)'">
 
           `
           loginmeme.innerHTML+=img;
         }
         else{
           const img=`
-            <video src="../assets/content/video/${meme[6]}" style="max-width: 540px;
+            <video src="../assets/content/video/${meme[6]}" style="max-width: 640px;
 
-            width: 100%; max-height:480px; margin:15px; height:100%;"  class="imagememe" alt="" controls></video>
+            width: 100%; max-height:580px; margin:15px; height:100%;  border-radius: 5px;"  class="imagememe" alt="" controls onmouseover="this.style.filter='brightness(0.8)'"
+            onmouseout="this.style.filter='brightness(1)'"></video>
 
           `
           loginmeme.innerHTML+=img;
@@ -416,8 +425,10 @@ export class ProfilPageComponent implements OnInit {
 
 
 
+
     })
   }
+
 
 
 
