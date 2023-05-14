@@ -58,15 +58,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "User.findByIsDeleted", query = "SELECT u FROM User u WHERE u.isDeleted = :isDeleted")})
 public class User implements Serializable {
 
-    @OneToMany(mappedBy = "userId")
-    private Collection<Content> contentCollection;
-//
-//    @OneToMany(mappedBy = "userId")
-//    private Collection<PasswordReset> passwordResetCollection;
-//    @OneToMany(mappedBy = "userId")
-//    private Collection<Comment> commentCollection;
-//    @OneToMany(mappedBy = "uploaderName")
-//    private Collection<Content> contentCollection;
+
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -424,14 +416,6 @@ public class User implements Serializable {
 }
 
 
-    @XmlTransient
-    public Collection<Content> getContentCollection() {
-        return contentCollection;
-    }
-
-    public void setContentCollection(Collection<Content> contentCollection) {
-        this.contentCollection = contentCollection;
-    }
     public String updateUserName(String username,Integer id) throws Exception{
     EntityManagerFactory emf = Persistence.createEntityManagerFactory(Database.getPuName());
     EntityManager em = emf.createEntityManager();
