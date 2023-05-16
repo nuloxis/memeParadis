@@ -3,16 +3,22 @@
     <div class="navbar">
       <h1>MEME<span>PARADISE</span></h1>
       <nav>
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+          <i class="fas fa-bars"></i>
+        </label>
         <ul class="navbarul">
-            <li class="navbarli"><a href="main">Home</a></li>
-            <li class="navbarli"><a (click)="loadallpicture()" >Pictures</a></li>
-            <li class="navbarli"><a (click)="loadallvideo()">Videos</a></li>
-            <li class="navbarli"><a (click)="loadEnglish()">English</a></li>
-            <li class="navbarli"><a (click)="loadHungary()">Hungary</a></li>
-            <li class="navbarli"><input class="inputtagss" id="inputtagss"  type="text" placeholder="tags" maxlength="25" autocomplete="off" > <button id="search" (click)="searchcontent()">Search</button></li>
+            <li class="navbarli asd2"><a href="main">Home</a></li>
+            <li class="navbarli asd2"><a (click)="loadallpicture()" >Pictures</a></li>
+            <li class="navbarli asd2"><a (click)="loadallvideo()">Videos</a></li>
+            <li class="navbarli asd2"><a (click)="loadEnglish()">English</a></li>
+            <li class="navbarli asd2"><a (click)="loadHungary()">Hungary</a></li>
+            <li class="navbarli" id="inputtagss2"><input class="inputtagss" id="inputtagss"  type="text" placeholder="tags" maxlength="25" autocomplete="off" > </li>
+            <li class="navbarli"><button id="search" (click)="searchcontent()">Search</button></li>
             <li *ngIf="datauser" class="navbarli"><a href="profile">{{datauser.name}}</a></li>
 
         </ul>
+
     </nav>
     </div>
     <div id="memes">

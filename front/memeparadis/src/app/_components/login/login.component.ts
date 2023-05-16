@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
           const img=`
             <img src="../assets/content/picture/${this.content.contentUpladeName}" onclick="showImage('../assets/content/picture/${this.content.contentUpladeName}')" style="max-width: 678px;
             height: auto;
-            width: 100%; max-height:676px; cursor: pointer;"  class="imagememe" alt="" onmouseover="this.style.filter='brightness(0.8)'"
+            width: 100%; max-height:655px; cursor: pointer;"  class="imagememe" alt="" onmouseover="this.style.filter='brightness(0.8)'"
             onmouseout="this.style.filter='brightness(1)'">
 
           `

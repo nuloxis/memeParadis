@@ -13,7 +13,6 @@
 
 }
 .navbarul{
-  width: auto;
   float: right;
   margin-top: 8px;
   margin-right: 15px;
@@ -27,6 +26,8 @@ a{
   color: #ffffff;
   text-decoration: none;
   font-size: 1,2vw;
+  cursor: pointer;
+
 }
 
 a:hover{
@@ -49,13 +50,21 @@ span{
 #memes{
   height: 100%;
   width: 100%;
-  display: flow-root;
+
+
+  display: flex; flex-wrap: wrap; justify-content: center;
+
 }
+.navbarli{
+  width: 120px;
+}
+
+
 
 input{
   background-color: #1E1F22;
   color: white;
-  width: 177px;
+  width: 120px;
   height: 25px;
   border: 0;
   border-radius: 5px;
@@ -73,3 +82,101 @@ input{
 #search:hover{
   background-color: #404040 ;
 }
+.checkbtn{
+  font-size: 30px;
+  color: white;
+  float: right;
+  line-height: 80px;
+  margin-right: 40px;
+  cursor: pointer;
+  display: none;
+}
+#check{
+  display: none;
+}
+
+@media screen and (max-width: 1850px) {
+
+  #memes{
+    justify-content: center;
+  }
+
+}
+@media screen and (max-width: 1170px) {
+
+  #memes{
+    justify-content: center;
+  }
+  .navbarul{
+    margin: 0;
+    padding: 0;
+
+  }
+  .navbarli{
+    width: 110px;
+  }
+
+}
+@media screen and (max-width: 1065px) {
+
+  #memes{
+    justify-content: center;
+  }
+  .navbarul{
+    margin: 0;
+    padding: 0;
+
+  }
+  .asd2{
+    width: 80px;
+  }
+
+}
+@media screen and (max-width: 930px) {
+
+  #memes{
+    justify-content: center;
+  }
+  .navbarul{
+    margin: 0;
+    padding: 0;
+
+  }
+  .asd2{
+    width: 55px;
+  }
+
+}
+@media screen and (max-width: 810px) {
+  .checkbtn{
+    display: block;
+  }
+  ul{
+    position: fixed;
+    width: 100%;
+    height: 110vh;
+    top: 80px;
+    left: -100%;
+    background-color: #282828;
+    text-align: center;
+    transition: all ;
+  }
+  nav ul li{
+    display: block;
+  }
+  nav ul li a{
+    font-size: 20px;
+  }
+  #check:checked ~ ul{
+    left: 0;
+    position: static;
+  }
+  a:hover{
+    background: none;
+    color: #f0c330;
+    transition: 0.5s;
+  }
+
+
+}
+

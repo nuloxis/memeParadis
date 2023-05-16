@@ -14,17 +14,15 @@
     </nav>
   </div>
   <div class="priflediv">
-    <div class="inprofilnavbar">
-      <div>
-        <div class="asd2"><label class="profilelabel">Profile</label></div>
-        <div class="asd2"><button class="navbarbutton" id="profilesettings">Profile Setting</button></div>
-        <div class="asd2"><button class="navbarbutton" id="contentupload">Upload Content</button></div>
-        <div class="asd2"><button class="navbarbutton" id="likescontent" (click)="loaduploadedconten()">Uploaded Content</button></div>
-        <div class="asd2"><button class="navbarbutton logoutbutton" id="logout" (click)="logoutfuntion()">Sign out</button></div>
-
+    <nav class="inprofilnavbar">
+      <div class="navbarull">
+        <div class="navbarli asd2"><label class="profilelabel">Profile</label></div>
+        <div class="asd2"><a class="navbarbutton" id="profilesettings" >Profile Setting</a> <a id="profileicon" (click)="profileicon()" class="far fa-address-card"></a></div>
+        <div class="asd2"><a class="navbarbutton " id="contentupload">Upload Content</a> <a id="uploadicon" (click)="uploadicon()" class="fas fa-upload"></a></div>
+        <div class="asd2"><a class="navbarbutton" id="likescontent" (click)="loaduploadedconten()">Uploaded Content</a> <a id="likesicon" (click)="loaduploadedconten()" (click)="uploadedicon()" class="far fa-folder-open"></a></div>
+        <div class="asd2"><a class="navbarbutton logoutbutton" id="logout" (click)="logoutfuntion()">Sign out</a> <a id="logouticon" (click)="logoutfuntion()" class="fas fa-sign-out-alt"></a></div>
       </div>
-
-    </div>
+    </nav>
     <div class="profildata">
       <div id="profilesettingsmodal">
         <div>
@@ -77,10 +75,6 @@
               <input type="file" id="file" class="fileinput" (change)="getFile($event)">
               <label for="file" class="filelabel">Choose file...</label>
             </div>
-           <!--<div class="uploaddd">
-              <label class="labelcontent">Sensitive Content:</label>
-              <input type="checkbox" class="chekboy">
-            </div>-->
             <div class="uploaddd">
               <select name="format2" id="language-select" class="format2">
                 <option id="option1" selected disabled>What language is in content</option>

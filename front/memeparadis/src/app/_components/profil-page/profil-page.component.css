@@ -7,18 +7,18 @@
   display: flex;
 
 }
+.navbarul{
+  float: right;
+  margin-top: 8px;
+  margin-right: 15px;
+}
 .navbar{
   width: 100%;
   height: 70px;
   background-color: #282828;
   position: fixed;
 }
-.navbarul{
-  width: auto;
-  float: right;
-  margin-top: 8px;
-  margin-right: 15px;
-}
+
 .navbarli{
   display: inline-block;
   padding: 15px 30px;
@@ -61,11 +61,7 @@ span{
 }
 /*----------------------------------*/
 .inprofilnavbar{
-  width: 25%;
-  height: 100%;
-  padding: 0;
-  display: flex;
-  justify-content:center ;
+
   border-right: 2px solid #00000065;
 }
 .profilelabel{
@@ -88,7 +84,10 @@ span{
   margin-top: 20px;
   margin-bottom: 20px;
 }
+
 .navbarbutton{
+  display: grid;
+  justify-content: center;
   background-color: #282828;
   color: white;
   height: 40px;
@@ -96,6 +95,9 @@ span{
   border: none;
   border-radius: 5px;
   font-size: medium;
+  cursor: pointer;
+  margin: auto;
+  align-content: center;
 }
 .navbarbutton:hover{
   background-color: #404040 ;
@@ -115,29 +117,30 @@ span{
   padding: 0;
 }
 #profilesettingsmodal{
-  display: block; /* Hidden by default */
+  margin-left: 5px;
+  display: block;
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
+  width: 100%;
+  height: 100%;
+  overflow: auto;
 
 }
 #contentuploadmodul{
-  display: none; /* Hidden by default */
+  display: none;
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
+  width: 100%;
+  height: 100%;
+  overflow: auto;
 }
 #likesmodul{
-  display: none; /* Hidden by default */
+  display: none;
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
+  width: 100%;
+  height: 100%;
+  overflow: auto;
 }
 /*----------------------------------*/
 /*PROFIL DATA*/
@@ -169,7 +172,6 @@ span{
   margin-bottom: 10px;
 }
 .editingbutton{
-  /*margin-left: 60%;*/
   background-color: #767373ad;
   color: white;
   height: 30px;
@@ -238,6 +240,7 @@ input{
 
 }
 .uploaddd{
+
   margin-bottom: 30px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.242);
 }
@@ -340,27 +343,123 @@ input{
 }
 
 ::-webkit-scrollbar {
-  width: 10px; /* A görgető sáv szélessége */
-  height: 10px; /* A görgető sáv magassága */
-  background-color: #00000084; /* A görgető sáv hátterének színe */
+  width: 10px;
+  height: 10px;
+  background-color: #00000084;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #00000084; /* A görgető sáv "hüvelykujjának" (thumb) színe */
+  background-color: #00000084;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #00000084; /* A görgető sáv "hüvelykujjának" (thumb) színe, ha a kurzor fölötte van */
+  background-color: #00000084;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #544f4f; /* A görgető sáv "távolságtartó" (track) részének színe */
+  background-color: #544f4f;
 }
 
 ::-webkit-scrollbar-track:hover {
-  background-color: #544f4f; /* A görgető sáv "távolságtartó" (track) részének színe, ha a kurzor fölötte van */
+  background-color: #544f4f;
 }
 
-.imagememe:hover{
-  background-color: #5f5b5b00;
+#check{
+  display: none;
+}
+#profileicon{
+  display: none;
+}
+#uploadicon{
+  display: none;
+}
+#likesicon{
+  display: none;
+}
+#logouticon{
+  display: none;
+}
+@media screen and (max-width: 1260px) {
+  .inprofilnavbar{
+    border: 0;
+  }
+}
+
+@media screen and (max-width: 1045px) {
+  .inprofilnavbar{
+    margin: 0;
+    padding: 0;
+    width: 10%;
+    border-right: 2px solid #00000065;
+  }
+  .navbarbutton:hover{
+    background-color: #404040 ;
+    background: none;
+  }
+  .profilelabel{
+    display: none;
+  }
+  #profileicon{
+    display: block;
+    font-size: 30px;
+    margin-top: 10px;
+    margin-right: 50px;
+    margin-bottom: 10px;
+  }
+  #uploadicon{
+    display: block;
+    font-size: 30px;
+    margin-top: 10px;
+    margin-right: 50px;
+    margin-bottom: 10px;
+  }
+  #likesicon{
+    display: block;
+    font-size: 30px;
+    margin-top: 10px;
+    margin-right: 50px;
+    margin-bottom: 10px;
+  }
+  #logouticon{
+    display: block;
+    font-size: 30px;
+    margin-top: 10px;
+    margin-right: 50px;
+    margin-bottom: 10px;
+  }
+  .navbarbutton{
+    display: none;
+  }
+  .priflediv{
+    justify-content: center;
+  }
+}
+@media screen and (max-width: 670px) {
+  .profildatadivsinnn{
+    display: grid;
+  }
+  .priflediv{
+    width: 100%;
+    height: 100%;
+  }
+
+  .navbarli{
+    width: 30px;
+  }
+  .navbar{
+    position: absolute;
+  }
+
+
+}
+@media screen and (max-width: 450px) {
+  .uploaddd{
+    display: grid;
+  }
+  .filelabel{
+    width: 100px;
+    height: 30px;
+  }
+
+
 }

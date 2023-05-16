@@ -35,6 +35,31 @@ export class ProfilPageComponent implements OnInit {
   showImage(url: string) {
     this.shiwimg.showImage(url);
   }
+  uploadicon(){
+    const modal3 = document.getElementById("likesmodul") as HTMLElement;
+    const modal = document.getElementById("profilesettingsmodal") as HTMLElement;
+    const modal2 = document.getElementById("contentuploadmodul") as HTMLElement;
+    modal.style.display = "none";
+    modal2.style.display = "block";
+    modal3.style.display="none";
+  }
+  profileicon(){
+    const modal3 = document.getElementById("likesmodul") as HTMLElement;
+    const modal = document.getElementById("profilesettingsmodal") as HTMLElement;
+    const modal2 = document.getElementById("contentuploadmodul") as HTMLElement;
+    modal.style.display = "block";
+    modal2.style.display = "none";
+    modal3.style.display="none";
+  }
+  uploadedicon(){
+    const modal3 = document.getElementById("likesmodul") as HTMLElement;
+    const modal = document.getElementById("profilesettingsmodal") as HTMLElement;
+    const modal2 = document.getElementById("contentuploadmodul") as HTMLElement;
+    modal.style.display = "none";
+      modal2.style.display = "none";
+      modal3.style.display="block";
+  }
+
 
 
   ngOnInit(): void {
@@ -309,6 +334,9 @@ export class ProfilPageComponent implements OnInit {
 
 
       }
+      else{
+        this.opendialogupload()
+      }
 
       if (language_select.value=="ENG"){
         content2.language="ENG";
@@ -319,11 +347,13 @@ export class ProfilPageComponent implements OnInit {
         content2.language="OTHER";
       }
       content2.contentUpladeName+=this.file.name;
-      this.http.post('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/Content/createContent',content2,{responseType:'text'}).subscribe((res)=>{
-        const id = parseInt(res.split(': ')[1]);
-        howmanycontent=id;
 
+
+      this.http.post('http://127.0.0.1:8080/MemeparadisEE7-1.0-SNAPSHOT/resources/Content/createContent',content2,{responseType:'text'}).subscribe((res)=>{
+      const id = parseInt(res.split(': ')[1]);
+      howmanycontent=id;
       })
+
       await new Promise(resolve => setTimeout(resolve, 800));
 
       const buttonTexts = this.getButtonTexts();
@@ -408,9 +438,9 @@ export class ProfilPageComponent implements OnInit {
 
         if (meme[5]==false){
           const img=`
-            <img src="../assets/content/picture/${meme[6]}" onclick="showImage('../assets/content/picture/${meme[6]}')"  style="max-width: 640px ;
+            <img src="../assets/content/picture/${meme[6]}" onclick="showImage('../assets/content/picture/${meme[6]}')"  style="max-width: 540px ;
 
-            width: 100%; max-height:580px; height:100%; margin:15px; cursor: pointer;  border-radius: 5px;"  class="imagememe" alt="" onmouseover="this.style.filter='brightness(0.8)'"
+            width: 100%; max-height:480px; height:100%; margin-top:15px; margin-bottom:15px; cursor: pointer;  border-radius: 5px;"  class="imagememe" alt="" onmouseover="this.style.filter='brightness(0.8)'"
             onmouseout="this.style.filter='brightness(1)'">
 
           `
@@ -418,9 +448,9 @@ export class ProfilPageComponent implements OnInit {
         }
         else{
           const img=`
-            <video src="../assets/content/video/${meme[6]}" style="max-width: 640px;
+            <video src="../assets/content/video/${meme[6]}" style="max-width: 540px;
 
-            width: 100%; max-height:580px; margin:15px; height:100%;  border-radius: 5px;"  class="imagememe" alt="" controls onmouseover="this.style.filter='brightness(0.8)'"
+            width: 100%; max-height:480px; margin-top:15px; margin-bottom:15px; height:100%;  border-radius: 5px;"  class="imagememe" alt="" controls onmouseover="this.style.filter='brightness(0.8)'"
             onmouseout="this.style.filter='brightness(1)'"></video>
 
           `
