@@ -37,6 +37,7 @@ span{
 
 }
 .thislogin{
+  max-height: 668px;
   width: 30%;
   height: 70%;
   background-color: #282828;
@@ -209,4 +210,8 @@ a{
     height: 90%;
 
   }
+}
+@media screen and (max-height:  950px) {
+
+
 }

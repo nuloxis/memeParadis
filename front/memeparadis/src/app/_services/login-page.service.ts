@@ -17,18 +17,6 @@ export class LoginRegistrationPageService {
   getMostLikedPosts(): Observable<Content[]>{
     return this.http.get<Content[]>(`${this.apiUrl}/Content/GetMostLikedPosts`)
   }
-  showImage(url: string) {
-    // Megjelenítjük a képet a képernyő közepén
-    const imgElement = document.createElement('img');
-    imgElement.src = url;
-    imgElement.style.position = 'fixed';
-    imgElement.style.top = '50%';
-    imgElement.style.left = '50%';
-    imgElement.style.transform = 'translate(-50%, -50%)';
-    imgElement.style.maxWidth = '90%';
-    imgElement.style.maxHeight = '90%';
-    imgElement.style.zIndex = '9999';
-    document.body.appendChild(imgElement);
-  }
+
 
 }

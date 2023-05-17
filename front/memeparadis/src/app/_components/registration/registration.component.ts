@@ -40,6 +40,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   onProductCreate(){
+
     const addNewUser:User=this.productsFrom.value;
 
     addNewUser.email=this.productsFrom.get("email")?.value;
@@ -51,6 +52,7 @@ export class RegistrationComponent implements OnInit {
     const containsUppercase = /[A-Z]/.test(myString);
     const containsNumber = /\d/.test(myString);
     const containsSpecialChar = /[@$!%*?&]/.test(myString);
+
 
 
     if(addNewUser.name==""||addNewUser.email==""||addNewUser.password==""||Number.isNaN(addNewUser.birthDate)){

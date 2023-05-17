@@ -112,3 +112,12 @@ a{
     width: 50%;
   }
 }
+@media screen and (max-height: 830px) {
+  .registration{
+     height: 500px;
+     margin-top: 10;
+
+  }
+
+
+ }

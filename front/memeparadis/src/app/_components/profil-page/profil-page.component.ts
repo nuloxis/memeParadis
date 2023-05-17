@@ -29,12 +29,10 @@ export class ProfilPageComponent implements OnInit {
 
 
 
-  constructor(private http:HttpClient,private lightbox: Lightbox,private shiwimg:LoginRegistrationPageService,private matdialog:MatDialog) {
+  constructor(private http:HttpClient,private matdialog:MatDialog) {
 
   }
-  showImage(url: string) {
-    this.shiwimg.showImage(url);
-  }
+
   uploadicon(){
     const modal3 = document.getElementById("likesmodul") as HTMLElement;
     const modal = document.getElementById("profilesettingsmodal") as HTMLElement;
